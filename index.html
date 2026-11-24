@@ -74,7 +74,7 @@
    "name": "Wie lange reicht eine Tintenkartusche?",
    "acceptedAnswer": {
     "@type": "Answer",
-    "text": "Je nach Größe reicht eine Original-Kartusche für etwa 700 bis 22.000 Briefe. Die genauen Werte je Modell stehen in der Übersicht oben. Die tatsächliche Reichweite hängt vom Abdruck ab, zum Beispiel ob Sie ein Werbeklischee mitdrucken."
+    "text": "Je nach Größe reicht eine Original-Kartusche für etwa 700 bis 22.000 Briefe. Die genauen Werte je Modell stehen in der Übersicht aller Kartuschen bei den häufigen Fragen. Die tatsächliche Reichweite hängt vom Abdruck ab, zum Beispiel ob Sie ein Werbeklischee mitdrucken."
    }
   },
   {
@@ -143,10 +143,10 @@ img{max-width:100%;height:auto}
 .wrap{max-width:1040px;margin:0 auto;padding:0 20px}
 
 /* Kopf wie im Shop: rote Leiste, blaue Vorteilsleiste, Logo, graue Navigation */
-.topbar{background:var(--red);color:#fff;font-size:.85rem;text-align:center;padding:9px 16px}
+.topbar{background:var(--red);color:#fff;font-size:.85rem;text-align:center;padding:9px 16px;text-wrap-style:balance}
 .usp{background:var(--blue);color:#fff;font-size:.82rem}
-.usp ul{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:12px 20px;max-width:1040px;margin:0 auto}
-.usp li{display:flex;gap:8px;align-items:center;line-height:1.3}
+.usp ul{list-style:none;display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 24px;padding:12px 20px;max-width:1040px;margin:0 auto}
+.usp li{display:flex;gap:8px;align-items:center;line-height:1.3;white-space:nowrap;min-width:0}
 .usp svg{flex-shrink:0}
 .head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 20px;max-width:1040px;margin:0 auto}
 .head img{height:40px;width:auto;display:block}
@@ -188,11 +188,12 @@ h2{font-size:1.45rem;line-height:1.25;margin-bottom:6px}
 section.block{margin-top:44px}
 
 /* Kacheln */
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.grid{display:flex;flex-wrap:wrap;justify-content:center;gap:12px}
+.grid .tile{flex:0 1 calc(25% - 9px)}
 .tile{background:var(--gray-light);border:2px solid transparent;border-radius:8px;padding:12px;cursor:pointer;
   text-align:left;font-family:var(--font);color:var(--text);transition:border-color .15s,transform .15s,background .15s;display:flex;flex-direction:column}
-.tile:hover,.tile:focus-visible{border-color:var(--red);background:#fff;transform:translateY(-2px);outline:none}
-.tile .pic{aspect-ratio:4/3;border-radius:6px;background:#fff;display:flex;align-items:center;justify-content:center;margin-bottom:10px;overflow:hidden}
+.tile:hover,.tile:focus-visible{border-color:var(--red);background:var(--red-soft);transform:translateY(-2px);outline:none}
+.tile .pic{aspect-ratio:4/3;border-radius:6px;background:transparent;display:flex;align-items:center;justify-content:center;margin-bottom:10px;overflow:hidden}
 .tile .pic img{max-width:100%;max-height:100%;object-fit:contain}
 .tile strong{font-size:1.05rem;line-height:1.2}
 .tile .models{font-size:.8rem;color:var(--text-mid);margin-top:2px}
@@ -232,6 +233,13 @@ section.block{margin-top:44px}
 .cmp a{color:var(--red);text-decoration:none;font-weight:700}
 .actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 .back{background:none;border:0;color:var(--text-mid);font-family:var(--font);font-size:.95rem;cursor:pointer;text-decoration:underline;margin:16px 14px 0 0}
+.nav-back{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
+.nav-back button{background:#fff;border:2px solid var(--text);color:var(--text);font-family:var(--font);font-size:.95rem;font-weight:700;
+  padding:9px 16px;border-radius:6px;cursor:pointer}
+.nav-back button:hover,.nav-back button:focus-visible{border-color:var(--red);color:var(--red);outline:none}
+.steps .go{cursor:pointer}
+.steps .go:hover{color:var(--red)}
+.steps .go b{background:var(--text);color:#fff}
 .fine{font-size:.8rem;color:var(--text-mid);margin-top:12px}
 
 /* Menschen statt Maschine */
@@ -250,7 +258,7 @@ section.block{margin-top:44px}
 .ov tbody th{font-weight:700}
 .ov tbody th small{display:block;font-weight:400;color:var(--text-mid);font-size:.8rem}
 .ov a{color:var(--red);font-weight:700;text-decoration:none}
-.scroll{overflow-x:auto}
+.scroll{overflow-x:auto;margin-top:10px}
 
 /* FAQ */
 .faq details{border-bottom:1px solid var(--gray-mid);padding:14px 0}
@@ -266,14 +274,16 @@ section.block{margin-top:44px}
 footer{background:#3a3a3c;color:#ddd;font-size:.88rem;padding:26px 0}
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
 footer a{color:#fff;margin-right:16px}
-@media (max-width:860px){.grid{grid-template-columns:repeat(3,1fr)}.usp ul{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:860px){.grid .tile{flex-basis:calc(33.333% - 8px)}.usp ul{display:grid;grid-template-columns:repeat(2,1fr)}}
 @media (max-width:720px){
   .hero{flex-direction:column;text-align:center;gap:14px}
   .hero img{width:170px}
   .hero h1{font-size:1.55rem}
   .head img{height:28px}
   .head .btn{font-size:.85rem;padding:9px 12px}
-  .grid,.qgrid{grid-template-columns:repeat(2,1fr)}
+  .qgrid{grid-template-columns:repeat(2,1fr)}
+  .nav-back{gap:8px}.nav-back button{font-size:.85rem;padding:8px 11px}
+  .grid .tile{flex-basis:calc(50% - 6px)}
   .card{flex-direction:column;padding:20px}
   .card .pic{width:140px}
   .people{grid-template-columns:1fr;padding:20px}
@@ -286,24 +296,28 @@ footer a{color:#fff;margin-right:16px}
   .topbar{font-size:.78rem}
   .sticky-call small,.sticky-call p{display:none}
 }
+h1,h2,h3,summary,.sub,.badge{text-wrap-style:balance}
+p,li,td,small{text-wrap-style:pretty}
+.faq p{hyphens:auto;-webkit-hyphens:auto}
+.tile .models{text-wrap-style:balance}
+.nw,a[href^="tel:"]{white-space:nowrap}
 </style>
 </head>
 <body>
 
 <div class="topbar">TE Printline GmbH · autorisierte Generalvertretung von Francotyp-Postalia</div>
 <div class="usp"><ul>
-  <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M3 14v-2a9 9 0 0118 0v2"/><rect x="2" y="14" width="5" height="7" rx="2"/><rect x="17" y="14" width="5" height="7" rx="2"/></svg>Persönliche Beratung unter 06204 / 9622-0</li>
-  <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg>Bis 13 Uhr bestellt, am selben Tag versendet</li>
-  <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>Für Gewerbe, Behörden und Vereine</li>
-  <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 2.7s6 6.6 6 11a6 6 0 01-12 0c0-4.4 6-11 6-11z"/></svg>Original-Zubehör von Francotyp-Postalia</li>
+  <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M3 14v-2a9 9 0 0118 0v2"/><rect x="2" y="14" width="5" height="7" rx="2"/><rect x="17" y="14" width="5" height="7" rx="2"/></svg>Beratung: <span class="nw">06204 / 9622-0</span></li>
+  <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg>Bis 13&nbsp;Uhr bestellt, heute versendet</li>
+  <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>Für Gewerbe, Behörden, Vereine</li>
+  <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 2.7s6 6.6 6 11a6 6 0 01-12 0c0-4.4 6-11 6-11z"/></svg>Original von Francotyp-Postalia</li>
 </ul></div>
 <div class="head">
-  <a href="https://www.frankierfarbe.de/?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=logo" data-shop="logo"><img src="logo.png" alt="TE Printline GmbH" width="380" height="47"></a>
-  <a class="btn" href="tel:+49620496220">&#128222; 06204 / 9622-0</a>
+  <a href="./" id="homelink" title="Zur Startseite von farbeleer.de"><img src="logo.png" alt="TE Printline GmbH" width="380" height="47"></a>
+  <a class="btn" href="tel:+49620496220">&#128222; <span class="nw">06204 / 9622-0</span></a>
 </div>
 <nav class="nav" aria-label="Hauptnavigation"><ul>
   <li><a class="on" href="#finder">Kartuschenfinder</a></li>
-  <li><a href="#uebersicht">Welche Kartusche passt?</a></li>
   <li><a href="#beratung">Persönliche Beratung</a></li>
   <li><a href="#faq">Häufige Fragen</a></li>
   <li><a href="https://www.frankierfarbe.de/?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=nav" data-shop="nav">Zum Shop</a></li>
@@ -313,15 +327,15 @@ footer a{color:#fff;margin-right:16px}
   <section class="hero">
     <img src="farbe-leer-oval.webp" alt="Farbe leer?" width="420" height="250">
     <div>
-      <h1>Farbe leer? <span>In drei Klicks</span> zur passenden Original-Kartusche.</h1>
+      <h1>Farbe leer? <span>In&nbsp;drei&nbsp;Klicks</span> zur passenden Original-Kartusche.</h1>
       <p>Tippen Sie auf Ihre Frankiermaschine und sagen Sie uns, wie viel Sie verschicken. Wir empfehlen die Kartuschengröße, die zu Ihrer Menge passt. Und wenn Sie lieber mit jemandem sprechen: Bei uns geht ein Mensch ans Telefon.</p>
     </div>
   </section>
 
   <div class="callbar">
     <p>Lieber persönlich bestellen? Wir beraten Sie gerne.</p>
-    <a class="btn white" href="tel:+49620496220">&#128222; Jetzt anrufen: 06204 / 9622-0</a>
-    <span>Mo–Fr 08:00–16:00 Uhr</span>
+    <a class="btn white" href="tel:+49620496220">&#128222; Jetzt anrufen: <span class="nw">06204 / 9622-0</span></a>
+    <span>Mo–Fr 08:00–16:00&nbsp;Uhr</span>
   </div>
 
   <div class="steps" id="steps">
@@ -334,11 +348,12 @@ footer a{color:#fff;margin-right:16px}
     <h2>Welche Frankiermaschine steht bei Ihnen?</h2>
     <p class="sub">Tippen Sie einfach auf das Gerät, das so aussieht wie Ihres. Den Namen müssen Sie nicht kennen.</p>
     <div class="grid" id="grid"></div>
-    <noscript><p class="noscript">Der Kartuschenfinder braucht JavaScript. Alle Kartuschen mit Reichweite finden Sie in der <a href="#uebersicht">Übersicht unten</a>, oder rufen Sie uns an: <a href="tel:+49620496220">06204 / 9622-0</a>.</p></noscript>
-    <p class="help">Ihre Maschine ist nicht dabei oder Sie sind unsicher? <a href="tel:+49620496220">Rufen Sie uns an: 06204 / 9622-0</a> (Mo–Fr 8–16 Uhr)</p>
+    <noscript><p class="noscript">Der Kartuschenfinder braucht JavaScript. Alle Kartuschen mit Reichweite finden Sie in der <a href="#uebersicht">Übersicht bei den häufigen Fragen</a>, oder rufen Sie uns an: <a href="tel:+49620496220"><span class="nw">06204 / 9622-0</span></a>.</p></noscript>
+    <p class="help">Ihre Maschine ist nicht dabei oder Sie sind unsicher? <a href="tel:+49620496220">Rufen Sie uns an: <span class="nw">06204 / 9622-0</span></a> (Mo–Fr 8–16&nbsp;Uhr)</p>
   </section>
 
   <section id="volume">
+    <div class="nav-back"><button type="button" data-back="1">&larr; Andere Maschine wählen</button></div>
     <p class="chosen">Ihre Maschine: <b id="vname">PostBase</b></p>
     <h2>Wie viele Briefe frankieren Sie ungefähr im Monat?</h2>
     <p class="sub">Eine grobe Schätzung reicht. Die genaue Zahl zeigt der Stückzähler Ihrer Maschine.</p>
@@ -349,10 +364,13 @@ footer a{color:#fff;margin-right:16px}
       <span>Briefe pro Monat</span>
       <button class="btn sm" type="submit">Empfehlung zeigen</button>
     </form>
-    <button class="back" data-back="1">&larr; Andere Maschine wählen</button>
   </section>
 
   <section id="result">
+    <div class="nav-back">
+      <button type="button" data-back="1">&larr; Andere Maschine wählen</button>
+      <button type="button" data-back="2" id="backqty">&larr; Menge ändern</button>
+    </div>
     <div class="card">
       <div class="pic" id="rpic"></div>
       <div>
@@ -369,7 +387,7 @@ footer a{color:#fff;margin-right:16px}
         <p class="fine">Reichweiten laut Hersteller Francotyp-Postalia. Sie hängen vom Abdruck ab (zum Beispiel mit Werbeklischee) und davon, wie regelmäßig Sie frankieren.</p>
       </div>
     </div>
-    <button class="back" data-back="2">&larr; Menge ändern</button><button class="back" data-back="1">Andere Maschine wählen</button>
+    <button class="back" data-back="2" id="backqty2">&larr; Menge ändern</button><button class="back" data-back="1">Andere Maschine wählen</button>
   </section>
 
   <section class="block" id="beratung">
@@ -385,76 +403,75 @@ footer a{color:#fff;margin-right:16px}
       </div>
       <div class="phonebox">
         <small>Persönliche Beratung und Bestellung</small>
-        <a class="num" href="tel:+49620496220">06204 / 9622-0</a>
-        <small>Montag bis Freitag, 8 bis 16 Uhr</small>
+        <a class="num" href="tel:+49620496220"><span class="nw">06204 / 9622-0</span></a>
+        <small>Montag bis Freitag, 8&nbsp;bis&nbsp;16&nbsp;Uhr</small>
         <p style="margin-top:14px"><a class="btn" href="tel:+49620496220">&#128222; Jetzt anrufen</a></p>
       </div>
     </div>
   </section>
 
-  <section class="block" id="uebersicht">
-    <h2>Welche Tintenkartusche passt in welche PostBase?</h2>
-    <p class="sub">Alle Original-Kartuschen von Francotyp-Postalia mit Füllmenge und Reichweite auf einen Blick. Die Reichweite gibt an, wie viele Briefe Sie mit einer Kartusche frankieren können.</p>
+
+  <section class="block faq" id="faq">
+    <h2>Häufige Fragen</h2>
+    <details><summary>Welche Tintenkartusche passt in meine Frankiermaschine?</summary><p>Das hängt vom Modell ab. Jede PostBase von Francotyp-Postalia hat eigene Kartuschen: die PostBase mini und die Vision M2 nutzen die Größen X-Small, Small und Medium, die PostBase 30&nbsp;bis&nbsp;100 und die Insight die Sets XS, Small, Medium und XL, die PostBase Fusion XS, S, M und XL, die Vision 35&nbsp;bis&nbsp;70 die Größe Large und die PostBase One das XL-Set. Tippen Sie oben im Kartuschenfinder auf Ihr Gerät oder rufen Sie uns an, wenn Sie unsicher sind.</p></details>
+    <details id="uebersicht"><summary>Welche Tintenkartusche passt in welche PostBase? (Übersicht aller Kartuschen)</summary>
+    <p>Alle Original-Kartuschen von Francotyp-Postalia mit Füllmenge und Reichweite. Die Reichweite gibt an, wie viele Briefe Sie mit einer Kartusche frankieren können.</p>
     <div class="scroll">
 <table class="ov">
 <thead><tr><th>Frankiermaschine</th><th>Kartusche</th><th>Füllmenge</th><th>Reicht für bis zu</th><th>Artikel-Nr.</th></tr></thead>
 <tbody>
-<tr><th scope="rowgroup" rowspan="3">PostBase mini</th><td><a href="https://www.frankierfarbe.de/p/tintenkartuschen-set-x-small-fuer-frankiermaschine-postbase-mini-francotyp-postalia?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=uebersicht&amp;utm_content=mini-x-small">X-SMALL</a></td><td>4 ml</td><td>700 Briefe</td><td>580053305600</td></tr>
-<tr><td><a href="https://www.frankierfarbe.de/p/tintenkartuschen-set-small-fuer-frankiermaschine-postbase-mini-francotyp-postalia?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=uebersicht&amp;utm_content=mini-small">SMALL</a></td><td>10 ml</td><td>2.000 Briefe</td><td>580053303600</td></tr>
-<tr><td><a href="https://www.frankierfarbe.de/p/tintenkartuschen-set-medium-fuer-frankiermaschine-postbase-mini-francotyp-postalia?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=uebersicht&amp;utm_content=mini-medium">MEDIUM</a></td><td>20 ml</td><td>4.000 Briefe</td><td>580053304600</td></tr>
-<tr><th scope="rowgroup" rowspan="3">PostBase Vision M2</th><td><a href="https://www.frankierfarbe.de/p/tintenkartusche-x-small-fuer-frankiermaschine-postbase-vision-m2-francotyp-postalia?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=uebersicht&amp;utm_content=m2-x-small">X-SMALL</a></td><td>4 ml</td><td>700 Briefe</td><td>580074895600</td></tr>
-<tr><td><a href="https://www.frankierfarbe.de/p/tintenkartusche-small-fuer-frankiermaschine-postbase-vision-m2-francotyp-postalia?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=uebersicht&amp;utm_content=m2-small">SMALL</a></td><td>10 ml</td><td>2.000 Briefe</td><td>580074893600</td></tr>
-<tr><td><a href="https://www.frankierfarbe.de/p/tintenkartusche-medium-fuer-frankiermaschine-postbase-vision-m2-francotyp-postalia?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=uebersicht&amp;utm_content=m2-medium">MEDIUM</a></td><td>20 ml</td><td>4.000 Briefe</td><td>580074894600</td></tr>
-<tr><th scope="rowgroup" rowspan="1">PostBase One<small>One 120 · One 150</small></th><td><a href="https://www.frankierfarbe.de/p/tintenkartuschen-set-xl-fuer-frankiermaschine-postbase-one?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=uebersicht&amp;utm_content=one-xl">XL</a></td><td>2 × 42 ml</td><td>22.000 Briefe</td><td>580055318800</td></tr>
-<tr><th scope="rowgroup" rowspan="4">PostBase Classic<small>PostBase 30 · 45 · 65 · 100</small></th><td><a href="https://www.frankierfarbe.de/p/tintenkartuschen-set-xs-fuer-frankiermaschine-postbase-30-bis-100-francotyp-postalia?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=uebersicht&amp;utm_content=classic-xs">XS</a></td><td>2 × 4 ml</td><td>1.500 Briefe</td><td>580052305600</td></tr>
-<tr><td><a href="https://www.frankierfarbe.de/p/tintenkartuschen-set-small-fuer-frankiermaschine-postbase-30-bis-100-francotyp-postalia?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=uebersicht&amp;utm_content=classic-small">SMALL</a></td><td>2 × 10 ml</td><td>4.000 Briefe</td><td>580052303600</td></tr>
-<tr><td><a href="https://www.frankierfarbe.de/p/tintenkartuschen-set-medium-fuer-frankiermaschine-postbase-30-bis-100-francotyp-postalia?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=uebersicht&amp;utm_content=classic-medium">MEDIUM</a></td><td>2 × 20 ml</td><td>8.000 Briefe</td><td>580052304600</td></tr>
-<tr><td><a href="https://www.frankierfarbe.de/p/tintenkartuschen-set-xl-fuer-frankiermaschine-postbase-30-bis-100-francotyp-postalia?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=uebersicht&amp;utm_content=classic-xl">XL</a></td><td>2 × 42 ml</td><td>18.000 Briefe</td><td>580052302600</td></tr>
-<tr><th scope="rowgroup" rowspan="1">PostBase Vision<small>Vision 35 · 50 · 70</small></th><td><a href="https://www.frankierfarbe.de/p/tintenkartusche-large-fuer-frankiermaschine-postbase-vision-35-bis-70-francotyp-postalia?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=uebersicht&amp;utm_content=vision-large">LARGE</a></td><td>40 ml</td><td>11.400 Briefe</td><td>580059772400</td></tr>
-<tr><th scope="rowgroup" rowspan="4">PostBase Fusion<small>Fusion 35 · 50 · 70 · 120</small></th><td><a href="https://www.frankierfarbe.de/p/tintenkartuschen-set-xs-fuer-frankiermaschine-postbase-fusion-35-bis-120-francotyp-postalia?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=uebersicht&amp;utm_content=fusion-xs">XS</a></td><td>2 × 4 ml</td><td>1.500 Briefe</td><td>580059895600</td></tr>
-<tr><td><a href="https://www.frankierfarbe.de/p/tintenkartuschen-set-s-fuer-frankiermaschine-postbase-fusion-35-bis-120-francotyp-postalia?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=uebersicht&amp;utm_content=fusion-s">S</a></td><td>2 × 10 ml</td><td>4.000 Briefe</td><td>580059893600</td></tr>
-<tr><td><a href="https://www.frankierfarbe.de/p/tintenkartuschen-set-m-fuer-frankiermaschine-postbase-fusion-35-bis-120-francotyp-postalia?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=uebersicht&amp;utm_content=fusion-m">M</a></td><td>2 × 20 ml</td><td>8.000 Briefe</td><td>580059894600</td></tr>
-<tr><td><a href="https://www.frankierfarbe.de/p/tintenkartuschen-set-xl-fuer-frankiermaschine-postbase-fusion-35-bis-120-francotyp-postalia?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=uebersicht&amp;utm_content=fusion-xl">XL</a></td><td>2 × 42 ml</td><td>17.000 Briefe</td><td>580059892600</td></tr>
-<tr><th scope="rowgroup" rowspan="4">PostBase Insight</th><td><a href="https://www.frankierfarbe.de/p/tintenkartuschen-set-xs-fuer-frankiermaschine-postbase-30-bis-100-francotyp-postalia?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=uebersicht&amp;utm_content=insight-xs">XS</a></td><td>2 × 4 ml</td><td>1.500 Briefe</td><td>580052305600</td></tr>
-<tr><td><a href="https://www.frankierfarbe.de/p/tintenkartuschen-set-small-fuer-frankiermaschine-postbase-30-bis-100-francotyp-postalia?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=uebersicht&amp;utm_content=insight-small">SMALL</a></td><td>2 × 10 ml</td><td>4.000 Briefe</td><td>580052303600</td></tr>
-<tr><td><a href="https://www.frankierfarbe.de/p/tintenkartuschen-set-medium-fuer-frankiermaschine-postbase-30-bis-100-francotyp-postalia?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=uebersicht&amp;utm_content=insight-medium">MEDIUM</a></td><td>2 × 20 ml</td><td>8.000 Briefe</td><td>580052304600</td></tr>
-<tr><td><a href="https://www.frankierfarbe.de/p/tintenkartuschen-set-xl-fuer-frankiermaschine-postbase-30-bis-100-francotyp-postalia?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=uebersicht&amp;utm_content=insight-xl">XL</a></td><td>2 × 42 ml</td><td>18.000 Briefe</td><td>580052302600</td></tr>
+<tr><th scope="rowgroup" rowspan="3">PostBase mini</th><td><a href="https://www.frankierfarbe.de/p/tintenkartuschen-set-x-small-fuer-frankiermaschine-postbase-mini-francotyp-postalia?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=uebersicht&amp;utm_content=mini-x-small">X-SMALL</a></td><td>4&nbsp;ml</td><td>700&nbsp;Briefe</td><td>580053305600</td></tr>
+<tr><td><a href="https://www.frankierfarbe.de/p/tintenkartuschen-set-small-fuer-frankiermaschine-postbase-mini-francotyp-postalia?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=uebersicht&amp;utm_content=mini-small">SMALL</a></td><td>10&nbsp;ml</td><td>2.000&nbsp;Briefe</td><td>580053303600</td></tr>
+<tr><td><a href="https://www.frankierfarbe.de/p/tintenkartuschen-set-medium-fuer-frankiermaschine-postbase-mini-francotyp-postalia?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=uebersicht&amp;utm_content=mini-medium">MEDIUM</a></td><td>20&nbsp;ml</td><td>4.000&nbsp;Briefe</td><td>580053304600</td></tr>
+<tr><th scope="rowgroup" rowspan="3">PostBase Vision M2</th><td><a href="https://www.frankierfarbe.de/p/tintenkartusche-x-small-fuer-frankiermaschine-postbase-vision-m2-francotyp-postalia?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=uebersicht&amp;utm_content=m2-x-small">X-SMALL</a></td><td>4&nbsp;ml</td><td>700&nbsp;Briefe</td><td>580074895600</td></tr>
+<tr><td><a href="https://www.frankierfarbe.de/p/tintenkartusche-small-fuer-frankiermaschine-postbase-vision-m2-francotyp-postalia?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=uebersicht&amp;utm_content=m2-small">SMALL</a></td><td>10&nbsp;ml</td><td>2.000&nbsp;Briefe</td><td>580074893600</td></tr>
+<tr><td><a href="https://www.frankierfarbe.de/p/tintenkartusche-medium-fuer-frankiermaschine-postbase-vision-m2-francotyp-postalia?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=uebersicht&amp;utm_content=m2-medium">MEDIUM</a></td><td>20&nbsp;ml</td><td>4.000&nbsp;Briefe</td><td>580074894600</td></tr>
+<tr><th scope="rowgroup" rowspan="1">PostBase One<small>One 120 · One 150</small></th><td><a href="https://www.frankierfarbe.de/p/tintenkartuschen-set-xl-fuer-frankiermaschine-postbase-one?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=uebersicht&amp;utm_content=one-xl">XL</a></td><td>2&nbsp;×&nbsp;42&nbsp;ml</td><td>22.000&nbsp;Briefe</td><td>580055318800</td></tr>
+<tr><th scope="rowgroup" rowspan="4">PostBase Classic<small>PostBase 30 · 45 · 65 · 100</small></th><td><a href="https://www.frankierfarbe.de/p/tintenkartuschen-set-xs-fuer-frankiermaschine-postbase-30-bis-100-francotyp-postalia?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=uebersicht&amp;utm_content=classic-xs">XS</a></td><td>2&nbsp;×&nbsp;4&nbsp;ml</td><td>1.500&nbsp;Briefe</td><td>580052305600</td></tr>
+<tr><td><a href="https://www.frankierfarbe.de/p/tintenkartuschen-set-small-fuer-frankiermaschine-postbase-30-bis-100-francotyp-postalia?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=uebersicht&amp;utm_content=classic-small">SMALL</a></td><td>2&nbsp;×&nbsp;10&nbsp;ml</td><td>4.000&nbsp;Briefe</td><td>580052303600</td></tr>
+<tr><td><a href="https://www.frankierfarbe.de/p/tintenkartuschen-set-medium-fuer-frankiermaschine-postbase-30-bis-100-francotyp-postalia?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=uebersicht&amp;utm_content=classic-medium">MEDIUM</a></td><td>2&nbsp;×&nbsp;20&nbsp;ml</td><td>8.000&nbsp;Briefe</td><td>580052304600</td></tr>
+<tr><td><a href="https://www.frankierfarbe.de/p/tintenkartuschen-set-xl-fuer-frankiermaschine-postbase-30-bis-100-francotyp-postalia?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=uebersicht&amp;utm_content=classic-xl">XL</a></td><td>2&nbsp;×&nbsp;42&nbsp;ml</td><td>18.000&nbsp;Briefe</td><td>580052302600</td></tr>
+<tr><th scope="rowgroup" rowspan="1">PostBase Vision<small>Vision 35 · 50 · 70</small></th><td><a href="https://www.frankierfarbe.de/p/tintenkartusche-large-fuer-frankiermaschine-postbase-vision-35-bis-70-francotyp-postalia?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=uebersicht&amp;utm_content=vision-large">LARGE</a></td><td>40&nbsp;ml</td><td>11.400&nbsp;Briefe</td><td>580059772400</td></tr>
+<tr><th scope="rowgroup" rowspan="4">PostBase Fusion<small>Fusion 35 · 50 · 70 · 120</small></th><td><a href="https://www.frankierfarbe.de/p/tintenkartuschen-set-xs-fuer-frankiermaschine-postbase-fusion-35-bis-120-francotyp-postalia?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=uebersicht&amp;utm_content=fusion-xs">XS</a></td><td>2&nbsp;×&nbsp;4&nbsp;ml</td><td>1.500&nbsp;Briefe</td><td>580059895600</td></tr>
+<tr><td><a href="https://www.frankierfarbe.de/p/tintenkartuschen-set-s-fuer-frankiermaschine-postbase-fusion-35-bis-120-francotyp-postalia?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=uebersicht&amp;utm_content=fusion-s">S</a></td><td>2&nbsp;×&nbsp;10&nbsp;ml</td><td>4.000&nbsp;Briefe</td><td>580059893600</td></tr>
+<tr><td><a href="https://www.frankierfarbe.de/p/tintenkartuschen-set-m-fuer-frankiermaschine-postbase-fusion-35-bis-120-francotyp-postalia?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=uebersicht&amp;utm_content=fusion-m">M</a></td><td>2&nbsp;×&nbsp;20&nbsp;ml</td><td>8.000&nbsp;Briefe</td><td>580059894600</td></tr>
+<tr><td><a href="https://www.frankierfarbe.de/p/tintenkartuschen-set-xl-fuer-frankiermaschine-postbase-fusion-35-bis-120-francotyp-postalia?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=uebersicht&amp;utm_content=fusion-xl">XL</a></td><td>2&nbsp;×&nbsp;42&nbsp;ml</td><td>17.000&nbsp;Briefe</td><td>580059892600</td></tr>
+<tr><th scope="rowgroup" rowspan="4">PostBase Insight</th><td><a href="https://www.frankierfarbe.de/p/tintenkartuschen-set-xs-fuer-frankiermaschine-postbase-30-bis-100-francotyp-postalia?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=uebersicht&amp;utm_content=insight-xs">XS</a></td><td>2&nbsp;×&nbsp;4&nbsp;ml</td><td>1.500&nbsp;Briefe</td><td>580052305600</td></tr>
+<tr><td><a href="https://www.frankierfarbe.de/p/tintenkartuschen-set-small-fuer-frankiermaschine-postbase-30-bis-100-francotyp-postalia?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=uebersicht&amp;utm_content=insight-small">SMALL</a></td><td>2&nbsp;×&nbsp;10&nbsp;ml</td><td>4.000&nbsp;Briefe</td><td>580052303600</td></tr>
+<tr><td><a href="https://www.frankierfarbe.de/p/tintenkartuschen-set-medium-fuer-frankiermaschine-postbase-30-bis-100-francotyp-postalia?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=uebersicht&amp;utm_content=insight-medium">MEDIUM</a></td><td>2&nbsp;×&nbsp;20&nbsp;ml</td><td>8.000&nbsp;Briefe</td><td>580052304600</td></tr>
+<tr><td><a href="https://www.frankierfarbe.de/p/tintenkartuschen-set-xl-fuer-frankiermaschine-postbase-30-bis-100-francotyp-postalia?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=uebersicht&amp;utm_content=insight-xl">XL</a></td><td>2&nbsp;×&nbsp;42&nbsp;ml</td><td>18.000&nbsp;Briefe</td><td>580052302600</td></tr>
 </tbody>
 </table>
     </div>
-    <p class="fine">PostBase Insight nutzt dieselben Kartuschen wie die PostBase 30 bis 100. Für die PostBase Vision A120 gibt es ein eigenes XL-Set (2 × 40 ml, bis 18.000 Briefe), das Sie telefonisch bei uns bestellen. Für die PostBase One gibt es außerdem Tintentanks mit 175 ml und 350 ml. Reichweiten laut Francotyp-Postalia, Stand November 2026.</p>
-  </section>
-
-  <section class="block faq" id="faq">
-    <h2>Häufige Fragen</h2>
-    <details><summary>Welche Tintenkartusche passt in meine Frankiermaschine?</summary><p>Das hängt vom Modell ab. Jede PostBase von Francotyp-Postalia hat eigene Kartuschen: die PostBase mini und die Vision M2 nutzen die Größen X-Small, Small und Medium, die PostBase 30 bis 100 und die Insight die Sets XS, Small, Medium und XL, die PostBase Fusion XS, S, M und XL, die Vision 35 bis 70 die Größe Large und die PostBase One das XL-Set. Tippen Sie oben im Kartuschenfinder auf Ihr Gerät oder rufen Sie uns an, wenn Sie unsicher sind.</p></details>
-    <details><summary>Wie lange reicht eine Tintenkartusche?</summary><p>Je nach Größe reicht eine Original-Kartusche für etwa 700 bis 22.000 Briefe. Die genauen Werte je Modell stehen in der Übersicht oben. Die tatsächliche Reichweite hängt vom Abdruck ab, zum Beispiel ob Sie ein Werbeklischee mitdrucken.</p></details>
+    <p class="fine">PostBase Insight nutzt dieselben Kartuschen wie die PostBase 30&nbsp;bis&nbsp;100. Für die PostBase Vision A120 gibt es ein eigenes XL-Set (2&nbsp;×&nbsp;40&nbsp;ml, bis 18.000&nbsp;Briefe), das Sie telefonisch bei uns bestellen. Für die PostBase One gibt es außerdem Tintentanks mit 175&nbsp;ml und 350&nbsp;ml. Reichweiten laut Francotyp-Postalia, Stand November 2026.</p>
+    </details>
+    <details><summary>Wie lange reicht eine Tintenkartusche?</summary><p>Je nach Größe reicht eine Original-Kartusche für etwa 700&nbsp;bis&nbsp;22.000&nbsp;Briefe. Die genauen Werte je Modell stehen in der Übersicht aller Kartuschen bei den häufigen Fragen. Die tatsächliche Reichweite hängt vom Abdruck ab, zum Beispiel ob Sie ein Werbeklischee mitdrucken.</p></details>
     <details><summary>Warum empfehlen Sie nicht einfach die größte Kartusche?</summary><p>Weil Tinte in der Maschine eintrocknen kann, wenn eine Kartusche zu lange steckt. Wir empfehlen deshalb die Größe, die bei Ihrer Menge innerhalb eines Jahres aufgebraucht ist. So bleibt das Druckbild sauber und Sie binden kein Geld in Vorrat, den Sie lange nicht brauchen. Wechseln Sie die Kartusche mindestens einmal im Jahr.</p></details>
     <details><summary>Sind das Original-Kartuschen von Francotyp-Postalia?</summary><p>Ja. TE Printline ist autorisierte Generalvertretung von Francotyp-Postalia und liefert ausschließlich Original-Tintenkartuschen und Original-Zubehör.</p></details>
-    <details><summary>Wie schnell wird geliefert?</summary><p>Was bis 13 Uhr bestellt ist, verschicken wir am selben Werktag.</p></details>
-    <details><summary>Kann ich auch telefonisch bestellen?</summary><p>Ja, gern. Unter 06204 / 9622-0 erreichen Sie Montag bis Freitag von 8 bis 16 Uhr unser Team in Viernheim. Am Telefon sprechen Sie mit Menschen, nicht mit einer Bandansage oder einer KI.</p></details>
+    <details><summary>Wie schnell wird geliefert?</summary><p>Was bis 13&nbsp;Uhr bestellt ist, verschicken wir am selben Werktag.</p></details>
+    <details><summary>Kann ich auch telefonisch bestellen?</summary><p>Ja, gern. Unter <span class="nw">06204 / 9622-0</span> erreichen Sie Montag bis Freitag von 8&nbsp;bis&nbsp;16&nbsp;Uhr unser Team in Viernheim. Am Telefon sprechen Sie mit Menschen, nicht mit einer Bandansage oder einer KI.</p></details>
     <details><summary>Wer kann bei Ihnen bestellen?</summary><p>Wir verkaufen an Gewerbetreibende, Behörden und Vereine.</p></details>
     <details><summary>Was mache ich, wenn meine Maschine nicht im Kartuschenfinder steht?</summary><p>Rufen Sie uns an. Wir finden gemeinsam heraus, welches Modell bei Ihnen steht und welche Kartusche passt.</p></details>
   </section>
 
   <section class="trust">
-    <div><strong>Gleichtags-Versand</strong>Bis 13 Uhr bestellt, heute verschickt</div>
+    <div><strong>Gleichtags-Versand</strong>Bis 13&nbsp;Uhr bestellt, heute verschickt</div>
     <div><strong>100 % Original</strong>Autorisierte Generalvertretung von Francotyp-Postalia</div>
-    <div><strong>Echte Beratung</strong>Menschen am Telefon, in Viernheim</div>
+    <div><strong>Echte Beratung</strong>Menschen am Telefon, in&nbsp;Viernheim</div>
     <div><strong>Einfache Zahlung</strong>Rechnung oder Bankeinzug</div>
   </section>
 </main>
 
 <div class="sticky-call">
   <p>Lieber persönlich bestellen? Wir beraten Sie gerne.</p>
-  <a class="btn white sm" href="tel:+49620496220">&#128222; Jetzt anrufen: 06204 / 9622-0</a>
-  <small>Mo–Fr 8–16 Uhr</small>
+  <a class="btn white sm" href="tel:+49620496220">&#128222; Jetzt anrufen: <span class="nw">06204 / 9622-0</span></a>
+  <small>Mo–Fr 8–16&nbsp;Uhr</small>
 </div>
 
 <footer>
   <div class="wrap">
-    <span>TE Printline GmbH · Ladenburger Straße 7 · 68519 Viernheim · <a href="tel:+49620496220">06204 / 9622-0</a></span>
-    <span><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><a href="https://www.frankierfarbe.de/?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=footer" data-shop="footer">Shop frankierfarbe.de</a></span>
+    <span>TE Printline GmbH · Ladenburger Straße&nbsp;7 · 68519&nbsp;Viernheim · <a href="tel:+49620496220"><span class="nw">06204 / 9622-0</span></a></span>
+    <span><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><a href="https://www.frankierfarbe.de/?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=footer" data-shop="footer">Shop&nbsp;frankierfarbe.de</a></span>
   </div>
 </footer>
 
@@ -466,32 +483,32 @@ footer a{color:#fff;margin-right:16px}
 var SHOP='https://www.frankierfarbe.de';
 var CLASSIC_SETS;
 var MACHINES=[
-  {id:'mini', name:'PostBase mini', models:'', img:'img/mini.jpg', sizes:[
+  {id:'mini', name:'PostBase mini', models:'', img:'img/mini.png', sizes:[
     {size:'X-SMALL', sku:'580053305600', ml:'4 ml',  reach:700, path:'/p/tintenkartuschen-set-x-small-fuer-frankiermaschine-postbase-mini-francotyp-postalia'},
     {size:'SMALL',   sku:'580053303600', ml:'10 ml', reach:2000, path:'/p/tintenkartuschen-set-small-fuer-frankiermaschine-postbase-mini-francotyp-postalia'},
     {size:'MEDIUM',  sku:'580053304600', ml:'20 ml', reach:4000, path:'/p/tintenkartuschen-set-medium-fuer-frankiermaschine-postbase-mini-francotyp-postalia'}]},
-  {id:'m2', name:'PostBase Vision M2', models:'', img:'img/m2.jpg', sizes:[
+  {id:'m2', name:'PostBase Vision M2', models:'', img:'img/m2.png', sizes:[
     {size:'X-SMALL', sku:'580074895600', ml:'4 ml',  reach:700,  path:'/p/tintenkartusche-x-small-fuer-frankiermaschine-postbase-vision-m2-francotyp-postalia'},
     {size:'SMALL',   sku:'580074893600', ml:'10 ml', reach:2000, path:'/p/tintenkartusche-small-fuer-frankiermaschine-postbase-vision-m2-francotyp-postalia'},
     {size:'MEDIUM',  sku:'580074894600', ml:'20 ml', reach:4000, path:'/p/tintenkartusche-medium-fuer-frankiermaschine-postbase-vision-m2-francotyp-postalia'}]},
-  {id:'one', name:'PostBase One', models:'One 120 · One 150', img:'img/one.jpg', sizes:[
+  {id:'one', name:'PostBase One', models:'One 120 · One 150', img:'img/one.png', sizes:[
     {size:'XL', sku:'580055318800', ml:'2 × 42 ml', reach:22000, path:'/p/tintenkartuschen-set-xl-fuer-frankiermaschine-postbase-one'}],
     extra:'Für sehr große Mengen gibt es für die PostBase One auch Tintentanks mit 175 ml (bis 50.000 Frankierungen) und 350 ml (bis 100.000). Dafür braucht die Maschine das Druckkopf-Set für das Tanksystem. Wir beraten Sie gern.'},
-  {id:'classic', name:'PostBase Classic', models:'PostBase 30 · 45 · 65 · 100', img:'img/classic.jpg', sizes:CLASSIC_SETS=[
+  {id:'classic', name:'PostBase Classic', models:'PostBase 30 · 45 · 65 · 100', img:'img/classic.png', sizes:CLASSIC_SETS=[
     {size:'XS',     sku:'580052305600', ml:'2 × 4 ml',  reach:1500,  path:'/p/tintenkartuschen-set-xs-fuer-frankiermaschine-postbase-30-bis-100-francotyp-postalia'},
     {size:'SMALL',  sku:'580052303600', ml:'2 × 10 ml', reach:4000,  path:'/p/tintenkartuschen-set-small-fuer-frankiermaschine-postbase-30-bis-100-francotyp-postalia'},
     {size:'MEDIUM', sku:'580052304600', ml:'2 × 20 ml', reach:8000,  path:'/p/tintenkartuschen-set-medium-fuer-frankiermaschine-postbase-30-bis-100-francotyp-postalia'},
     {size:'XL',     sku:'580052302600', ml:'2 × 42 ml', reach:18000, path:'/p/tintenkartuschen-set-xl-fuer-frankiermaschine-postbase-30-bis-100-francotyp-postalia'}]},
-  {id:'vision', name:'PostBase Vision', models:'Vision 35 · 50 · 70', img:'img/vision.jpg', sizes:[
+  {id:'vision', name:'PostBase Vision', models:'Vision 35 · 50 · 70', img:'img/vision.png', sizes:[
     {size:'LARGE', sku:'580059772400', ml:'40 ml', reach:11400, path:'/p/tintenkartusche-large-fuer-frankiermaschine-postbase-vision-35-bis-70-francotyp-postalia'}],
     only:'Für die PostBase Vision 35 bis 70 gibt es die Original-Kartusche nur noch in Größe LARGE. Wechseln Sie sie mindestens einmal im Jahr, damit die Tinte nicht eintrocknet.',
     extra:'Sie haben eine PostBase Vision A120? Dafür gibt es ein eigenes XL-Set (2 × 40 ml, bis 18.000 Frankierungen). Rufen Sie uns an, wir bestellen es für Sie.'},
-  {id:'fusion', name:'PostBase Fusion', models:'Fusion 35 · 50 · 70 · 120', img:'img/fusion.jpg', sizes:[
+  {id:'fusion', name:'PostBase Fusion', models:'Fusion 35 · 50 · 70 · 120', img:'img/fusion.png', sizes:[
     {size:'XS', sku:'580059895600', ml:'2 × 4 ml',  reach:1500,  path:'/p/tintenkartuschen-set-xs-fuer-frankiermaschine-postbase-fusion-35-bis-120-francotyp-postalia'},
     {size:'S',  sku:'580059893600', ml:'2 × 10 ml', reach:4000,  path:'/p/tintenkartuschen-set-s-fuer-frankiermaschine-postbase-fusion-35-bis-120-francotyp-postalia'},
     {size:'M',  sku:'580059894600', ml:'2 × 20 ml', reach:8000,  path:'/p/tintenkartuschen-set-m-fuer-frankiermaschine-postbase-fusion-35-bis-120-francotyp-postalia'},
     {size:'XL', sku:'580059892600', ml:'2 × 42 ml', reach:17000, path:'/p/tintenkartuschen-set-xl-fuer-frankiermaschine-postbase-fusion-35-bis-120-francotyp-postalia'}]},
-  {id:'insight', name:'PostBase Insight', models:'', img:'img/insight.jpg', sizes:CLASSIC_SETS,
+  {id:'insight', name:'PostBase Insight', models:'', img:'img/insight.png', sizes:CLASSIC_SETS,
     extra:'Die PostBase Insight nutzt dieselben Original-Kartuschen wie die PostBase 30 bis 100.'}
 ];
 var VOLUMES=[
@@ -523,7 +540,7 @@ function el(id){return document.getElementById(id)}
 MACHINES.forEach(function(m){
   var b=document.createElement('button'); b.className='tile'; b.type='button';
   b.innerHTML='<div class="pic">'+(m.img?'<img src="'+m.img+'" alt="'+m.name+'" loading="lazy">':PH)+'</div>'+
-    '<strong>'+m.name+'</strong>'+(m.models?'<span class="models">'+m.models+'</span>':'');
+    '<strong>'+m.name.replace(/ (\S+)$/,'&nbsp;$1')+'</strong>'+(m.models?'<span class="models">'+m.models.replace(/ · /g,'&nbsp;· ')+'</span>':'');
   b.onclick=function(){pick(m)}; el('grid').appendChild(b);
 });
 VOLUMES.forEach(function(v){
@@ -535,9 +552,14 @@ el('ownform').onsubmit=function(e){
   e.preventDefault(); var n=parseInt(el('own').value,10);
   if(n>0) recommend(n,fmt(n));
 };
+var cur=1;
+function canGo(i){return i<cur && (i===1 || (i===2 && machine && machine.sizes.length>1))}
 function step(n){
+  cur=n;
   ['finder','volume','result'].forEach(function(id,i){el(id).style.display=(i===n-1)?'block':'none'});
-  [1,2,3].forEach(function(i){el('st'+i).className=(i===n)?'on':''});
+  [1,2,3].forEach(function(i){var s=el('st'+i); s.className=(i===n)?'on':(canGo(i)?'go':''); s.title=canGo(i)?'Zurück zu Schritt '+i:'';});
+  var q=!!(machine && machine.sizes.length>1);
+  el('backqty').style.display=el('backqty2').style.display=q?'':'none';
   window.scrollTo({top:el('steps').offsetTop-10,behavior:'smooth'});
 }
 function pick(m){
@@ -568,7 +590,7 @@ function recommend(perMonth,label){
   var k=S[idx];
   el('rpic').innerHTML=m.img?'<img src="'+m.img+'" alt="'+m.name+'">':'';
   el('rtitle').innerHTML=(S.length>1?'Größe <span>'+k.size+'</span>':'Kartusche <span>'+k.size+'</span>')+' für Ihre '+m.name;
-  el('rsku').textContent='Original Francotyp Postalia · Artikel-Nr. '+k.sku;
+  el('rsku').textContent='Original Francotyp-Postalia · Artikel\u2011Nr.\u00a0'+k.sku;
   var facts='<div>Reicht für<b>'+(k.est?'ca. ':'bis zu ')+fmt(k.reach)+' Briefe</b></div><div>Füllmenge<b>'+k.ml+'</b></div>';
   if(perMonth) facts+='<div>Bei '+label+' Briefen im Monat<b>'+months(k.reach,perMonth)+'</b></div>';
   el('rfacts').innerHTML=facts;
@@ -594,9 +616,13 @@ function recommend(perMonth,label){
   el('rshop').href=url;
   step(3);
 }
+[1,2].forEach(function(i){el('st'+i).onclick=function(){if(canGo(i)) step(i)}});
 document.querySelectorAll('[data-back]').forEach(function(b){
   b.onclick=function(){step(parseInt(b.getAttribute('data-back'),10))};
 });
+function openOv(){if(location.hash==='#uebersicht'){var d=el('uebersicht');d.open=true;d.scrollIntoView()}}
+window.addEventListener('hashchange',openOv); openOv();
+el('homelink').onclick=function(e){e.preventDefault(); machine=null; step(1); history.replaceState(null,'',location.pathname); window.scrollTo({top:0,behavior:'smooth'})};
 document.querySelectorAll('[data-shop]').forEach(function(a){a.href=shopUrl('/',a.getAttribute('data-shop'))});
 </script>
 </body>
