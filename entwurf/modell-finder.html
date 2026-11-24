@@ -69,8 +69,18 @@ h2{font-size:1.35rem;margin-bottom:14px}
 .actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 .back{background:none;border:0;color:var(--text-mid);font-family:var(--font);font-size:.9rem;cursor:pointer;text-decoration:underline;margin-top:16px}
 
-.note{margin-top:14px;font-size:.78rem;color:#8a7a2a;background:#fff7d6;border-radius:8px;padding:8px 12px}
+.qgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.chosen{font-size:.9rem;color:var(--text-mid);margin-bottom:6px}
+.chosen b{color:var(--text)}
+.badge{display:inline-block;background:var(--red);color:#fff;font-size:.72rem;font-weight:700;letter-spacing:.04em;
+  text-transform:uppercase;padding:3px 10px;border-radius:100vw;margin-bottom:8px}
+.sku{font-size:.82rem;color:var(--text-mid);margin:-4px 0 12px}
+.alts{margin:4px 0 16px;font-size:.9rem;color:var(--text-mid)}
+.alts a{color:var(--red);font-weight:700;text-decoration:none;margin-left:10px;white-space:nowrap}
+.card>div{min-width:0}
+.note{word-break:break-all;margin-top:14px;font-size:.78rem;color:#8a7a2a;background:#fff7d6;border-radius:8px;padding:8px 12px}
 
+@media (max-width:720px){.qgrid{grid-template-columns:repeat(2,1fr)}.steps{flex-wrap:wrap}}
 .trust{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:36px;padding-top:24px;border-top:1px solid var(--gray-mid)}
 .trust div{font-size:.85rem;color:var(--text-mid)}
 .trust strong{display:block;color:var(--text);font-size:.95rem}
@@ -91,7 +101,7 @@ footer a{margin:0 8px}
 </head>
 <body>
 
-<div class="draft">Entwurf zur Ansicht: Die Shop-Links führen noch alle auf die Kategorieseite und werden je Modell auf die passende Produktseite gesetzt.</div>
+<div class="draft">Entwurf zur Ansicht: Die Mengen-Schwellen sind Platzhalter, bis die Reichweiten der Kartuschen feststehen. Shop-Links laufen vorerst über die Artikelnummer-Suche.</div>
 
 <header>
   <img src="logo.png" alt="TE Printline GmbH">
@@ -105,14 +115,15 @@ footer a{margin:0 8px}
   <section class="hero">
     <img src="farbe-leer-oval.webp" alt="Farbe leer?">
     <div>
-      <h1>Farbe leer? <span>In zwei Klicks</span> zur passenden Original-Kartusche.</h1>
-      <p>Wählen Sie Ihre Francotyp-Postalia-Frankiermaschine. Wir zeigen Ihnen direkt die richtige Tinte im Shop. Bestellung bis 13 Uhr geht noch heute raus.</p>
+      <h1>Farbe leer? <span>In drei Klicks</span> zur passenden Original-Kartusche.</h1>
+      <p>Wählen Sie Ihre Francotyp-Postalia-Frankiermaschine und wie viel Sie verschicken. Wir empfehlen Ihnen die passende Kartuschengröße. Bestellung bis 13 Uhr geht noch heute raus.</p>
     </div>
   </section>
 
   <div class="steps" id="steps">
     <div class="on" id="st1"><b>1</b>Modell wählen</div>
-    <div id="st2"><b>2</b>Kartusche bestellen</div>
+    <div id="st2"><b>2</b>Menge angeben</div>
+    <div id="st3"><b>3</b>Empfehlung</div>
   </div>
 
   <section id="finder">
@@ -121,27 +132,38 @@ footer a{margin:0 8px}
     <p class="help">Der Modellname steht meist gut sichtbar auf dem Gerät. Nicht sicher? <a href="tel:0620496220">Rufen Sie uns an: 06204 / 9622-0</a> (Mo–Fr 8–16 Uhr)</p>
   </section>
 
+  <section id="volume" style="display:none">
+    <p class="chosen">Ihr Modell: <b id="vname">PostBase</b></p>
+    <h2>Wie viele Briefe frankieren Sie ungefähr im Monat?</h2>
+    <div class="qgrid" id="qgrid"></div>
+    <p class="help">Eine grobe Schätzung reicht. Die Zahl sehen Sie auch im Stückzähler Ihrer Maschine.</p>
+    <button class="back" data-back="finder">&larr; Anderes Modell wählen</button>
+  </section>
+
   <section id="result">
     <div class="card">
       <div class="ink">
         <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#c61824" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.7s6 6.6 6 11a6 6 0 01-12 0c0-4.4 6-11 6-11z"/></svg>
       </div>
       <div>
-        <h3>Original-Tinte für <span id="rname">PostBase</span></h3>
-        <p>Direkt von Francotyp Postalia, passend für Ihr Modell. Deutsche-Post-konformer Abdruck, Ihre Garantie bleibt erhalten.</p>
+        <span class="badge">Unsere Empfehlung</span>
+        <h3 id="rtitle">Tintenkartuschen-Set</h3>
+        <p class="sku" id="rsku"></p>
+        <p id="rwhy"></p>
         <ul>
           <li>Versand noch heute bei Bestellung bis 13:00 Uhr</li>
           <li>Kauf auf Rechnung oder per Bankeinzug</li>
           <li>Autorisierte Generalvertretung von Francotyp Postalia</li>
         </ul>
+        <p class="alts" id="ralts"></p>
         <div class="actions">
-          <a class="btn" id="rshop" href="#">Passende Kartusche im Shop ansehen &rarr;</a>
+          <a class="btn" id="rshop" href="#">Diese Kartusche im Shop ansehen &rarr;</a>
           <a class="btn ghost" href="tel:0620496220">Lieber anrufen</a>
         </div>
         <p class="note" id="rlink"></p>
       </div>
     </div>
-    <button class="back" id="back">&larr; Anderes Modell wählen</button>
+    <button class="back" data-back="volume">&larr; Menge ändern</button> &nbsp; <button class="back" data-back="finder">Anderes Modell wählen</button>
   </section>
 
   <section class="trust">
@@ -158,49 +180,106 @@ footer a{margin:0 8px}
 </footer>
 
 <script>
-// Je Modell der Ziel-Link im Shop. Im Entwurf zeigen alle noch auf die Kategorieseite.
+// ── Daten ─────────────────────────────────────────────────────────────
+// Größen und Artikelnummern aus den Shop-Bestellungen (STRATO-Export 12.05.–09.09.2026).
+// Reichweiten je Größe sind noch nicht hinterlegt: NACHTRAGEN. Bis dahin entscheiden die
+// Platzhalter-Schwellen unten, welche Größe empfohlen wird.
 var SHOP='https://www.frankierfarbe.de';
-var MODELS=[
-  {id:'mini',     line:'PostBase', name:'Mini',        path:'/c/postverarbeitung'},
-  {id:'one',      line:'PostBase', name:'One',         path:'/c/postverarbeitung'},
-  {id:'c30',      line:'PostBase', name:'Classic 30',  path:'/c/postverarbeitung'},
-  {id:'c45',      line:'PostBase', name:'Classic 45',  path:'/c/postverarbeitung'},
-  {id:'c65',      line:'PostBase', name:'Classic 65',  path:'/c/postverarbeitung'},
-  {id:'c100',     line:'PostBase', name:'Classic 100', path:'/c/postverarbeitung'},
-  {id:'vision',   line:'PostBase', name:'Vision',      path:'/c/postverarbeitung'},
-  {id:'fusion',   line:'PostBase', name:'Fusion',      path:'/c/postverarbeitung'},
-  {id:'insight',  line:'PostBase', name:'Insight',     path:'/c/postverarbeitung'}
+function bySku(sku){return '/search?q='+sku}          // Entwurf: Suche nach Artikelnummer
+var CLASSIC=[
+  {size:'XS',     sku:'580052305600', path:bySku('580052305600')},
+  {size:'SMALL',  sku:'580052303600', path:bySku('580052303600')},
+  {size:'MEDIUM', sku:'580052304600', path:bySku('580052304600')}
 ];
-// Herkunft mitgeben, damit Bestellungen über farbeleer.de in der Shop-Statistik erkennbar sind.
+var MODELS=[
+  {id:'mini',   name:'Mini',        sizes:[
+     {size:'SMALL',  sku:'580053303600', path:'/p/tintenkartuschen-set-small-fuer-frankiermaschine-postbase-mini-francotyp-postalia'},
+     {size:'MEDIUM', sku:'580053304600', path:bySku('580053304600')}], complete:false},
+  {id:'one',    name:'One',         sizes:[{size:'XL', sku:'580055318800', path:bySku('580055318800')}], complete:false},
+  {id:'c30',    name:'Classic 30',  sizes:CLASSIC, complete:false},
+  {id:'c45',    name:'Classic 45',  sizes:CLASSIC, complete:false},
+  {id:'c65',    name:'Classic 65',  sizes:CLASSIC, complete:false},
+  {id:'c100',   name:'Classic 100', sizes:CLASSIC, complete:false},
+  {id:'vision', name:'Vision',      sizes:[{size:'LARGE', sku:'580059772400', path:bySku('580059772400')}], complete:true,
+     onlyText:'Für die PostBase Vision gibt es die Original-Kartusche nur noch in Größe LARGE. Sie passt für jede Menge.'},
+  {id:'fusion', name:'Fusion',      sizes:[{size:'MEDIUM', sku:'580059894600', path:bySku('580059894600')}], complete:false},
+  {id:'insight',name:'Insight',     sizes:[], complete:false}
+];
+// Platzhalter-Schwellen (Briefe pro Monat), bis die Reichweiten feststehen.
+var VOLUMES=[
+  {id:'s',  label:'bis 200',        hint:'gelegentlich'},
+  {id:'m',  label:'200 bis 1.000',  hint:'regelmäßig'},
+  {id:'l',  label:'1.000 bis 3.000',hint:'täglich viel'},
+  {id:'xl', label:'über 3.000',     hint:'Poststelle'}
+];
+var WHY=[
+  'Bei Ihrer Menge reicht die kleinere Kartusche. Sie binden kein Geld in Vorrat, den Sie lange nicht brauchen.',
+  'Für Ihre Menge passt die mittlere Größe: ein guter Mittelweg zwischen Vorrat und Wechselhäufigkeit.',
+  'Bei Ihrer Menge lohnt sich die größere Kartusche. Sie wechseln seltener und bestellen seltener nach.',
+  'Bei Ihrem Volumen empfehlen wir die größere Kartusche. Sie wechseln seltener und bestellen seltener nach.'
+];
+
+// ── Messung ───────────────────────────────────────────────────────────
 var src=(new URLSearchParams(location.search).get('utm_source'))||'farbeleer';
-function shopUrl(path,model){
-  return SHOP+path+'?utm_source='+encodeURIComponent(src)+'&utm_medium=landingpage&utm_campaign=modell-finder'+(model?'&utm_content='+model:'');
+function shopUrl(path,content){
+  return SHOP+path+(path.indexOf('?')<0?'?':'&')+'utm_source='+encodeURIComponent(src)+
+    '&utm_medium=landingpage&utm_campaign=kartuschenfinder'+(content?'&utm_content='+content:'');
 }
-var grid=document.getElementById('grid');
+
+// ── Ablauf ────────────────────────────────────────────────────────────
+var model=null;
+function el(id){return document.getElementById(id)}
+function step(n){
+  ['finder','volume','result'].forEach(function(id,i){el(id).style.display=(i===n-1)?'block':'none'});
+  [1,2,3].forEach(function(i){el('st'+i).className=(i===n)?'on':''});
+  window.scrollTo({top:el('steps').offsetTop-70,behavior:'smooth'});
+}
 MODELS.forEach(function(m){
-  var b=document.createElement('button');
-  b.className='tile';
-  b.innerHTML='<span class="arrow">&rarr;</span><small>'+m.line+'</small><strong>'+m.name+'</strong>';
-  b.onclick=function(){show(m)};
-  grid.appendChild(b);
+  var b=document.createElement('button'); b.className='tile';
+  b.innerHTML='<span class="arrow">&rarr;</span><small>PostBase</small><strong>'+m.name+'</strong>';
+  b.onclick=function(){pickModel(m)}; el('grid').appendChild(b);
 });
-function show(m){
-  var url=shopUrl(m.path,m.id);
-  document.getElementById('rname').textContent=m.line+' '+m.name;
-  document.getElementById('rshop').href=url;
-  document.getElementById('rlink').textContent='Entwurf: Dieser Button öffnet '+url;
-  document.getElementById('finder').style.display='none';
-  document.getElementById('result').style.display='block';
-  document.getElementById('st1').className='';
-  document.getElementById('st2').className='on';
-  window.scrollTo({top:document.getElementById('steps').offsetTop-70,behavior:'smooth'});
+VOLUMES.forEach(function(v,i){
+  var b=document.createElement('button'); b.className='tile';
+  b.innerHTML='<span class="arrow">&rarr;</span><small>'+v.hint+'</small><strong>'+v.label+'</strong>';
+  b.onclick=function(){recommend(i)}; el('qgrid').appendChild(b);
+});
+function pickModel(m){
+  model=m;
+  if(m.sizes.length===1 && m.complete){recommend(null);return}   // nur eine Größe: Mengenfrage überspringen
+  el('vname').textContent='PostBase '+m.name;
+  step(2);
 }
-document.getElementById('back').onclick=function(){
-  document.getElementById('result').style.display='none';
-  document.getElementById('finder').style.display='block';
-  document.getElementById('st1').className='on';
-  document.getElementById('st2').className='';
-};
+function recommend(vi){
+  var m=model, n=m.sizes.length;
+  el('rtitle').innerHTML='';
+  if(n===0){
+    el('rtitle').innerHTML='Wir beraten Sie persönlich zur <span>PostBase '+m.name+'</span>';
+    el('rsku').textContent='';
+    el('rwhy').textContent='Für dieses Modell empfehlen wir die passende Kartusche am Telefon, damit sicher die richtige ankommt.';
+    el('ralts').innerHTML='';
+    el('rshop').href=shopUrl('/c/postverarbeitung',m.id);
+    el('rlink').textContent='Entwurf: Kartuschengrößen für die PostBase '+m.name+' nachtragen.';
+    step(3);return;
+  }
+  var idx = (vi===null) ? 0 : Math.round(vi*(n-1)/(VOLUMES.length-1));
+  var k=m.sizes[idx];
+  el('rtitle').innerHTML='Tintenkartuschen-Set <span>'+k.size+'</span> für PostBase '+m.name;
+  el('rsku').textContent='Original Francotyp Postalia · Artikel-Nr. '+k.sku;
+  el('rwhy').textContent = m.onlyText || (n===1
+      ? 'Diese Größe passt zu Ihrem Modell. Ob es weitere Größen gibt, sehen Sie im Shop.'
+      : (idx===0 ? WHY[0] : idx===n-1 ? WHY[3] : WHY[1]));
+  var alts=m.sizes.filter(function(x,i){return i!==idx});
+  el('ralts').innerHTML = alts.length ? 'Andere Größen: '+alts.map(function(a){
+      return '<a href="'+shopUrl(a.path,m.id+'-'+a.size.toLowerCase())+'">'+a.size+'</a>'}).join('') : '';
+  var url=shopUrl(k.path,m.id+'-'+k.size.toLowerCase()+(vi===null?'':'-'+VOLUMES[vi].id));
+  el('rshop').href=url;
+  el('rlink').textContent='Entwurf: '+(m.complete?'':'Weitere Größen und ')+'Reichweiten nachtragen. Der Button öffnet '+url;
+  step(3);
+}
+document.querySelectorAll('[data-back]').forEach(function(b){
+  b.onclick=function(){step(b.getAttribute('data-back')==='finder'?1:2)};
+});
 document.querySelectorAll('[data-shop]').forEach(function(a){a.href=shopUrl('',null)});
 </script>
 </body>
