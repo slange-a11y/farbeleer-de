@@ -15,9 +15,7 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--font);color:var(--text);background:var(--white);line-height:1.45}
 a{color:inherit}
-
 .draft{background:#fff7d6;border-bottom:1px solid #eadb9a;color:#6b5a10;font-size:.8rem;text-align:center;padding:6px 16px}
-
 header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.97);border-bottom:2px solid var(--red);
   display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 20px}
 header img{height:26px;display:block}
@@ -30,70 +28,83 @@ header img{height:26px;display:block}
 .btn.sm{font-size:.8rem;padding:7px 16px}
 .btn.ghost{background:#fff;color:var(--red);border:2px solid var(--red)}
 .btn.ghost:hover{background:var(--red-soft)}
-
-main{max-width:960px;margin:0 auto;padding:32px 20px 48px}
+main{max-width:980px;margin:0 auto;padding:32px 20px 48px}
 .hero{display:flex;align-items:center;gap:28px;margin-bottom:28px}
 .hero img{width:220px;flex-shrink:0}
 .hero h1{font-size:2rem;line-height:1.15;margin-bottom:8px}
 .hero h1 span{color:var(--red)}
 .hero p{color:var(--text-mid);font-size:1.05rem}
-
-.steps{display:flex;gap:8px;margin-bottom:18px;font-size:.85rem;color:var(--text-mid)}
+.steps{display:flex;flex-wrap:wrap;gap:8px 14px;margin-bottom:18px;font-size:.85rem;color:var(--text-mid)}
 .steps b{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;
   background:var(--gray-mid);color:var(--text);margin-right:6px;font-size:.75rem}
 .steps .on b{background:var(--red);color:#fff}
 .steps .on{color:var(--text);font-weight:700}
+h2{font-size:1.35rem;margin-bottom:6px}
+.sub{color:var(--text-mid);margin-bottom:14px;font-size:.95rem}
 
-h2{font-size:1.35rem;margin-bottom:14px}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.tile{background:var(--gray-light);border:2px solid transparent;border-radius:14px;padding:18px 16px;cursor:pointer;
-  text-align:left;font-family:var(--font);color:var(--text);transition:border-color .15s,transform .15s,background .15s}
+/* Modell-Kacheln mit Bild */
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.tile{background:var(--gray-light);border:2px solid transparent;border-radius:14px;padding:12px;cursor:pointer;
+  text-align:left;font-family:var(--font);color:var(--text);transition:border-color .15s,transform .15s,background .15s;display:flex;flex-direction:column}
 .tile:hover{border-color:var(--red);background:#fff;transform:translateY(-2px)}
-.tile small{display:block;color:var(--text-mid);font-size:.78rem;margin-bottom:2px}
-.tile strong{font-size:1.1rem}
-.tile .arrow{float:right;color:var(--red);font-weight:700}
+.tile .pic{aspect-ratio:4/3;border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center;margin-bottom:10px;position:relative;overflow:hidden}
+.tile .pic img{max-width:100%;max-height:100%;object-fit:contain}
+.tile .pic .ph{color:#b9b6bb;font-size:.68rem;text-align:center;line-height:1.25}
+.tile .pic .ph svg{display:block;margin:0 auto 4px}
+.tile small{display:block;color:var(--text-mid);font-size:.75rem}
+.tile strong{font-size:1.05rem;line-height:1.2}
+.tile .models{font-size:.78rem;color:var(--text-mid);margin-top:2px}
 
+/* Mengen-Kacheln */
+.qgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.qtile{background:var(--gray-light);border:2px solid transparent;border-radius:14px;padding:16px;cursor:pointer;text-align:left;font-family:var(--font);color:var(--text)}
+.qtile:hover{border-color:var(--red);background:#fff}
+.qtile small{display:block;color:var(--text-mid);font-size:.78rem}
+.qtile strong{font-size:1.05rem}
+.own{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:14px;font-size:.95rem}
+.own input{font-family:var(--font);font-size:1rem;width:120px;padding:9px 12px;border:2px solid var(--gray-mid);border-radius:10px}
+.own input:focus{outline:none;border-color:var(--red)}
 .help{margin-top:16px;font-size:.9rem;color:var(--text-mid)}
 .help a{color:var(--red);font-weight:700;text-decoration:none}
+.chosen{font-size:.9rem;color:var(--text-mid);margin-bottom:6px}
+.chosen b{color:var(--text)}
 
 /* Ergebnis */
 #result{display:none}
 .card{border:2px solid var(--red);border-radius:16px;padding:26px;display:flex;gap:26px;align-items:flex-start}
+.card>div{min-width:0}
 .card .ink{width:120px;height:120px;flex-shrink:0;border-radius:14px;background:var(--red-soft);display:flex;align-items:center;justify-content:center}
-.card h3{font-size:1.5rem;margin-bottom:6px}
-.card h3 span{color:var(--red)}
-.card p{color:var(--text-mid);margin-bottom:14px}
-.card ul{list-style:none;margin-bottom:18px}
-.card li{padding:3px 0 3px 24px;position:relative}
-.card li::before{content:"✓";position:absolute;left:0;color:var(--red);font-weight:700}
-.actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-.back{background:none;border:0;color:var(--text-mid);font-family:var(--font);font-size:.9rem;cursor:pointer;text-decoration:underline;margin-top:16px}
-
-.qgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.chosen{font-size:.9rem;color:var(--text-mid);margin-bottom:6px}
-.chosen b{color:var(--text)}
 .badge{display:inline-block;background:var(--red);color:#fff;font-size:.72rem;font-weight:700;letter-spacing:.04em;
   text-transform:uppercase;padding:3px 10px;border-radius:100vw;margin-bottom:8px}
-.sku{font-size:.82rem;color:var(--text-mid);margin:-4px 0 12px}
-.alts{margin:4px 0 16px;font-size:.9rem;color:var(--text-mid)}
-.alts a{color:var(--red);font-weight:700;text-decoration:none;margin-left:10px;white-space:nowrap}
-.card>div{min-width:0}
-.note{word-break:break-all;margin-top:14px;font-size:.78rem;color:#8a7a2a;background:#fff7d6;border-radius:8px;padding:8px 12px}
-
-@media (max-width:720px){.qgrid{grid-template-columns:repeat(2,1fr)}.steps{flex-wrap:wrap}}
+.card h3{font-size:1.45rem;margin-bottom:4px;line-height:1.25}
+.card h3 span{color:var(--red)}
+.sku{font-size:.82rem;color:var(--text-mid);margin-bottom:12px}
+.facts{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.facts div{background:var(--gray-light);border-radius:10px;padding:8px 12px;font-size:.85rem;color:var(--text-mid)}
+.facts b{display:block;color:var(--text);font-size:1rem}
+.why{color:var(--text-mid);margin-bottom:14px}
+.cmp{width:100%;border-collapse:collapse;font-size:.85rem;margin:4px 0 18px}
+.cmp th,.cmp td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--gray-mid)}
+.cmp th{color:var(--text-mid);font-weight:400}
+.cmp tr.rec td{font-weight:700;background:var(--red-soft)}
+.cmp a{color:var(--red);text-decoration:none;font-weight:700}
+.actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.back{background:none;border:0;color:var(--text-mid);font-family:var(--font);font-size:.9rem;cursor:pointer;text-decoration:underline;margin:16px 14px 0 0}
+.fine{font-size:.75rem;color:var(--text-mid);margin-top:12px}
+.note{margin-top:12px;font-size:.78rem;color:#8a7a2a;background:#fff7d6;border-radius:8px;padding:8px 12px;word-break:break-word}
 .trust{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:36px;padding-top:24px;border-top:1px solid var(--gray-mid)}
 .trust div{font-size:.85rem;color:var(--text-mid)}
 .trust strong{display:block;color:var(--text);font-size:.95rem}
-
 footer{border-top:1px solid var(--gray-mid);padding:16px 20px;text-align:center;font-size:.8rem;color:var(--text-mid)}
 footer a{margin:0 8px}
-
+@media (max-width:820px){.grid{grid-template-columns:repeat(3,1fr)}}
 @media (max-width:720px){
   .hero{flex-direction:column;text-align:center;gap:14px}
   .hero img{width:180px}
   .hero h1{font-size:1.6rem}
-  .grid{grid-template-columns:repeat(2,1fr)}
+  .grid,.qgrid{grid-template-columns:repeat(2,1fr)}
   .card{flex-direction:column;padding:20px}
+  .card .ink{display:none}
   .trust{grid-template-columns:repeat(2,1fr)}
   .hdr-phone{display:none}
 }
@@ -101,7 +112,7 @@ footer a{margin:0 8px}
 </head>
 <body>
 
-<div class="draft">Entwurf zur Ansicht: Die Mengen-Schwellen sind Platzhalter, bis die Reichweiten der Kartuschen feststehen. Shop-Links laufen vorerst über die Artikelnummer-Suche.</div>
+<div class="draft">Entwurf: Reichweiten aus den Produktseiten von frankierfarbe.de (Stand 24.11.2026). Maschinenfotos fehlen noch, die grauen Felder sind Platzhalter.</div>
 
 <header>
   <img src="logo.png" alt="TE Printline GmbH">
@@ -116,28 +127,35 @@ footer a{margin:0 8px}
     <img src="farbe-leer-oval.webp" alt="Farbe leer?">
     <div>
       <h1>Farbe leer? <span>In drei Klicks</span> zur passenden Original-Kartusche.</h1>
-      <p>Wählen Sie Ihre Francotyp-Postalia-Frankiermaschine und wie viel Sie verschicken. Wir empfehlen Ihnen die passende Kartuschengröße. Bestellung bis 13 Uhr geht noch heute raus.</p>
+      <p>Zeigen Sie uns Ihre Frankiermaschine und wie viel Sie verschicken. Wir empfehlen Ihnen die richtige Kartuschengröße. Bestellung bis 13 Uhr geht noch heute raus.</p>
     </div>
   </section>
 
   <div class="steps" id="steps">
-    <div class="on" id="st1"><b>1</b>Modell wählen</div>
+    <div class="on" id="st1"><b>1</b>Maschine wählen</div>
     <div id="st2"><b>2</b>Menge angeben</div>
     <div id="st3"><b>3</b>Empfehlung</div>
   </div>
 
   <section id="finder">
-    <h2>Welche Frankiermaschine haben Sie?</h2>
+    <h2>Welche Frankiermaschine steht bei Ihnen?</h2>
+    <p class="sub">Tippen Sie einfach auf das Gerät, das so aussieht wie Ihres.</p>
     <div class="grid" id="grid"></div>
-    <p class="help">Der Modellname steht meist gut sichtbar auf dem Gerät. Nicht sicher? <a href="tel:0620496220">Rufen Sie uns an: 06204 / 9622-0</a> (Mo–Fr 8–16 Uhr)</p>
+    <p class="help">Ihre Maschine ist nicht dabei oder Sie sind unsicher? <a href="tel:0620496220">Rufen Sie uns an: 06204 / 9622-0</a> (Mo–Fr 8–16 Uhr)</p>
   </section>
 
   <section id="volume" style="display:none">
-    <p class="chosen">Ihr Modell: <b id="vname">PostBase</b></p>
+    <p class="chosen">Ihre Maschine: <b id="vname">PostBase</b></p>
     <h2>Wie viele Briefe frankieren Sie ungefähr im Monat?</h2>
+    <p class="sub">Eine grobe Schätzung reicht. Die genaue Zahl zeigt der Stückzähler Ihrer Maschine.</p>
     <div class="qgrid" id="qgrid"></div>
-    <p class="help">Eine grobe Schätzung reicht. Die Zahl sehen Sie auch im Stückzähler Ihrer Maschine.</p>
-    <button class="back" data-back="finder">&larr; Anderes Modell wählen</button>
+    <form class="own" id="ownform">
+      <label for="own">Oder genau:</label>
+      <input id="own" type="number" min="1" step="1" inputmode="numeric" placeholder="z. B. 750">
+      <span>Briefe pro Monat</span>
+      <button class="btn sm" type="submit">Empfehlung zeigen</button>
+    </form>
+    <button class="back" data-back="1">&larr; Andere Maschine wählen</button>
   </section>
 
   <section id="result">
@@ -147,23 +165,20 @@ footer a{margin:0 8px}
       </div>
       <div>
         <span class="badge">Unsere Empfehlung</span>
-        <h3 id="rtitle">Tintenkartuschen-Set</h3>
+        <h3 id="rtitle"></h3>
         <p class="sku" id="rsku"></p>
-        <p id="rwhy"></p>
-        <ul>
-          <li>Versand noch heute bei Bestellung bis 13:00 Uhr</li>
-          <li>Kauf auf Rechnung oder per Bankeinzug</li>
-          <li>Autorisierte Generalvertretung von Francotyp Postalia</li>
-        </ul>
-        <p class="alts" id="ralts"></p>
+        <div class="facts" id="rfacts"></div>
+        <p class="why" id="rwhy"></p>
+        <table class="cmp" id="rcmp"></table>
         <div class="actions">
           <a class="btn" id="rshop" href="#">Diese Kartusche im Shop ansehen &rarr;</a>
           <a class="btn ghost" href="tel:0620496220">Lieber anrufen</a>
         </div>
-        <p class="note" id="rlink"></p>
+        <p class="fine">Reichweiten laut Hersteller, abhängig vom Frankierabdruck (zum Beispiel mit Werbeklischee) und davon, wie oft Sie frankieren.</p>
+        <p class="note" id="rnote"></p>
       </div>
     </div>
-    <button class="back" data-back="volume">&larr; Menge ändern</button> &nbsp; <button class="back" data-back="finder">Anderes Modell wählen</button>
+    <button class="back" data-back="2">&larr; Menge ändern</button><button class="back" data-back="1">Andere Maschine wählen</button>
   </section>
 
   <section class="trust">
@@ -180,107 +195,144 @@ footer a{margin:0 8px}
 </footer>
 
 <script>
-// ── Daten ─────────────────────────────────────────────────────────────
-// Größen und Artikelnummern aus den Shop-Bestellungen (STRATO-Export 12.05.–09.09.2026).
-// Reichweiten je Größe sind noch nicht hinterlegt: NACHTRAGEN. Bis dahin entscheiden die
-// Platzhalter-Schwellen unten, welche Größe empfohlen wird.
+// ── Daten ───────────────────────────────────────────────────────────────
+// Quelle: Produktseiten auf frankierfarbe.de, abgerufen am 24.11.2026.
+// reach = Frankierungen laut Produktseite. est:true = dort nicht angegeben, hier
+// geschätzt nach gleicher Füllmenge wie PostBase Vision M2 (mit FP bestätigen!).
+// img = Foto der Maschine. Leer = Platzhalter, bis ein freigegebenes Bild vorliegt.
 var SHOP='https://www.frankierfarbe.de';
-function bySku(sku){return '/search?q='+sku}          // Entwurf: Suche nach Artikelnummer
-var CLASSIC=[
-  {size:'XS',     sku:'580052305600', path:bySku('580052305600')},
-  {size:'SMALL',  sku:'580052303600', path:bySku('580052303600')},
-  {size:'MEDIUM', sku:'580052304600', path:bySku('580052304600')}
+var MACHINES=[
+  {id:'mini', name:'PostBase mini', models:'', img:'', sizes:[
+    {size:'X-SMALL', sku:'580053305600', ml:'4 ml',  reach:700,  est:true, path:'/p/tintenkartuschen-set-x-small-fuer-frankiermaschine-postbase-mini-francotyp-postalia'},
+    {size:'SMALL',   sku:'580053303600', ml:'10 ml', reach:1700, est:true, path:'/p/tintenkartuschen-set-small-fuer-frankiermaschine-postbase-mini-francotyp-postalia'},
+    {size:'MEDIUM',  sku:'580053304600', ml:'20 ml', reach:3500, est:true, path:'/p/tintenkartuschen-set-medium-fuer-frankiermaschine-postbase-mini-francotyp-postalia'}]},
+  {id:'m2', name:'PostBase Vision M2', models:'', img:'', sizes:[
+    {size:'X-SMALL', sku:'580074895600', ml:'4 ml',  reach:700,  path:'/p/tintenkartusche-x-small-fuer-frankiermaschine-postbase-vision-m2-francotyp-postalia'},
+    {size:'SMALL',   sku:'580074893600', ml:'10 ml', reach:1700, path:'/p/tintenkartusche-small-fuer-frankiermaschine-postbase-vision-m2-francotyp-postalia'},
+    {size:'MEDIUM',  sku:'580074894600', ml:'20 ml', reach:3500, path:'/p/tintenkartusche-medium-fuer-frankiermaschine-postbase-vision-m2-francotyp-postalia'}]},
+  {id:'one', name:'PostBase One', models:'One 120 · One 150', img:'', sizes:[
+    {size:'XL', sku:'580055318800', ml:'2 × 42 ml', reach:20000, path:'/p/tintenkartuschen-set-xl-fuer-frankiermaschine-postbase-one'}],
+    extra:'Für sehr große Mengen gibt es für die PostBase One auch Tintentanks mit 175 ml (bis 50.000 Frankierungen) und 350 ml (bis 100.000). Dafür braucht die Maschine das Druckkopf-Set für das Tanksystem. Wir beraten Sie gern.'},
+  {id:'classic', name:'PostBase Classic', models:'PostBase 30 · 45 · 65 · 100', img:'', sizes:[
+    {size:'XS',     sku:'580052305600', ml:'2 × 4 ml',  reach:1500,  path:'/p/tintenkartuschen-set-xs-fuer-frankiermaschine-postbase-30-bis-100-francotyp-postalia'},
+    {size:'SMALL',  sku:'580052303600', ml:'2 × 10 ml', reach:4000,  path:'/p/tintenkartuschen-set-small-fuer-frankiermaschine-postbase-30-bis-100-francotyp-postalia'},
+    {size:'MEDIUM', sku:'580052304600', ml:'2 × 20 ml', reach:8000,  path:'/p/tintenkartuschen-set-medium-fuer-frankiermaschine-postbase-30-bis-100-francotyp-postalia'},
+    {size:'XL',     sku:'580052302600', ml:'2 × 42 ml', reach:17000, path:'/p/tintenkartuschen-set-xl-fuer-frankiermaschine-postbase-30-bis-100-francotyp-postalia'}]},
+  {id:'vision', name:'PostBase Vision', models:'Vision 35 · 50 · 70', img:'', sizes:[
+    {size:'LARGE', sku:'580059772400', ml:'40 ml', reach:9000, path:'/p/tintenkartusche-large-fuer-frankiermaschine-postbase-vision-35-bis-70-francotyp-postalia'}],
+    only:'Für die PostBase Vision 35 bis 70 gibt es die Original-Kartusche nur noch in Größe LARGE.'},
+  {id:'fusion', name:'PostBase Fusion', models:'Fusion 35 · 50 · 70 · 120', img:'', sizes:[
+    {size:'XS', sku:'580059895600', ml:'2 × 4 ml',  reach:1500,  path:'/p/tintenkartuschen-set-xs-fuer-frankiermaschine-postbase-fusion-35-bis-120-francotyp-postalia'},
+    {size:'S',  sku:'580059893600', ml:'2 × 10 ml', reach:4000,  path:'/p/tintenkartuschen-set-s-fuer-frankiermaschine-postbase-fusion-35-bis-120-francotyp-postalia'},
+    {size:'M',  sku:'580059894600', ml:'2 × 20 ml', reach:8000,  path:'/p/tintenkartuschen-set-m-fuer-frankiermaschine-postbase-fusion-35-bis-120-francotyp-postalia'},
+    {size:'XL', sku:'580059892600', ml:'2 × 42 ml', reach:17000, path:'/p/tintenkartuschen-set-xl-fuer-frankiermaschine-postbase-fusion-35-bis-120-francotyp-postalia'}]},
+  {id:'insight', name:'PostBase Insight', models:'', img:'', sizes:[]}
 ];
-var MODELS=[
-  {id:'mini',   name:'Mini',        sizes:[
-     {size:'SMALL',  sku:'580053303600', path:'/p/tintenkartuschen-set-small-fuer-frankiermaschine-postbase-mini-francotyp-postalia'},
-     {size:'MEDIUM', sku:'580053304600', path:bySku('580053304600')}], complete:false},
-  {id:'one',    name:'One',         sizes:[{size:'XL', sku:'580055318800', path:bySku('580055318800')}], complete:false},
-  {id:'c30',    name:'Classic 30',  sizes:CLASSIC, complete:false},
-  {id:'c45',    name:'Classic 45',  sizes:CLASSIC, complete:false},
-  {id:'c65',    name:'Classic 65',  sizes:CLASSIC, complete:false},
-  {id:'c100',   name:'Classic 100', sizes:CLASSIC, complete:false},
-  {id:'vision', name:'Vision',      sizes:[{size:'LARGE', sku:'580059772400', path:bySku('580059772400')}], complete:true,
-     onlyText:'Für die PostBase Vision gibt es die Original-Kartusche nur noch in Größe LARGE. Sie passt für jede Menge.'},
-  {id:'fusion', name:'Fusion',      sizes:[{size:'MEDIUM', sku:'580059894600', path:bySku('580059894600')}], complete:false},
-  {id:'insight',name:'Insight',     sizes:[], complete:false}
-];
-// Platzhalter-Schwellen (Briefe pro Monat), bis die Reichweiten feststehen.
 var VOLUMES=[
-  {id:'s',  label:'bis 200',        hint:'gelegentlich'},
-  {id:'m',  label:'200 bis 1.000',  hint:'regelmäßig'},
-  {id:'l',  label:'1.000 bis 3.000',hint:'täglich viel'},
-  {id:'xl', label:'über 3.000',     hint:'Poststelle'}
+  {label:'bis 200',         hint:'gelegentlich', n:150},
+  {label:'200 bis 1.000',   hint:'regelmäßig',   n:600},
+  {label:'1.000 bis 3.000', hint:'täglich viel', n:2000},
+  {label:'über 3.000',      hint:'Poststelle',   n:5000}
 ];
-var WHY=[
-  'Bei Ihrer Menge reicht die kleinere Kartusche. Sie binden kein Geld in Vorrat, den Sie lange nicht brauchen.',
-  'Für Ihre Menge passt die mittlere Größe: ein guter Mittelweg zwischen Vorrat und Wechselhäufigkeit.',
-  'Bei Ihrer Menge lohnt sich die größere Kartusche. Sie wechseln seltener und bestellen seltener nach.',
-  'Bei Ihrem Volumen empfehlen wir die größere Kartusche. Sie wechseln seltener und bestellen seltener nach.'
-];
+var MONTHS_STOCK=2;   // Ziel: Kartusche soll etwa zwei Monate reichen
 
-// ── Messung ───────────────────────────────────────────────────────────
+// ── Messung ─────────────────────────────────────────────────────────────
 var src=(new URLSearchParams(location.search).get('utm_source'))||'farbeleer';
 function shopUrl(path,content){
-  return SHOP+path+(path.indexOf('?')<0?'?':'&')+'utm_source='+encodeURIComponent(src)+
-    '&utm_medium=landingpage&utm_campaign=kartuschenfinder'+(content?'&utm_content='+content:'');
+  return SHOP+path+'?utm_source='+encodeURIComponent(src)+'&utm_medium=landingpage&utm_campaign=kartuschenfinder'+(content?'&utm_content='+encodeURIComponent(content):'');
+}
+function fmt(n){return n.toLocaleString('de-DE')}
+function months(reach,perMonth){
+  var m=reach/perMonth;
+  if(m<1) return 'weniger als 1 Monat';
+  if(m<1.5) return 'etwa 1 Monat';
+  if(m>=12) return 'über 1 Jahr';
+  return 'etwa '+Math.round(m)+' Monate';
 }
 
-// ── Ablauf ────────────────────────────────────────────────────────────
-var model=null;
+// ── Aufbau ──────────────────────────────────────────────────────────────
+var PH='<div class="ph"><svg width="54" height="40" viewBox="0 0 54 40" fill="none" stroke="#c9c6cb" stroke-width="2"><rect x="4" y="12" width="46" height="20" rx="3"/><rect x="10" y="5" width="18" height="9" rx="2"/><line x1="1" y1="34" x2="53" y2="34"/><rect x="34" y="16" width="11" height="7" rx="1"/></svg>Foto folgt</div>';
+var machine=null;
 function el(id){return document.getElementById(id)}
+MACHINES.forEach(function(m){
+  var b=document.createElement('button'); b.className='tile'; b.type='button';
+  b.innerHTML='<div class="pic">'+(m.img?'<img src="'+m.img+'" alt="'+m.name+'">':PH)+'</div>'+
+    '<strong>'+m.name+'</strong>'+(m.models?'<span class="models">'+m.models+'</span>':'');
+  b.onclick=function(){pick(m)}; el('grid').appendChild(b);
+});
+VOLUMES.forEach(function(v){
+  var b=document.createElement('button'); b.className='qtile'; b.type='button';
+  b.innerHTML='<small>'+v.hint+'</small><strong>'+v.label+'</strong>';
+  b.onclick=function(){recommend(v.n,'rund '+fmt(v.n))}; el('qgrid').appendChild(b);
+});
+el('ownform').onsubmit=function(e){
+  e.preventDefault(); var n=parseInt(el('own').value,10);
+  if(n>0) recommend(n,fmt(n));
+};
 function step(n){
   ['finder','volume','result'].forEach(function(id,i){el(id).style.display=(i===n-1)?'block':'none'});
   [1,2,3].forEach(function(i){el('st'+i).className=(i===n)?'on':''});
   window.scrollTo({top:el('steps').offsetTop-70,behavior:'smooth'});
 }
-MODELS.forEach(function(m){
-  var b=document.createElement('button'); b.className='tile';
-  b.innerHTML='<span class="arrow">&rarr;</span><small>PostBase</small><strong>'+m.name+'</strong>';
-  b.onclick=function(){pickModel(m)}; el('grid').appendChild(b);
-});
-VOLUMES.forEach(function(v,i){
-  var b=document.createElement('button'); b.className='tile';
-  b.innerHTML='<span class="arrow">&rarr;</span><small>'+v.hint+'</small><strong>'+v.label+'</strong>';
-  b.onclick=function(){recommend(i)}; el('qgrid').appendChild(b);
-});
-function pickModel(m){
-  model=m;
-  if(m.sizes.length===1 && m.complete){recommend(null);return}   // nur eine Größe: Mengenfrage überspringen
-  el('vname').textContent='PostBase '+m.name;
+function pick(m){
+  machine=m;
+  if(m.sizes.length<=1){recommend(null,null);return}   // nur eine Größe: Mengenfrage überspringen
+  el('vname').textContent=m.name+(m.models?' ('+m.models+')':'');
   step(2);
 }
-function recommend(vi){
-  var m=model, n=m.sizes.length;
-  el('rtitle').innerHTML='';
-  if(n===0){
-    el('rtitle').innerHTML='Wir beraten Sie persönlich zur <span>PostBase '+m.name+'</span>';
-    el('rsku').textContent='';
-    el('rwhy').textContent='Für dieses Modell empfehlen wir die passende Kartusche am Telefon, damit sicher die richtige ankommt.';
-    el('ralts').innerHTML='';
-    el('rshop').href=shopUrl('/c/postverarbeitung',m.id);
-    el('rlink').textContent='Entwurf: Kartuschengrößen für die PostBase '+m.name+' nachtragen.';
-    step(3);return;
+
+// ── Empfehlung ──────────────────────────────────────────────────────────
+// Kleinste Größe, die bei der angegebenen Menge etwa zwei Monate reicht.
+function recommend(perMonth,label){
+  var m=machine, S=m.sizes;
+  if(!S.length){
+    el('rtitle').innerHTML='Wir beraten Sie persönlich zur <span>'+m.name+'</span>';
+    el('rsku').textContent=''; el('rfacts').innerHTML=''; el('rcmp').innerHTML='';
+    el('rwhy').textContent='Für dieses Modell stellen wir Ihnen die passende Original-Kartusche am Telefon zusammen, damit sicher die richtige ankommt.';
+    el('rshop').style.display='none';
+    el('rnote').textContent='Entwurf: Für die PostBase Insight führt der Shop derzeit keine Kartuschen. Nachtragen oder Kachel entfernen.';
+    step(3); return;
   }
-  var idx = (vi===null) ? 0 : Math.round(vi*(n-1)/(VOLUMES.length-1));
-  var k=m.sizes[idx];
-  el('rtitle').innerHTML='Tintenkartuschen-Set <span>'+k.size+'</span> für PostBase '+m.name;
+  el('rshop').style.display='';
+  var idx=0;
+  if(perMonth){
+    idx=S.length-1;
+    for(var i=0;i<S.length;i++){ if(S[i].reach>=perMonth*MONTHS_STOCK){idx=i;break;} }
+  }
+  var k=S[idx];
+  el('rtitle').innerHTML=(S.length>1?'Größe <span>'+k.size+'</span>':'Kartusche <span>'+k.size+'</span>')+' für Ihre '+m.name;
   el('rsku').textContent='Original Francotyp Postalia · Artikel-Nr. '+k.sku;
-  el('rwhy').textContent = m.onlyText || (n===1
-      ? 'Diese Größe passt zu Ihrem Modell. Ob es weitere Größen gibt, sehen Sie im Shop.'
-      : (idx===0 ? WHY[0] : idx===n-1 ? WHY[3] : WHY[1]));
-  var alts=m.sizes.filter(function(x,i){return i!==idx});
-  el('ralts').innerHTML = alts.length ? 'Andere Größen: '+alts.map(function(a){
-      return '<a href="'+shopUrl(a.path,m.id+'-'+a.size.toLowerCase())+'">'+a.size+'</a>'}).join('') : '';
-  var url=shopUrl(k.path,m.id+'-'+k.size.toLowerCase()+(vi===null?'':'-'+VOLUMES[vi].id));
+  var facts='<div>Reicht für<b>'+(k.est?'ca. ':'bis zu ')+fmt(k.reach)+' Briefe</b></div><div>Füllmenge<b>'+k.ml+'</b></div>';
+  if(perMonth) facts+='<div>Bei '+label+' Briefen im Monat<b>'+months(k.reach,perMonth)+'</b></div>';
+  el('rfacts').innerHTML=facts;
+  var why;
+  if(m.only) why=m.only;
+  else if(!perMonth) why='Diese Kartusche passt zu Ihrer Maschine.';
+  else if(idx===S.length-1 && k.reach<perMonth*MONTHS_STOCK) why='Bei Ihrer Menge empfehlen wir die größte Kartusche. Tipp: Bestellen Sie zwei Stück, dann haben Sie immer eine in Reserve.';
+  else if(idx===0) why='Bei Ihrer Menge reicht die kleinste Größe für rund zwei Monate. Sie binden kein Geld in Vorrat, den Sie lange nicht brauchen.';
+  else why='Diese Größe reicht bei Ihrer Menge für rund zwei Monate oder länger. Die kleinere müssten Sie häufiger wechseln.';
+  if(m.extra) why+=' '+m.extra;
+  el('rwhy').textContent=why;
+  // Vergleichstabelle
+  if(S.length>1){
+    var rows='<tr><th>Größe</th><th>Reicht für</th>'+(perMonth?'<th>bei Ihrer Menge</th>':'')+'<th></th></tr>';
+    S.forEach(function(s,i){
+      rows+='<tr'+(i===idx?' class="rec"':'')+'><td>'+s.size+'</td><td>'+(s.est?'ca. ':'bis ')+fmt(s.reach)+'</td>'+
+        (perMonth?'<td>'+months(s.reach,perMonth)+'</td>':'')+
+        '<td><a href="'+shopUrl(s.path,m.id+'-'+s.size.toLowerCase())+'">ansehen</a></td></tr>';
+    });
+    el('rcmp').innerHTML=rows;
+  } else el('rcmp').innerHTML='';
+  var url=shopUrl(k.path,m.id+'-'+k.size.toLowerCase()+(perMonth?'-'+perMonth:''));
   el('rshop').href=url;
-  el('rlink').textContent='Entwurf: '+(m.complete?'':'Weitere Größen und ')+'Reichweiten nachtragen. Der Button öffnet '+url;
+  el('rnote').textContent=(k.est?'Entwurf: Reichweite für die PostBase mini steht nicht im Shop, Wert geschätzt (gleiche Füllmenge wie Vision M2). Bitte mit FP bestätigen. ':'')+
+    'Entwurf: Der Button öffnet '+url;
   step(3);
 }
 document.querySelectorAll('[data-back]').forEach(function(b){
-  b.onclick=function(){step(b.getAttribute('data-back')==='finder'?1:2)};
+  b.onclick=function(){step(parseInt(b.getAttribute('data-back'),10))};
 });
-document.querySelectorAll('[data-shop]').forEach(function(a){a.href=shopUrl('',null)});
+document.querySelectorAll('[data-shop]').forEach(function(a){a.href=shopUrl('/c/postverarbeitung',null)});
 </script>
 </body>
 </html>
