@@ -112,7 +112,7 @@ footer a{margin:0 8px}
 </head>
 <body>
 
-<div class="draft">Entwurf: Reichweiten aus den Produktseiten von frankierfarbe.de und fp-francotyp.de (Stand 24.11.2026). Maschinenfotos: Francotyp-Postalia, Nutzung freigegeben.</div>
+<div class="draft">Entwurf: Reichweiten aus der FP-Tabelle „Reichweiten Tintensysteme“, fehlende Werte aus frankierfarbe.de (Stand 24.11.2026). Maschinenfotos: Francotyp-Postalia, Nutzung freigegeben.</div>
 
 <header>
   <img src="logo.png" alt="TE Printline GmbH">
@@ -197,31 +197,32 @@ footer a{margin:0 8px}
 <script>
 // ── Daten ───────────────────────────────────────────────────────────────
 // Quelle: Produktseiten auf frankierfarbe.de, abgerufen am 24.11.2026.
-// reach = Frankierungen laut Produktseite. PostBase mini: Werte aus dem FP-Shop
-// (fp-francotyp.de), weil frankierfarbe.de sie nicht nennt.
+// reach = Frankierungen ("bis"-Wert) laut FP-Tabelle "Reichweiten Tintensysteme".
+// mini = Vision M2 (laut Silvio identisch). Was in der Tabelle fehlt (XS/Starter,
+// PostBase Fusion), stammt aus dem Webshop frankierfarbe.de. Insight = Classic.
 // img = Maschinenfoto von Francotyp-Postalia (fp-francotyp.de), Nutzung freigegeben.
 var SHOP='https://www.frankierfarbe.de';
 var CLASSIC_SETS;
 var MACHINES=[
   {id:'mini', name:'PostBase mini', models:'', img:'img/mini.jpg', sizes:[
-    {size:'X-SMALL', sku:'580053305600', ml:'4 ml',  reach:800, path:'/p/tintenkartuschen-set-x-small-fuer-frankiermaschine-postbase-mini-francotyp-postalia'},
+    {size:'X-SMALL', sku:'580053305600', ml:'4 ml',  reach:700, path:'/p/tintenkartuschen-set-x-small-fuer-frankiermaschine-postbase-mini-francotyp-postalia'},
     {size:'SMALL',   sku:'580053303600', ml:'10 ml', reach:2000, path:'/p/tintenkartuschen-set-small-fuer-frankiermaschine-postbase-mini-francotyp-postalia'},
     {size:'MEDIUM',  sku:'580053304600', ml:'20 ml', reach:4000, path:'/p/tintenkartuschen-set-medium-fuer-frankiermaschine-postbase-mini-francotyp-postalia'}]},
   {id:'m2', name:'PostBase Vision M2', models:'', img:'img/m2.jpg', sizes:[
     {size:'X-SMALL', sku:'580074895600', ml:'4 ml',  reach:700,  path:'/p/tintenkartusche-x-small-fuer-frankiermaschine-postbase-vision-m2-francotyp-postalia'},
-    {size:'SMALL',   sku:'580074893600', ml:'10 ml', reach:1700, path:'/p/tintenkartusche-small-fuer-frankiermaschine-postbase-vision-m2-francotyp-postalia'},
-    {size:'MEDIUM',  sku:'580074894600', ml:'20 ml', reach:3500, path:'/p/tintenkartusche-medium-fuer-frankiermaschine-postbase-vision-m2-francotyp-postalia'}]},
+    {size:'SMALL',   sku:'580074893600', ml:'10 ml', reach:2000, path:'/p/tintenkartusche-small-fuer-frankiermaschine-postbase-vision-m2-francotyp-postalia'},
+    {size:'MEDIUM',  sku:'580074894600', ml:'20 ml', reach:4000, path:'/p/tintenkartusche-medium-fuer-frankiermaschine-postbase-vision-m2-francotyp-postalia'}]},
   {id:'one', name:'PostBase One', models:'One 120 · One 150', img:'img/one.jpg', sizes:[
-    {size:'XL', sku:'580055318800', ml:'2 × 42 ml', reach:20000, path:'/p/tintenkartuschen-set-xl-fuer-frankiermaschine-postbase-one'}],
+    {size:'XL', sku:'580055318800', ml:'2 × 42 ml', reach:22000, path:'/p/tintenkartuschen-set-xl-fuer-frankiermaschine-postbase-one'}],
     extra:'Für sehr große Mengen gibt es für die PostBase One auch Tintentanks mit 175 ml (bis 50.000 Frankierungen) und 350 ml (bis 100.000). Dafür braucht die Maschine das Druckkopf-Set für das Tanksystem. Wir beraten Sie gern.'},
   {id:'classic', name:'PostBase Classic', models:'PostBase 30 · 45 · 65 · 100', img:'img/classic.jpg', sizes:CLASSIC_SETS=[
     {size:'XS',     sku:'580052305600', ml:'2 × 4 ml',  reach:1500,  path:'/p/tintenkartuschen-set-xs-fuer-frankiermaschine-postbase-30-bis-100-francotyp-postalia'},
     {size:'SMALL',  sku:'580052303600', ml:'2 × 10 ml', reach:4000,  path:'/p/tintenkartuschen-set-small-fuer-frankiermaschine-postbase-30-bis-100-francotyp-postalia'},
     {size:'MEDIUM', sku:'580052304600', ml:'2 × 20 ml', reach:8000,  path:'/p/tintenkartuschen-set-medium-fuer-frankiermaschine-postbase-30-bis-100-francotyp-postalia'},
-    {size:'XL',     sku:'580052302600', ml:'2 × 42 ml', reach:17000, path:'/p/tintenkartuschen-set-xl-fuer-frankiermaschine-postbase-30-bis-100-francotyp-postalia'}]},
+    {size:'XL',     sku:'580052302600', ml:'2 × 42 ml', reach:18000, path:'/p/tintenkartuschen-set-xl-fuer-frankiermaschine-postbase-30-bis-100-francotyp-postalia'}]},
   {id:'vision', name:'PostBase Vision', models:'Vision 35 · 50 · 70', img:'img/vision.jpg', sizes:[
-    {size:'LARGE', sku:'580059772400', ml:'40 ml', reach:9000, path:'/p/tintenkartusche-large-fuer-frankiermaschine-postbase-vision-35-bis-70-francotyp-postalia'}],
-    only:'Für die PostBase Vision 35 bis 70 gibt es die Original-Kartusche nur noch in Größe LARGE.',
+    {size:'LARGE', sku:'580059772400', ml:'40 ml', reach:11400, path:'/p/tintenkartusche-large-fuer-frankiermaschine-postbase-vision-35-bis-70-francotyp-postalia'}],
+    only:'Für die PostBase Vision 35 bis 70 gibt es die Original-Kartusche nur noch in Größe LARGE. Wechseln Sie sie mindestens einmal im Jahr, damit die Tinte nicht eintrocknet.',
     extra:'Sie haben eine PostBase Vision A120? Dafür gibt es ein eigenes XL-Set (2 × 40 ml, bis 18.000 Frankierungen). Rufen Sie uns an, wir bestellen es für Sie.'},
   {id:'fusion', name:'PostBase Fusion', models:'Fusion 35 · 50 · 70 · 120', img:'img/fusion.jpg', sizes:[
     {size:'XS', sku:'580059895600', ml:'2 × 4 ml',  reach:1500,  path:'/p/tintenkartuschen-set-xs-fuer-frankiermaschine-postbase-fusion-35-bis-120-francotyp-postalia'},
@@ -237,7 +238,7 @@ var VOLUMES=[
   {label:'1.000 bis 3.000', hint:'täglich viel', n:2000},
   {label:'über 3.000',      hint:'Poststelle',   n:5000}
 ];
-var MONTHS_STOCK=2;   // Ziel: Kartusche soll etwa zwei Monate reichen
+var MAX_MONTHS=12;    // Kartusche soll spätestens nach 12 Monaten leer sein (sonst trocknet die Tinte ein)
 
 // ── Messung ─────────────────────────────────────────────────────────────
 var src=(new URLSearchParams(location.search).get('utm_source'))||'farbeleer';
@@ -285,7 +286,8 @@ function pick(m){
 }
 
 // ── Empfehlung ──────────────────────────────────────────────────────────
-// Kleinste Größe, die bei der angegebenen Menge etwa zwei Monate reicht.
+// Größte Kartusche, die bei der angegebenen Menge in höchstens 12 Monaten leer ist.
+// Reicht schon die kleinste länger, wird die kleinste empfohlen.
 function recommend(perMonth,label){
   var m=machine, S=m.sizes;
   if(!S.length){
@@ -299,8 +301,7 @@ function recommend(perMonth,label){
   el('rshop').style.display='';
   var idx=0;
   if(perMonth){
-    idx=S.length-1;
-    for(var i=0;i<S.length;i++){ if(S[i].reach>=perMonth*MONTHS_STOCK){idx=i;break;} }
+    for(var i=0;i<S.length;i++){ if(S[i].reach<=perMonth*MAX_MONTHS) idx=i; }
   }
   var k=S[idx];
   el('rtitle').innerHTML=(S.length>1?'Größe <span>'+k.size+'</span>':'Kartusche <span>'+k.size+'</span>')+' für Ihre '+m.name;
@@ -311,9 +312,9 @@ function recommend(perMonth,label){
   var why;
   if(m.only) why=m.only;
   else if(!perMonth) why='Diese Kartusche passt zu Ihrer Maschine.';
-  else if(idx===S.length-1 && k.reach<perMonth*MONTHS_STOCK) why='Bei Ihrer Menge empfehlen wir die größte Kartusche. Tipp: Bestellen Sie zwei Stück, dann haben Sie immer eine in Reserve.';
-  else if(idx===0) why='Bei Ihrer Menge reicht die kleinste Größe für rund zwei Monate. Sie binden kein Geld in Vorrat, den Sie lange nicht brauchen.';
-  else why='Diese Größe reicht bei Ihrer Menge für rund zwei Monate oder länger. Die kleinere müssten Sie häufiger wechseln.';
+  else if(k.reach>perMonth*MAX_MONTHS) why='Bei Ihrer Menge reicht schon die kleinste Größe länger als ein Jahr. Wechseln Sie die Kartusche trotzdem mindestens einmal im Jahr, damit die Tinte nicht eintrocknet und das Druckbild sauber bleibt.';
+  else if(idx===S.length-1 && k.reach<perMonth*2) why='Bei Ihrer Menge empfehlen wir die größte Kartusche. Tipp: Bestellen Sie zwei Stück, dann haben Sie immer eine in Reserve.';
+  else why='Diese Größe ist bei Ihrer Menge innerhalb eines Jahres aufgebraucht. So bleibt die Tinte frisch und trocknet nicht ein. Eine größere Kartusche würde länger als ein Jahr in der Maschine stecken.';
   if(m.extra) why+=' '+m.extra;
   el('rwhy').textContent=why;
   // Vergleichstabelle
