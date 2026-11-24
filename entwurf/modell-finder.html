@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Farbe leer? Passende Original-Kartusche finden | farbeleer.de</title>
+<meta name="robots" content="noindex">
+<style>
+:root{
+  --red:#c61824;--red-dark:#a01420;--red-soft:#fbeaeb;
+  --gray-mid:#e4e3e5;--gray-light:#f7f7f8;
+  --text:#1a1a1a;--text-mid:#5a5a5a;--white:#fff;
+  --font:'Avenir','Avenir Next','Century Gothic','Trebuchet MS',Arial,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);color:var(--text);background:var(--white);line-height:1.45}
+a{color:inherit}
+
+.draft{background:#fff7d6;border-bottom:1px solid #eadb9a;color:#6b5a10;font-size:.8rem;text-align:center;padding:6px 16px}
+
+header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.97);border-bottom:2px solid var(--red);
+  display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 20px}
+header img{height:26px;display:block}
+.hdr-right{display:flex;align-items:center;gap:14px}
+.hdr-phone{font-size:.85rem;font-weight:700;color:var(--text-mid);text-decoration:none;white-space:nowrap}
+.hdr-phone span{color:var(--red)}
+.btn{display:inline-block;background:var(--red);color:#fff;font-weight:700;text-decoration:none;border:0;cursor:pointer;
+  font-family:var(--font);font-size:.95rem;padding:12px 22px;border-radius:100vw;transition:background .2s}
+.btn:hover{background:var(--red-dark)}
+.btn.sm{font-size:.8rem;padding:7px 16px}
+.btn.ghost{background:#fff;color:var(--red);border:2px solid var(--red)}
+.btn.ghost:hover{background:var(--red-soft)}
+
+main{max-width:960px;margin:0 auto;padding:32px 20px 48px}
+.hero{display:flex;align-items:center;gap:28px;margin-bottom:28px}
+.hero img{width:220px;flex-shrink:0}
+.hero h1{font-size:2rem;line-height:1.15;margin-bottom:8px}
+.hero h1 span{color:var(--red)}
+.hero p{color:var(--text-mid);font-size:1.05rem}
+
+.steps{display:flex;gap:8px;margin-bottom:18px;font-size:.85rem;color:var(--text-mid)}
+.steps b{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;
+  background:var(--gray-mid);color:var(--text);margin-right:6px;font-size:.75rem}
+.steps .on b{background:var(--red);color:#fff}
+.steps .on{color:var(--text);font-weight:700}
+
+h2{font-size:1.35rem;margin-bottom:14px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.tile{background:var(--gray-light);border:2px solid transparent;border-radius:14px;padding:18px 16px;cursor:pointer;
+  text-align:left;font-family:var(--font);color:var(--text);transition:border-color .15s,transform .15s,background .15s}
+.tile:hover{border-color:var(--red);background:#fff;transform:translateY(-2px)}
+.tile small{display:block;color:var(--text-mid);font-size:.78rem;margin-bottom:2px}
+.tile strong{font-size:1.1rem}
+.tile .arrow{float:right;color:var(--red);font-weight:700}
+
+.help{margin-top:16px;font-size:.9rem;color:var(--text-mid)}
+.help a{color:var(--red);font-weight:700;text-decoration:none}
+
+/* Ergebnis */
+#result{display:none}
+.card{border:2px solid var(--red);border-radius:16px;padding:26px;display:flex;gap:26px;align-items:flex-start}
+.card .ink{width:120px;height:120px;flex-shrink:0;border-radius:14px;background:var(--red-soft);display:flex;align-items:center;justify-content:center}
+.card h3{font-size:1.5rem;margin-bottom:6px}
+.card h3 span{color:var(--red)}
+.card p{color:var(--text-mid);margin-bottom:14px}
+.card ul{list-style:none;margin-bottom:18px}
+.card li{padding:3px 0 3px 24px;position:relative}
+.card li::before{content:"✓";position:absolute;left:0;color:var(--red);font-weight:700}
+.actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.back{background:none;border:0;color:var(--text-mid);font-family:var(--font);font-size:.9rem;cursor:pointer;text-decoration:underline;margin-top:16px}
+
+.note{margin-top:14px;font-size:.78rem;color:#8a7a2a;background:#fff7d6;border-radius:8px;padding:8px 12px}
+
+.trust{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:36px;padding-top:24px;border-top:1px solid var(--gray-mid)}
+.trust div{font-size:.85rem;color:var(--text-mid)}
+.trust strong{display:block;color:var(--text);font-size:.95rem}
+
+footer{border-top:1px solid var(--gray-mid);padding:16px 20px;text-align:center;font-size:.8rem;color:var(--text-mid)}
+footer a{margin:0 8px}
+
+@media (max-width:720px){
+  .hero{flex-direction:column;text-align:center;gap:14px}
+  .hero img{width:180px}
+  .hero h1{font-size:1.6rem}
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .card{flex-direction:column;padding:20px}
+  .trust{grid-template-columns:repeat(2,1fr)}
+  .hdr-phone{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="draft">Entwurf zur Ansicht: Die Shop-Links führen noch alle auf die Kategorieseite und werden je Modell auf die passende Produktseite gesetzt.</div>
+
+<header>
+  <img src="logo.png" alt="TE Printline GmbH">
+  <div class="hdr-right">
+    <a class="hdr-phone" href="tel:0620496220">&#9742; <span>06204 / 9622-0</span></a>
+    <a class="btn sm" href="#" data-shop="start">Zum Shop</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <img src="farbe-leer-oval.webp" alt="Farbe leer?">
+    <div>
+      <h1>Farbe leer? <span>In zwei Klicks</span> zur passenden Original-Kartusche.</h1>
+      <p>Wählen Sie Ihre Francotyp-Postalia-Frankiermaschine. Wir zeigen Ihnen direkt die richtige Tinte im Shop. Bestellung bis 13 Uhr geht noch heute raus.</p>
+    </div>
+  </section>
+
+  <div class="steps" id="steps">
+    <div class="on" id="st1"><b>1</b>Modell wählen</div>
+    <div id="st2"><b>2</b>Kartusche bestellen</div>
+  </div>
+
+  <section id="finder">
+    <h2>Welche Frankiermaschine haben Sie?</h2>
+    <div class="grid" id="grid"></div>
+    <p class="help">Der Modellname steht meist gut sichtbar auf dem Gerät. Nicht sicher? <a href="tel:0620496220">Rufen Sie uns an: 06204 / 9622-0</a> (Mo–Fr 8–16 Uhr)</p>
+  </section>
+
+  <section id="result">
+    <div class="card">
+      <div class="ink">
+        <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#c61824" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.7s6 6.6 6 11a6 6 0 01-12 0c0-4.4 6-11 6-11z"/></svg>
+      </div>
+      <div>
+        <h3>Original-Tinte für <span id="rname">PostBase</span></h3>
+        <p>Direkt von Francotyp Postalia, passend für Ihr Modell. Deutsche-Post-konformer Abdruck, Ihre Garantie bleibt erhalten.</p>
+        <ul>
+          <li>Versand noch heute bei Bestellung bis 13:00 Uhr</li>
+          <li>Kauf auf Rechnung oder per Bankeinzug</li>
+          <li>Autorisierte Generalvertretung von Francotyp Postalia</li>
+        </ul>
+        <div class="actions">
+          <a class="btn" id="rshop" href="#">Passende Kartusche im Shop ansehen &rarr;</a>
+          <a class="btn ghost" href="tel:0620496220">Lieber anrufen</a>
+        </div>
+        <p class="note" id="rlink"></p>
+      </div>
+    </div>
+    <button class="back" id="back">&larr; Anderes Modell wählen</button>
+  </section>
+
+  <section class="trust">
+    <div><strong>Gleichtags-Versand</strong>Bis 13 Uhr bestellt, heute verschickt</div>
+    <div><strong>100 % Original</strong>Zertifiziert von Francotyp Postalia</div>
+    <div><strong>Persönliche Beratung</strong>Echte Ansprechpartner in Viernheim</div>
+    <div><strong>Einfache Zahlung</strong>Rechnung oder Bankeinzug</div>
+  </section>
+</main>
+
+<footer>
+  TE Printline GmbH · Viernheim
+  <a href="#">Impressum</a><a href="#">Datenschutz</a>
+</footer>
+
+<script>
+// Je Modell der Ziel-Link im Shop. Im Entwurf zeigen alle noch auf die Kategorieseite.
+var SHOP='https://www.frankierfarbe.de';
+var MODELS=[
+  {id:'mini',     line:'PostBase', name:'Mini',        path:'/c/postverarbeitung'},
+  {id:'one',      line:'PostBase', name:'One',         path:'/c/postverarbeitung'},
+  {id:'c30',      line:'PostBase', name:'Classic 30',  path:'/c/postverarbeitung'},
+  {id:'c45',      line:'PostBase', name:'Classic 45',  path:'/c/postverarbeitung'},
+  {id:'c65',      line:'PostBase', name:'Classic 65',  path:'/c/postverarbeitung'},
+  {id:'c100',     line:'PostBase', name:'Classic 100', path:'/c/postverarbeitung'},
+  {id:'vision',   line:'PostBase', name:'Vision',      path:'/c/postverarbeitung'},
+  {id:'fusion',   line:'PostBase', name:'Fusion',      path:'/c/postverarbeitung'},
+  {id:'insight',  line:'PostBase', name:'Insight',     path:'/c/postverarbeitung'}
+];
+// Herkunft mitgeben, damit Bestellungen über farbeleer.de in der Shop-Statistik erkennbar sind.
+var src=(new URLSearchParams(location.search).get('utm_source'))||'farbeleer';
+function shopUrl(path,model){
+  return SHOP+path+'?utm_source='+encodeURIComponent(src)+'&utm_medium=landingpage&utm_campaign=modell-finder'+(model?'&utm_content='+model:'');
+}
+var grid=document.getElementById('grid');
+MODELS.forEach(function(m){
+  var b=document.createElement('button');
+  b.className='tile';
+  b.innerHTML='<span class="arrow">&rarr;</span><small>'+m.line+'</small><strong>'+m.name+'</strong>';
+  b.onclick=function(){show(m)};
+  grid.appendChild(b);
+});
+function show(m){
+  var url=shopUrl(m.path,m.id);
+  document.getElementById('rname').textContent=m.line+' '+m.name;
+  document.getElementById('rshop').href=url;
+  document.getElementById('rlink').textContent='Entwurf: Dieser Button öffnet '+url;
+  document.getElementById('finder').style.display='none';
+  document.getElementById('result').style.display='block';
+  document.getElementById('st1').className='';
+  document.getElementById('st2').className='on';
+  window.scrollTo({top:document.getElementById('steps').offsetTop-70,behavior:'smooth'});
+}
+document.getElementById('back').onclick=function(){
+  document.getElementById('result').style.display='none';
+  document.getElementById('finder').style.display='block';
+  document.getElementById('st1').className='on';
+  document.getElementById('st2').className='';
+};
+document.querySelectorAll('[data-shop]').forEach(function(a){a.href=shopUrl('',null)});
+</script>
+</body>
+</html>

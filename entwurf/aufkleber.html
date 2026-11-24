@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aufkleber Farbe leer (Entwurf)</title>
+<style>
+:root{--red:#c61824;--text:#1a1a1a;--mid:#5a5a5a;
+  --font:'Avenir','Avenir Next','Century Gothic','Trebuchet MS',Arial,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:#eeeef0;color:var(--text);padding:32px 16px;display:flex;flex-direction:column;align-items:center;gap:20px}
+h1{font-size:1rem;color:var(--mid);font-weight:400}
+/* Aufkleber 80 x 40 mm, im Browser 4-fach vergrößert */
+.sticker{width:320mm;max-width:100%;aspect-ratio:2/1;background:#fff;border-radius:6mm;
+  box-shadow:0 6px 24px rgba(0,0,0,.15);display:flex;align-items:center;gap:4%;padding:4% 5%}
+.sticker .oval{width:52%;flex-shrink:0}
+.sticker .oval img{width:100%;display:block}
+.sticker .right{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px}
+.sticker .qr{width:78%;aspect-ratio:1}
+.sticker .qr img{width:100%;height:100%;display:block}
+.sticker .cta{font-weight:700;font-size:clamp(.7rem,2.2vw,1.35rem);line-height:1.2}
+.sticker .cta span{color:var(--red)}
+.sticker .tel{font-size:clamp(.6rem,1.7vw,1rem);color:var(--mid)}
+.sticker .tel b{color:var(--red)}
+p.info{max-width:640px;font-size:.9rem;color:var(--mid);text-align:center}
+</style>
+</head>
+<body>
+<h1>Entwurf Aufkleber für die Frankiermaschine · Format 80 × 40 mm</h1>
+<div class="sticker">
+  <div class="oval"><img src="farbe-leer-oval.webp" alt="Farbe leer?"></div>
+  <div class="right">
+    <div class="qr"><img src="qr-farbeleer.svg" alt="QR-Code zu farbeleer.de"></div>
+    <div class="cta">Scannen und <span>Original-Tinte</span> nachbestellen</div>
+    <div class="tel">oder anrufen: <b>06204 / 9622-0</b></div>
+  </div>
+</div>
+<p class="info">Der QR-Code führt auf farbeleer.de mit der Kennung „Aufkleber“. So zeigt die Shop-Statistik später, wie viele Bestellungen über die Aufkleber kommen. Im fertigen Druck steht auf dem Oval „www.farbeleer.de“ statt „www.frankierfarbe.de“.</p>
+</body>
+</html>
