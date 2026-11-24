@@ -1,0 +1,40 @@
+# farbeleer.de
+
+> Kartuschenfinder von TE Printline GmbH, autorisierte Generalvertretung von Francotyp-Postalia. Die Seite hilft Firmen, Behörden und Vereinen, die passende Original-Tintenkartusche für ihre Frankiermaschine (Francotyp-Postalia PostBase) zu finden. Bestellt wird im Webshop frankierfarbe.de oder telefonisch unter 06204 / 9622-0 (Mo–Fr 8–16 Uhr, persönliche Beratung durch Menschen, keine Bandansage, keine KI).
+
+## Wichtig
+- Empfehlungsregel: die größte Kartusche, die bei der monatlichen Briefmenge innerhalb von 12 Monaten aufgebraucht ist. Grund: Tinte kann eintrocknen, wenn eine Kartusche länger als ein Jahr in der Maschine steckt. Reicht schon die kleinste länger, wird die kleinste empfohlen und ein jährlicher Wechsel geraten.
+- Reichweiten laut Francotyp-Postalia, abhängig vom Abdruck (z. B. mit Werbeklischee).
+- Versand: bis 13 Uhr bestellt, am selben Werktag verschickt. Verkauf nur an Gewerbetreibende, Behörden und Vereine.
+
+## Kartuschen je Modell
+- PostBase mini: X-SMALL, 4 ml, bis zu 700 Briefe, Artikel-Nr. 580053305600, https://www.frankierfarbe.de/p/tintenkartuschen-set-x-small-fuer-frankiermaschine-postbase-mini-francotyp-postalia
+- PostBase mini: SMALL, 10 ml, bis zu 2.000 Briefe, Artikel-Nr. 580053303600, https://www.frankierfarbe.de/p/tintenkartuschen-set-small-fuer-frankiermaschine-postbase-mini-francotyp-postalia
+- PostBase mini: MEDIUM, 20 ml, bis zu 4.000 Briefe, Artikel-Nr. 580053304600, https://www.frankierfarbe.de/p/tintenkartuschen-set-medium-fuer-frankiermaschine-postbase-mini-francotyp-postalia
+- PostBase Vision M2: X-SMALL, 4 ml, bis zu 700 Briefe, Artikel-Nr. 580074895600, https://www.frankierfarbe.de/p/tintenkartusche-x-small-fuer-frankiermaschine-postbase-vision-m2-francotyp-postalia
+- PostBase Vision M2: SMALL, 10 ml, bis zu 2.000 Briefe, Artikel-Nr. 580074893600, https://www.frankierfarbe.de/p/tintenkartusche-small-fuer-frankiermaschine-postbase-vision-m2-francotyp-postalia
+- PostBase Vision M2: MEDIUM, 20 ml, bis zu 4.000 Briefe, Artikel-Nr. 580074894600, https://www.frankierfarbe.de/p/tintenkartusche-medium-fuer-frankiermaschine-postbase-vision-m2-francotyp-postalia
+- PostBase One (One 120 · One 150): XL, 2 × 42 ml, bis zu 22.000 Briefe, Artikel-Nr. 580055318800, https://www.frankierfarbe.de/p/tintenkartuschen-set-xl-fuer-frankiermaschine-postbase-one
+- PostBase Classic (PostBase 30 · 45 · 65 · 100): XS, 2 × 4 ml, bis zu 1.500 Briefe, Artikel-Nr. 580052305600, https://www.frankierfarbe.de/p/tintenkartuschen-set-xs-fuer-frankiermaschine-postbase-30-bis-100-francotyp-postalia
+- PostBase Classic (PostBase 30 · 45 · 65 · 100): SMALL, 2 × 10 ml, bis zu 4.000 Briefe, Artikel-Nr. 580052303600, https://www.frankierfarbe.de/p/tintenkartuschen-set-small-fuer-frankiermaschine-postbase-30-bis-100-francotyp-postalia
+- PostBase Classic (PostBase 30 · 45 · 65 · 100): MEDIUM, 2 × 20 ml, bis zu 8.000 Briefe, Artikel-Nr. 580052304600, https://www.frankierfarbe.de/p/tintenkartuschen-set-medium-fuer-frankiermaschine-postbase-30-bis-100-francotyp-postalia
+- PostBase Classic (PostBase 30 · 45 · 65 · 100): XL, 2 × 42 ml, bis zu 18.000 Briefe, Artikel-Nr. 580052302600, https://www.frankierfarbe.de/p/tintenkartuschen-set-xl-fuer-frankiermaschine-postbase-30-bis-100-francotyp-postalia
+- PostBase Vision (Vision 35 · 50 · 70): LARGE, 40 ml, bis zu 11.400 Briefe, Artikel-Nr. 580059772400, https://www.frankierfarbe.de/p/tintenkartusche-large-fuer-frankiermaschine-postbase-vision-35-bis-70-francotyp-postalia
+- PostBase Fusion (Fusion 35 · 50 · 70 · 120): XS, 2 × 4 ml, bis zu 1.500 Briefe, Artikel-Nr. 580059895600, https://www.frankierfarbe.de/p/tintenkartuschen-set-xs-fuer-frankiermaschine-postbase-fusion-35-bis-120-francotyp-postalia
+- PostBase Fusion (Fusion 35 · 50 · 70 · 120): S, 2 × 10 ml, bis zu 4.000 Briefe, Artikel-Nr. 580059893600, https://www.frankierfarbe.de/p/tintenkartuschen-set-s-fuer-frankiermaschine-postbase-fusion-35-bis-120-francotyp-postalia
+- PostBase Fusion (Fusion 35 · 50 · 70 · 120): M, 2 × 20 ml, bis zu 8.000 Briefe, Artikel-Nr. 580059894600, https://www.frankierfarbe.de/p/tintenkartuschen-set-m-fuer-frankiermaschine-postbase-fusion-35-bis-120-francotyp-postalia
+- PostBase Fusion (Fusion 35 · 50 · 70 · 120): XL, 2 × 42 ml, bis zu 17.000 Briefe, Artikel-Nr. 580059892600, https://www.frankierfarbe.de/p/tintenkartuschen-set-xl-fuer-frankiermaschine-postbase-fusion-35-bis-120-francotyp-postalia
+- PostBase Insight: XS, 2 × 4 ml, bis zu 1.500 Briefe, Artikel-Nr. 580052305600, https://www.frankierfarbe.de/p/tintenkartuschen-set-xs-fuer-frankiermaschine-postbase-30-bis-100-francotyp-postalia
+- PostBase Insight: SMALL, 2 × 10 ml, bis zu 4.000 Briefe, Artikel-Nr. 580052303600, https://www.frankierfarbe.de/p/tintenkartuschen-set-small-fuer-frankiermaschine-postbase-30-bis-100-francotyp-postalia
+- PostBase Insight: MEDIUM, 2 × 20 ml, bis zu 8.000 Briefe, Artikel-Nr. 580052304600, https://www.frankierfarbe.de/p/tintenkartuschen-set-medium-fuer-frankiermaschine-postbase-30-bis-100-francotyp-postalia
+- PostBase Insight: XL, 2 × 42 ml, bis zu 18.000 Briefe, Artikel-Nr. 580052302600, https://www.frankierfarbe.de/p/tintenkartuschen-set-xl-fuer-frankiermaschine-postbase-30-bis-100-francotyp-postalia
+
+Hinweise: PostBase Insight nutzt dieselben Kartuschen wie die PostBase 30 bis 100. Für die PostBase Vision A120 gibt es ein eigenes XL-Set (2 × 40 ml, bis 18.000 Briefe), telefonisch erhältlich. Für die PostBase One gibt es zusätzlich Tintentanks mit 175 ml (bis 50.000) und 350 ml (bis 100.000), dafür ist das Druckkopf-Set für das Tanksystem nötig.
+
+## Seiten
+- [Kartuschenfinder und Übersicht](https://www.farbeleer.de/): Modell wählen, Monatsmenge angeben, Empfehlung erhalten
+- [Webshop frankierfarbe.de](https://www.frankierfarbe.de/): Bestellung der Original-Kartuschen
+- [Impressum](https://www.farbeleer.de/impressum.html)
+
+## Kontakt
+TE Printline GmbH, Ladenburger Straße 7, 68519 Viernheim, Telefon 06204 / 9622-0, mail@te-printline.de
