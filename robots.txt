@@ -5,38 +5,51 @@ Disallow: /entwurf/
 
 User-agent: Googlebot
 Allow: /
+Disallow: /entwurf/
 
 User-agent: Bingbot
 Allow: /
+Disallow: /entwurf/
 
 User-agent: OAI-SearchBot
 Allow: /
+Disallow: /entwurf/
 
 User-agent: ChatGPT-User
 Allow: /
+Disallow: /entwurf/
 
 User-agent: GPTBot
 Allow: /
+Disallow: /entwurf/
 
 User-agent: PerplexityBot
 Allow: /
+Disallow: /entwurf/
 
 User-agent: Perplexity-User
 Allow: /
+Disallow: /entwurf/
 
 User-agent: ClaudeBot
 Allow: /
+Disallow: /entwurf/
 
 User-agent: Claude-SearchBot
 Allow: /
+Disallow: /entwurf/
 
 User-agent: Claude-User
 Allow: /
+Disallow: /entwurf/
 
 User-agent: Google-Extended
 Allow: /
+Disallow: /entwurf/
 
 User-agent: Applebot
 Allow: /
+Disallow: /entwurf/
+Disallow: /entwurf/
 
 Sitemap: https://www.farbeleer.de/sitemap.xml
