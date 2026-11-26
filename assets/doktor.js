@@ -27,7 +27,7 @@
   function viewSymptom() {
     return '<h2 tabindex="-1">Wie sieht Ihr Abdruck aus?</h2><p class="sub">Legen Sie einen frankierten Brief neben den Bildschirm und tippen Sie auf das Bild, das am ehesten passt.</p>' +
       '<div class="abdrucke">' + SYMPTOME.map(function (s) {
-        return '<button type="button" class="atile" data-sym="' + s.id + '">' + abdruckSvg(s.id, 'Beispiel: ' + s.label) + '<strong>' + esc(s.label) + '</strong><small>' + esc(s.sub) + '</small></button>';
+        return '<button type="button" class="atile" data-sym="' + s.id + '">' + abdruckBild(s.id, 'Beispiel: ' + s.label) + '<strong>' + esc(s.label) + '</strong><small>' + esc(s.sub) + '</small></button>';
       }).join('') + '</div>' +
       '<p class="smoke">Riecht die Maschine verschmort? <button type="button" data-sym="rauch">Dann bitte hier tippen.</button></p>';
   }
@@ -81,7 +81,7 @@
       '<button type="button" class="linkbtn" data-go="symptom">Neu starten</button></div></div></div>';
     if (b.nachher && st.symptom && st.symptom !== 'sauber') {
       html += '<div class="vn"><h3>So sollte Ihr Abdruck danach aussehen</h3><p class="sub">Ziehen Sie den Regler: links Ihr Abdruck jetzt, rechts so, wie er sein soll.</p>' +
-        '<div class="vn-box" id="vnbox">' + abdruckSvg(st.symptom, 'Vorher: ' + s.label) + '<div class="vn-after">' + abdruckSvg('sauber', 'Nachher: sauberer Abdruck') + '</div><span class="vn-line"></span></div>' +
+        '<div class="vn-box" id="vnbox">' + abdruckBild(st.symptom, 'Vorher: ' + s.label) + '<div class="vn-after">' + abdruckBild('sauber', 'Nachher: sauberer Abdruck') + '</div><span class="vn-line"></span></div>' +
         '<div class="vn-lbl"><span>vorher</span><span>nachher</span></div>' +
         '<input type="range" min="0" max="100" value="50" aria-label="Vorher-nachher-Regler" id="vn"></div>';
     }

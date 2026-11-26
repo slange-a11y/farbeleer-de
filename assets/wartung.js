@@ -128,6 +128,21 @@ WARTUNG.insight.steps = WARTUNG.classic.steps;
 // Reihenfolge der Modelle auf den Seiten (wie im Kartuschenfinder)
 var WARTUNG_ORDER = ['mini', 'm2', 'one', 'classic', 'vision', 'fusion', 'insight'];
 
+// Bilder zum Kartuschenwechsel (img/erlebnis/, geschnitten mit tools/bogen-schneiden.py).
+// Zeichnungen nach den FP-Betriebsanleitungen, Fotos von farbeleer.de. Je Schritt eine Liste:
+// mehrere Bilder werden nacheinander überblendet. tap = Lage des Displays im Foto (Prozent), dort pulsiert der Tipp-Kreis.
+// Schritte ohne passende Zeichnung zeigen das Foto der Maschine. Vision M2: noch keine Zeichnungen.
+var WECHSEL_BILDER = {
+  mini:    { tap: [67, 24], steps: [['mini-1'], ['mini-2'], ['mini-3', 'mini-4'], ['mini-5'], ['mini-6'], ['mini-1'], ['umschlag']] },
+  m2:      { tap: [66, 30], steps: [['m2-1'], ['m2-1'], ['m2-1'], ['m2-1'], ['m2-1'], ['m2-1'], ['umschlag']] },
+  classic: { tap: [35, 36], steps: [['classic-1'], ['classic-2', 'classic-3'], ['classic-1'], ['classic-4'], ['classic-5'], ['umschlag']] },
+  insight: { tap: [34, 32], steps: [['insight-1'], ['classic-2', 'classic-3'], ['insight-1'], ['classic-4'], ['classic-5'], ['umschlag']] },
+  vision:  { tap: [36, 32], steps: [['vision-1'], ['vision-2', 'vision-3'], ['vision-4', 'vision-5'], ['vision-6'], ['vision-1'], ['umschlag']] },
+  fusion:  { tap: [32, 30], steps: [['fusion-1'], ['fusion-2', 'fusion-3'], ['fusion-1'], ['fusion-4'], ['fusion-1'], ['umschlag']] },
+  one:     { tap: [37, 43], steps: [['one-1'], ['one-2', 'one-3', 'one-4'], ['one-5', 'one-6'], ['one-7'], ['one-1'], ['umschlag']],
+             tank: [['one-1'], ['one-1'], ['one-1'], ['one-1'], ['umschlag']] }
+};
+
 // ── 2. Druckbild-Doktor: Symptome ───────────────────────────────────────
 // fault = Fehlerbild, wie es in den Handbüchern heißt. two = nur bei Modellen mit zwei Kartuschen.
 // ask = welche Rückfragen nach dem Modell kommen (wechsel, stand).

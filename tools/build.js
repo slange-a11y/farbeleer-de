@@ -28,7 +28,7 @@ vm.runInContext(fs.readFileSync(path.join(ROOT, 'assets/kartuschen.js'), 'utf8')
 vm.runInContext(fs.readFileSync(path.join(ROOT, 'assets/wartung.js'), 'utf8'), D);
 vm.runInContext(fs.readFileSync(path.join(ROOT, 'assets/abdruck.js'), 'utf8'), D);
 const { SHOP, MACHINES, VOLUMES, MAX_MONTHS, pickIndex, fmt, months } = D;
-const { WARTUNG, WARTUNG_ORDER, SYMPTOME, BEFUNDE, DIAGNOSE, wMenu, wSteps, wFill, abdruckSvg } = D;
+const { WARTUNG, WARTUNG_ORDER, SYMPTOME, BEFUNDE, DIAGNOSE, wMenu, wSteps, wFill, abdruckBild } = D;
 const byId = id => MACHINES.find(m => m.id === id);
 const one = byId('one');
 const oneCart = one.choice[0].m, oneTank = one.choice[1].m;
@@ -519,7 +519,7 @@ function buildDoktor() {
     gestaucht: 'Gestauchte Abdrucke kommen vom Brieftransport, nicht von der Kartusche. Bitte rufen Sie uns an.',
     leer: 'Die Kartusche sitzt oft nicht richtig oder die Kontakte sind verschmutzt. Neu einsetzen, Kontakte säubern. Hilft das nicht, rufen Sie uns an.'
   };
-  const syms = SYMPTOME.map(s => `      <div class="sym">${abdruckSvg(s.id, 'Beispiel: ' + s.label)}<div><h3>${esc(s.label)}</h3><p>${esc(symTxt[s.id])}</p></div></div>`).join('\n');
+  const syms = SYMPTOME.map(s => `      <div class="sym">${abdruckBild(s.id, 'Beispiel: ' + s.label)}<div><h3>${esc(s.label)}</h3><p>${esc(symTxt[s.id])}</p></div></div>`).join('\n');
   const faq = [
     { q: 'Warum ist mein Frankierabdruck blass?',
       a: 'Meist sind die Düsen der Kartusche eingetrocknet oder die Kartusche ist fast leer. Machen Sie einen Testabdruck und starten Sie dann im Menü „Reinigen“, bei Bedarf „Intensiv reinigen“. Wird es nicht besser und ist die Kartusche älter als etwa ein Jahr, setzen Sie eine neue Original-Kartusche ein.' },
