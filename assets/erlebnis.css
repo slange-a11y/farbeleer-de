@@ -16,7 +16,7 @@
 .abdrucke{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .atile{background:var(--gray-light);border:2px solid transparent;border-radius:8px;padding:10px;cursor:pointer;font-family:var(--font);color:var(--text);text-align:center;transition:border-color .15s,background .15s,transform .15s}
 .atile:hover,.atile:focus-visible{border-color:var(--red);background:var(--red-soft);transform:translateY(-2px);outline:none}
-.atile svg{display:block;width:100%;height:auto;border-radius:4px;box-shadow:0 1px 3px rgba(0,0,0,.12);margin-bottom:8px}
+.atile .abdruck{display:block;width:100%;height:auto;border-radius:4px;box-shadow:0 1px 3px rgba(0,0,0,.12);margin-bottom:8px}
 .atile strong{display:block;font-size:1rem;line-height:1.2}
 .atile small{display:block;color:var(--text-mid);font-size:.8rem}
 .smoke{margin-top:14px;font-size:.95rem;color:var(--text-mid)}
@@ -50,7 +50,7 @@
 /* Vorher-nachher-Regler */
 .vn{margin-top:22px}
 .vn-box{position:relative;max-width:520px;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.15);touch-action:pan-y}
-.vn-box svg{display:block;width:100%;height:auto}
+.vn-box .abdruck{display:block;width:100%;height:auto}
 .vn-after{position:absolute;inset:0;clip-path:inset(0 0 0 var(--cut,50%))}
 .vn-line{position:absolute;top:0;bottom:0;left:var(--cut,50%);width:3px;margin-left:-1.5px;background:var(--red);pointer-events:none}
 .vn-line::after{content:"";position:absolute;top:50%;left:50%;width:30px;height:30px;margin:-15px 0 0 -15px;border-radius:50%;background:var(--red);box-shadow:0 0 0 3px #fff}
@@ -59,8 +59,7 @@
 
 /* Kartuschenwechsel: Bühne */
 .player{display:grid;grid-template-columns:1.1fr 1fr;gap:24px;align-items:center}
-.stage{position:relative;background:linear-gradient(#f7f7f8,#ececee);border-radius:10px;overflow:hidden;aspect-ratio:4/3;touch-action:pan-y;user-select:none}
-.stage svg{display:block;width:100%;height:100%}
+.stage{position:relative;background:#f7f7f8;border-radius:10px;overflow:hidden;aspect-ratio:4/3;touch-action:pan-y;user-select:none}
 .progress{height:6px;background:var(--gray-mid);border-radius:3px;overflow:hidden;margin:0 0 8px}
 .progress span{display:block;height:100%;background:var(--red);width:0;transition:width .35s}
 .stepcount{font-size:.85rem;color:var(--text-mid);margin-bottom:4px}
@@ -82,39 +81,25 @@
 .done .abdruck{max-width:320px;margin:14px auto;display:block;box-shadow:0 2px 8px rgba(0,0,0,.15);border-radius:6px}
 .done h3{font-size:1.6rem}
 
-/* Ebenen der Maschine (Platzhalter-Grafik, später Bilder aus dem Bogen) */
-.stage .flap{transform-box:fill-box;transform-origin:50% 0;transition:transform .9s cubic-bezier(.4,.1,.2,1)}
-.stage.s-open .flap{transform:translateY(-18px) scaleY(.22)}
-.stage .old{transition:transform 1.1s ease-in,opacity 1.1s ease-in}
-.stage.s-out .old{transform:translateY(-150px);opacity:0}
-.stage .new{opacity:0;transform:translate(120px,-110px);transition:transform 1.1s cubic-bezier(.3,.1,.2,1),opacity .5s}
-.stage.s-prep .new{opacity:1;transform:translate(120px,-80px)}
-.stage.s-in .new{opacity:1;transform:translate(0,0)}
-.stage .strip{transition:transform .9s .3s,opacity .9s .3s}
-.stage.s-stripped .strip{transform:translate(40px,30px) rotate(25deg);opacity:0}
-.stage.a-shake .newwrap{animation:shake .32s ease-in-out 6}
-@keyframes shake{50%{transform:translateY(-14px)}}
-.stage .lever{transform-box:fill-box;transform-origin:0 50%;transition:transform .7s}
-.stage.s-lever .lever{transform:rotate(-55deg)}
-.stage .finger{opacity:0;transition:opacity .3s}
-.stage.a-menu .finger{opacity:1;animation:tap 1s ease-in-out 2}
-@keyframes tap{50%{transform:translate(-6px,6px)}}
-.stage .click{opacity:0}
-.stage.a-in .click{animation:click .6s 1.1s ease-out forwards}
-@keyframes click{0%{opacity:0;transform:scale(.4)}40%{opacity:1}100%{opacity:0;transform:scale(1.6)}}
-.stage .click{transform-box:fill-box;transform-origin:center}
-.stage .env{transform:translateX(-420px);transition:transform 1.6s ease-in-out}
-.stage.s-env .env{transform:translateX(0)}
-.stage .wait{opacity:0}
-.stage.s-wait .wait{opacity:1}
-.stage.s-wait .wait circle{transform-box:fill-box;transform-origin:center;animation:spin 1s linear infinite}
+/* Bilder je Schritt: weich überblenden, leicht heranzoomen */
+.stage .pics img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity .6s ease}
+.stage .pics img.on{opacity:1}
+.stage .pics{position:absolute;inset:0;animation:zoom 7s ease-out forwards}
+@keyframes zoom{from{transform:scale(1)}to{transform:scale(1.05)}}
+.stage.a-align .pics,.stage.a-test .pics{animation:slidein .9s cubic-bezier(.3,.1,.2,1) both}
+@keyframes slidein{from{transform:translateX(35%);opacity:0}to{transform:none;opacity:1}}
+.stage .tap{position:absolute;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;border:4px solid var(--red);animation:pulse 1.5s ease-out .4s infinite;opacity:0}
+@keyframes pulse{0%{transform:scale(.45);opacity:1}100%{transform:scale(1.5);opacity:0}}
+.stage .busy{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);display:flex;align-items:center;gap:8px;background:rgba(40,40,42,.86);color:#fff;font-size:.85rem;padding:6px 14px;border-radius:16px;white-space:nowrap;opacity:0;animation:fadein .4s 1.4s forwards}
+.stage .busy i{width:14px;height:14px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:spin 1s linear infinite}
+@keyframes fadein{to{opacity:1}}
 @keyframes spin{to{transform:rotate(360deg)}}
-.stage .led{fill:#9aa}
-.stage.s-in .led{fill:#2e9d4d}
-.stage.no-anim *, .stage.no-anim{transition:none!important;animation:none!important}
+.stage .dots{position:absolute;right:12px;bottom:12px;display:flex;gap:6px}
+.stage .dots i{width:8px;height:8px;border-radius:50%;background:#c9c9cd;transition:background .3s}
+.stage .dots i.on{background:var(--red)}
 @media (prefers-reduced-motion:reduce){
   .stage *,.stage{transition:none!important;animation:none!important}
-  .stage .finger{opacity:1}
+  .stage .tap,.stage .busy{opacity:1}
   .done .tick path{animation:none;stroke-dashoffset:0}
   .ampel i,.progress span{transition:none}
 }
@@ -127,7 +112,7 @@
 .textfassung .src{font-size:.8rem;color:var(--text-mid);margin-top:8px}
 .symlist{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:12px}
 .sym{display:grid;grid-template-columns:120px 1fr;gap:12px;align-items:start;border:1px solid var(--gray-mid);border-radius:8px;padding:12px}
-.sym svg{width:100%;height:auto;border-radius:4px;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.sym .abdruck{width:100%;height:auto;border-radius:4px;box-shadow:0 1px 3px rgba(0,0,0,.12)}
 .sym h3{font-size:1rem;margin-bottom:4px}
 .sym p{font-size:.9rem;color:var(--text-mid)}
 .order{counter-reset:o;list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}

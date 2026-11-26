@@ -14,64 +14,32 @@
   function steps() { return wSteps(st.id, st.tank); }
   function title() { return st.tank ? WARTUNG.one.tank.name : WARTUNG[st.id].name; }
 
-  // ── Bühne: gezeichnete Platzhalter-Ebenen (werden später durch Bilder aus dem Bogen ersetzt)
-  function cart(x, cls) {
-    var isNew = cls === 'new';
-    return '<g transform="translate(' + x + ' 32)"><rect x="0" y="78" width="40" height="62" rx="5" fill="' + (isNew ? '#fff' : '#55565a') + '" stroke="#2a2a2a" stroke-width="2"/>' +
-      '<rect x="0" y="92" width="40" height="10" fill="' + (isNew ? '#c61824' : '#77787c') + '"/>' +
-      '<g stroke="' + (isNew ? '#bbb' : '#3a3a3c') + '" stroke-width="2"><path d="M8 112h24M8 118h24M8 124h24"/></g>' +
-      (isNew ? '<rect class="strip" x="4" y="136" width="32" height="8" rx="2" fill="#c61824"/>' : '') + '</g>';
+  // ── Bühne: Bilder je Schritt (WECHSEL_BILDER in assets/wartung.js). Mehrere Bilder werden nacheinander überblendet.
+  var cycle = null;
+  function pics() { var b = WECHSEL_BILDER[st.id]; return (st.tank ? b.tank : b.steps)[st.i]; }
+  function stageHtml() {
+    var list = pics(), a = steps()[st.i].anim, tap = WECHSEL_BILDER[st.id].tap;
+    var h = '<div class="pics">' + list.map(function (n, k) {
+      return '<img src="/img/erlebnis/' + n + '.webp" alt="" width="480" height="480" decoding="async"' + (k === 0 ? ' class="on"' : '') + '>';
+    }).join('') + '</div>';
+    if (a === 'menu') h += '<span class="tap" style="left:' + tap[0] + '%;top:' + tap[1] + '%"></span>';
+    if (a === 'close' || a === 'wait') h += '<span class="busy"><i></i>Maschine arbeitet</span>';
+    if (list.length > 1) h += '<span class="dots">' + list.map(function (n, k) { return '<i' + (k === 0 ? ' class="on"' : '') + '></i>'; }).join('') + '</span>';
+    return h;
   }
-  function stageSvg() {
-    var two = WARTUNG[st.id].carts === 2 && !st.tank;
-    var xs = two ? [228, 276] : [252];
-    var olds = xs.map(function (x) { return cart(x, 'old'); }).join('');
-    var news = xs.map(function (x) { return cart(x, 'new'); }).join('');
-    var imprint = abdruckSvg('sauber', 'sauberer Testabdruck').replace('<svg class="abdruck"', '<svg x="18" y="10" width="124" height="62"');
-    return '<svg viewBox="0 0 440 300" role="img" aria-label="Schematische Frankiermaschine">' +
-      '<rect x="0" y="262" width="440" height="38" fill="#dcdcde"/>' +
-      '<rect x="30" y="120" width="330" height="140" rx="16" fill="#d9dadc" stroke="#9a9a9e" stroke-width="2"/>' +
-      '<rect x="30" y="226" width="330" height="16" fill="#3a3a3c"/>' +
-      '<rect x="206" y="120" width="138" height="54" rx="4" fill="#2a2a2c"/>' +
-      '<g class="old">' + olds + '</g>' +
-      '<rect x="52" y="148" width="120" height="64" rx="7" fill="#26313a"/>' +
-      '<text class="disp" x="112" y="184" text-anchor="middle" font-family="Arial,sans-serif" font-size="12" fill="#fff"></text>' +
-      '<g class="wait"><circle cx="112" cy="196" r="8" fill="none" stroke="#fff" stroke-width="3" stroke-dasharray="30 20"/></g>' +
-      '<circle class="led" cx="352" cy="190" r="6"/>' +
-      '<g class="newwrap"><g class="new">' + news + '</g></g>' +
-      '<g class="click"><circle cx="272" cy="140" r="34" fill="none" stroke="#2e9d4d" stroke-width="4"/></g>' +
-      (st.id === 'one' && !st.tank ? '<rect class="lever" x="214" y="116" width="116" height="8" rx="4" fill="#2a8c8c"/>' : '') +
-      '<rect class="flap" x="200" y="104" width="150" height="72" rx="8" fill="#c4c5c8" stroke="#9a9a9e" stroke-width="2"/>' +
-      '<g class="finger"><circle cx="160" cy="214" r="13" fill="#f1c9a5" stroke="#8a6a50" stroke-width="2"/><rect x="154" y="214" width="12" height="40" rx="6" fill="#f1c9a5" stroke="#8a6a50" stroke-width="2"/></g>' +
-      '<g class="env"><g transform="translate(190 196)"><rect width="160" height="80" fill="#fff" stroke="#bbb"/>' + imprint + '</g></g>' +
-      '</svg>';
-  }
-  var DISP = { menu: function () { var m = wMenu(st.id).WECHSELN || ''; return stripChecks(m).replace(/[„“]/g, '').split('›').pop().trim() || 'WECHSELN'; },
-    close: function () { return 'Bitte warten'; }, wait: function () { return 'Bitte warten'; }, align: function () { return 'Ausrichten'; }, test: function () { return 'Testdruck'; } };
-
-  function stateAt(i) {
-    var s = {}, list = steps();
-    for (var j = 0; j <= i; j++) {
-      var a = list[j].anim;
-      if (a === 'menu' && /öffne/.test(list[j].t)) s.open = 1;
-      if (a === 'open' || a === 'lift' || a === 'out') s.open = 1;
-      if (a === 'lever') { s.open = 1; s.lever = 1; s.out = 1; }
-      if (a === 'out') s.out = 1;
-      if (a === 'prep' || a === 'shake') { s.prep = 1; s.stripped = 1; }
-      if (a === 'in') { s['in'] = 1; s.stripped = 1; s.out = 1; delete s.prep; }
-      if (a === 'close') { delete s.open; delete s.lever; s.wait = 1; }
-      if (a === 'align' || a === 'test') { delete s.wait; s.env = 1; }
-    }
-    return Object.keys(s).map(function (k) { return 's-' + k; });
-  }
-  function animate(again) {
+  function animate() {
     var stage = root.querySelector('.stage'); if (!stage) return;
-    var a = steps()[st.i].anim;
-    var before = st.i > 0 ? stateAt(st.i - 1) : [];
-    stage.className = 'stage no-anim ' + before.join(' ');
-    void stage.offsetWidth;
-    stage.className = 'stage ' + stateAt(st.i).join(' ') + ' a-' + a;
-    var d = stage.querySelector('.disp'); d.textContent = DISP[a] ? DISP[a]() : (st.i === 0 ? '' : 'OK');
+    clearInterval(cycle);
+    stage.className = 'stage a-' + steps()[st.i].anim;
+    stage.innerHTML = stageHtml();
+    var imgs = stage.querySelectorAll('.pics img'), dots = stage.querySelectorAll('.dots i'), k = 0;
+    if (imgs.length < 2) return;
+    cycle = setInterval(function () {
+      if (!document.body.contains(stage)) return clearInterval(cycle);
+      imgs[k].classList.remove('on'); dots[k].classList.remove('on');
+      k = (k + 1) % imgs.length;
+      imgs[k].classList.add('on'); dots[k].classList.add('on');
+    }, reduce ? 3500 : 2200);
   }
 
   function viewModell() {
@@ -90,7 +58,7 @@
     return '<div class="nav-back"><button type="button" data-go="modell">&larr; Andere Maschine</button></div>' +
       '<h2 tabindex="-1">Kartusche wechseln: ' + esc(title()) + '</h2>' +
       (w.note && st.i === 0 ? '<p class="sub">' + markChecks(w.note) + '</p>' : '') +
-      '<div class="player"><div><div class="stage">' + stageSvg() + '</div><p class="swipehint">Auf dem Handy: nach links wischen für weiter</p></div>' +
+      '<div class="player"><div><div class="stage" role="img" aria-label="Bild zum Schritt"></div><p class="swipehint">Auf dem Handy: nach links wischen für weiter</p></div>' +
       '<div><div class="progress" aria-hidden="true"><span style="width:' + ((st.i + 1) / n * 100) + '%"></span></div>' +
       '<p class="stepcount">Schritt ' + (st.i + 1) + ' von ' + n + '</p>' +
       '<p class="steptext" aria-live="polite">' + markChecks(wFill(s.t, st.id)) + '</p>' +
@@ -113,7 +81,7 @@
         VOLUMES.map(function (v) { return '<button type="button" class="qtile" data-vol="' + v.n + '"><small>' + esc(v.hint) + '</small><strong>' + esc(v.label) + '</strong></button>'; }).join('') + '</div>';
     }
     return '<div class="done"><svg class="tick" viewBox="0 0 84 84" aria-hidden="true"><circle cx="42" cy="42" r="42"/><path d="M24 44l12 12 24-26"/></svg>' +
-      '<h2 tabindex="-1">Geschafft</h2><p class="sub">So sieht ein sauberer Abdruck aus. Ist Ihrer blass oder lückenhaft, hilft der <a class="inline-link" href="/ratgeber/druckbild-pruefen/?modell=' + st.id + '">Druckbild-Doktor</a>.</p>' + abdruckSvg('sauber', 'sauberer Testabdruck') + '</div>' +
+      '<h2 tabindex="-1">Geschafft</h2><p class="sub">So sieht ein sauberer Abdruck aus. Ist Ihrer blass oder lückenhaft, hilft der <a class="inline-link" href="/ratgeber/druckbild-pruefen/?modell=' + st.id + '">Druckbild-Doktor</a>.</p>' + abdruckBild('sauber', 'sauberer Testabdruck') + '</div>' +
       '<div class="rec" id="rec"><h4>Nächste ' + unit + ' gleich bereitlegen?</h4>' + rec +
       '<p class="fine">Lagern Sie die Ersatz' + unit.toLowerCase() + ' nicht länger als etwa 12&nbsp;Monate und tauschen Sie spätestens nach einem Jahr, auch wenn noch Tinte drin ist. Sonst kann sie eintrocknen.</p></div>' +
       (w.power ? '<p class="note"><b>Gut zu wissen:</b> ' + esc(w.power) + '</p>' : '') +
@@ -123,6 +91,7 @@
 
   function render(focus) {
     root.innerHTML = st.view === 'modell' ? viewModell() : st.view === 'done' ? viewDone() : viewPlay();
+    clearInterval(cycle);
     if (st.view === 'play') { animate(); bindSwipe(); }
     if (focus !== false) { var h = root.querySelector('h2'); if (h) h.focus({ preventScroll: true }); if (root.getBoundingClientRect().top < 0) root.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); }
   }
@@ -148,7 +117,7 @@
     var d = t.dataset;
     if (d.mod) { st.tank = d.mod === 'one-tank'; st.id = st.tank ? 'one' : d.mod; st.i = 0; st.vol = 0; st.view = 'play'; return render(); }
     if (d.nav) return go(+d.nav);
-    if (d.again) return animate(true);
+    if (d.again) return animate();
     if (d.vol !== undefined) { st.vol = +d.vol; render(false); var r = document.getElementById('rec'); if (r) r.scrollIntoView({ block: 'nearest' }); return; }
     if (d.go) { st.view = d.go; st.i = 0; return render(); }
   });
