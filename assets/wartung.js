@@ -203,7 +203,7 @@ var BEFUNDE = {
     schritte: ['Nehmen Sie die Kartusche über {WECHSELN} heraus und setzen Sie sie wieder ein, bis sie einrastet.', 'Säubern Sie die Kontakte. Dafür gibt es das FP-Set „clean & renew“.', 'Prüfen Sie, ob es die richtige Kartusche für Ihr Modell ist.'],
     weiter: 'techniker', nachher: 'sauber' },
   'transport': { ampel: 'rot', titel: 'Bitte rufen Sie uns an',
-    text: 'Ein gestauchter Abdruck heißt meist, dass der Brief nicht gleichmäßig durch die Maschine läuft. Die Ursache sitzt dann im Transport, nicht in der Kartusche. Ein Techniker schaut sich das an.[[?Druckbild-Doktor: dürfen Kunden die Transportbürste selbst prüfen oder tauschen?]]',
+    text: 'Ein gestauchter Abdruck heißt meist, dass der Brief nicht gleichmäßig durch die Maschine läuft. Die Ursache sitzt dann im Transport, nicht in der Kartusche. Bitte nichts selbst zerlegen: Rufen Sie uns an, dann kommt ein Techniker zu Ihnen.',
     schritte: [], nachher: 'sauber' },
   'techniker': { ampel: 'rot', titel: 'Jetzt sollte ein Techniker draufschauen',
     text: 'Sie haben alles versucht, was Sie selbst machen können. Rufen Sie uns an, wir finden gemeinsam die Ursache und sagen Ihnen ehrlich, ob eine neue Kartusche hilft oder ob ein Techniker kommen sollte.',
