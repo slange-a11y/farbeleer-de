@@ -25,7 +25,10 @@ const TEL = 'tel:+49620496220';
 const D = {};
 vm.createContext(D);
 vm.runInContext(fs.readFileSync(path.join(ROOT, 'assets/kartuschen.js'), 'utf8'), D);
+vm.runInContext(fs.readFileSync(path.join(ROOT, 'assets/wartung.js'), 'utf8'), D);
+vm.runInContext(fs.readFileSync(path.join(ROOT, 'assets/abdruck.js'), 'utf8'), D);
 const { SHOP, MACHINES, VOLUMES, MAX_MONTHS, pickIndex, fmt, months } = D;
+const { WARTUNG, WARTUNG_ORDER, SYMPTOME, BEFUNDE, DIAGNOSE, wMenu, wSteps, wFill, abdruckSvg } = D;
 const byId = id => MACHINES.find(m => m.id === id);
 const one = byId('one');
 const oneCart = one.choice[0].m, oneTank = one.choice[1].m;
@@ -42,6 +45,11 @@ function chk(what) {
   CHECKS.push(currentPage + ': ' + what);
   return ' <span class="check" title="' + esc(what) + '">[bitte prüfen]</span>';
 }
+// Text aus assets/wartung.js: [[?…]] wird zum gelben Prüfhinweis, der Rest escaped.
+function mk(t) {
+  return String(t).split(/(\[\[\?.+?\]\])/).map(x => { const m = x.match(/^\[\[\?(.+)\]\]$/); return m ? chk(m[1]) : esc(x); }).join('');
+}
+const plainTxt = t => String(t).replace(/\[\[\?.+?\]\]/g, '');
 function shop(p, campaign, content) {
   return SHOP + p + '?utm_source=farbeleer&amp;utm_medium=landingpage&amp;utm_campaign=' + campaign + '&amp;utm_content=' + content;
 }
@@ -63,6 +71,7 @@ function layout(o) {
       o.image ? { primaryImageOfPage: { '@type': 'ImageObject', url: BASE + o.image } } : {}),
     { '@type': 'BreadcrumbList', '@id': url + '#breadcrumb', itemListElement: crumbs.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: BASE + c.path })) }
   ];
+  if (o.howto) graph.push(o.howto);
   if (o.faq && o.faq.length) graph.push({ '@type': 'FAQPage', '@id': url + '#faq', mainEntity: o.faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) });
   const ld = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }, null, 1);
   const navShop = shop('/', o.campaign, o.slug + '-nav');
@@ -88,7 +97,7 @@ function layout(o) {
 <meta property="og:image" content="${BASE}${o.ogImage || '/img/og-farbeleer.jpg'}">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/favicon.png" type="image/png">
-<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/site.css">${o.css ? '\n<link rel="stylesheet" href="' + o.css + '">' : ''}
 <script type="application/ld+json">
 ${ld}
 </script>
@@ -109,7 +118,7 @@ ${ld}
 <nav class="nav" aria-label="Hauptnavigation"><ul>
   <li><a href="/#finder">Kartuschenfinder</a></li>
   <li><a${on('modelle')} href="/#modelle">Modelle</a></li>
-  <li><a${on('ratgeber')} href="/ratgeber/farbe-leer-was-tun/">Ratgeber</a></li>
+  <li><a${on('ratgeber')} href="/ratgeber/">Ratgeber</a></li>
   <li><a href="/#beratung">Persönliche Beratung</a></li>
   <li><a href="/#faq">Häufige Fragen</a></li>
   <li><a href="${navShop}">Zum Shop</a></li>
@@ -133,7 +142,7 @@ ${o.body}
     <span>TE Printline GmbH · Ladenburger Straße&nbsp;7 · 68519&nbsp;Viernheim · <a href="${TEL}"><span class="nw">${PHONE}</span></a></span>
     <span><a href="/impressum.html">Impressum</a><a href="/datenschutz.html">Datenschutz</a><a href="${footShop}">Shop&nbsp;frankierfarbe.de</a></span>
   </div>
-</footer>
+</footer>${(o.js || []).map(j => '\n<script src="' + j + '" defer></script>').join('')}
 </body>
 </html>
 `;
@@ -243,19 +252,15 @@ function sizesSentence(m) {
   return m.sizes.map(s => s.size + ' (' + s.ml + ', bis zu ' + fmt(s.reach) + ' Frankierungen)').join(', ').replace(/, ([^,]*)$/, ' und $1');
 }
 
-function howto(mm, name, isSet) {
-  const steps = [
-    'Lassen Sie die Maschine eingeschaltet. Die PostBase zeigt im Display an, wenn die Kartusche getauscht werden muss, und führt Sie durch den Wechsel.' + chk('Wechselanleitung: Maschine bleibt eingeschaltet, Display führt durch den Wechsel'),
-    'Öffnen Sie die Abdeckung, unter der die Kartusche sitzt.' + chk('Wechselanleitung ' + name + ': Lage der Abdeckung / des Kartuschenfachs'),
-    'Nehmen Sie die leere Kartusche heraus.' + chk('Wechselanleitung ' + name + ': muss die Kartusche entriegelt werden?'),
-    'Packen Sie die neue Kartusche erst jetzt aus und ziehen Sie die Schutzfolie ab. Die Düsen bitte nicht mit den Fingern berühren.' + chk('Wechselanleitung: Schutzfolie über den Düsen vorhanden'),
-    'Setzen Sie die neue Kartusche ein, bis sie fest sitzt, und schließen Sie die Abdeckung. Die Maschine erkennt die neue Kartusche.' + chk('Wechselanleitung: Kartusche rastet ein, Maschine erkennt sie selbst'),
-    'Schauen Sie beim nächsten Brief auf den Abdruck. Ist er sauber und vollständig, ist alles erledigt. Ist er blass oder streifig, rufen Sie uns an.'
-  ];
-  if (isSet) steps.splice(3, 0, 'Im Set stecken zwei Kartuschen. Tauschen Sie beide zusammen aus.' + chk('Wechselanleitung ' + name + ': werden beide Kartuschen des Sets gemeinsam getauscht?'));
+function howto(id, tank) {
+  const steps = wSteps(id, tank);
   return `    <ol class="howto">
-${steps.map(s => '      <li>' + s + '</li>').join('\n')}
+${steps.map(st => '      <li>' + mk(wFill(st.t, id)) + (st.tip ? ' <i>' + esc(st.tip) + '</i>' : '') + '</li>').join('\n')}
     </ol>`;
+}
+function wechselLinks(id, tank) {
+  const q = tank ? 'one-tank' : id;
+  return `    <p class="more"><a href="/ratgeber/kartusche-wechseln/?modell=${q}">Den Wechsel Schritt für Schritt durchklicken &rarr;</a></p>`;
 }
 
 function buildModel(p) {
@@ -278,13 +283,12 @@ ${sizesTable(oneTank, slug, { unit: 'Tintentank', prefix: 'tank-' })}`;
 ${recTable(oneTank)}`;
     special = `    <div class="note"><b>Kartusche oder Tank?</b> ${esc(one.questionSub)} Für das Tanksystem braucht die Maschine außerdem das Druckkopf-Set (Artikel-Nr. ${oneTank.addon.sku}, reicht für bis zu ${fmt(oneTank.addon.reach)}&nbsp;Frankierungen).</div>`;
     guide = `    <h3>Mit Kartuschen</h3>
-${howto(oneCart, 'PostBase One', true)}
+${howto('one')}
+${wechselLinks('one')}
     <h3 style="margin-top:18px">Mit Tanksystem</h3>
-    <ol class="howto">
-      <li>Der Tintentank steht neben der Maschine und ist über einen Schlauch mit dem Druckkopf verbunden.</li>
-      <li>Wie Sie den Tank tauschen, zeigt Ihnen das Display der Maschine.${chk('Wechselanleitung PostBase One Tanksystem: Ablauf des Tankwechsels')}</li>
-      <li>Das Druckkopf-Set brauchen Sie nur beim Umstieg auf das Tanksystem und wenn es nach seiner Reichweite getauscht werden muss.${chk('PostBase One Tanksystem: wann wird das Druckkopf-Set gebraucht, baut der Kunde es selbst ein?')}</li>
-    </ol>`;
+${howto('one', true)}
+    <p>Das Druckkopf-Set brauchen Sie nur beim Umstieg auf das Tanksystem und wenn es nach seiner Reichweite getauscht werden muss.${chk('PostBase One Tanksystem: wann wird das Druckkopf-Set gebraucht, baut der Kunde es selbst ein?')}</p>
+${wechselLinks('one', true)}`;
     faq = [
       { q: 'Welche Tinte passt in die PostBase One?',
         a: 'Für die PostBase One 120 und One 150 mit Kartuschen gibt es das Original-Kartuschen-Set XL (2 × 42 ml, bis zu 22.000 Frankierungen). Für die Ausführung mit Tanksystem gibt es Tintentanks mit 175 ml (bis zu 50.000 Frankierungen) und 350 ml (bis zu 100.000 Frankierungen).' },
@@ -305,7 +309,7 @@ ${recTable(m)}`;
 ${recTable(m)}`;
     }
     if (p.id === 'insight') special = `    <div class="note"><b>Gut zu wissen:</b> ${esc(m.extra)} Im Shop finden Sie die Sets deshalb unter „PostBase 30 bis 100“.</div>`;
-    guide = howto(m, p.name, isSet);
+    guide = howto(p.id) + '\n' + wechselLinks(p.id);
     faq = [
       { q: 'Welche Kartuschen passen in die ' + p.name + '?',
         a: (m.sizes.length > 1 ? 'Für die ' + p.name + ' gibt es ' + m.sizes.length + ' Original-' + (isSet ? 'Kartuschen-Sets' : 'Kartuschen') + ' von Francotyp-Postalia: ' : 'Für die ' + p.name + ' gibt es die Original-Kartusche ') + sizesSentence(m) + '.' + (p.id === 'insight' ? ' Es sind dieselben Sets wie für die PostBase 30 bis 100.' : '') }
@@ -341,8 +345,18 @@ ${rec}
 
   <section class="block" id="wechsel">
     <h2>Kartusche wechseln: so geht es</h2>
-    <p class="sub">Eine kurze Übersicht in unseren Worten. Wenn Sie lieber jemanden dabeihaben: Rufen Sie uns an, wir gehen den Wechsel am Telefon mit Ihnen durch.</p>
+    <p class="sub">In unseren Worten nach der Bedienungsanleitung von Francotyp-Postalia. Wenn Sie lieber jemanden dabeihaben: Rufen Sie uns an, wir gehen den Wechsel am Telefon mit Ihnen durch.</p>
 ${guide}
+    <p class="fine">Quelle: ${esc(WARTUNG[p.id].src)}</p>
+  </section>
+
+  <section class="block split" id="druckbild">
+    <div>
+      <h2>Abdruck blass, streifig oder lückenhaft?</h2>
+      <p class="sub">Der Druckbild-Doktor fragt kurz nach, wie Ihr Abdruck aussieht, und sagt Ihnen, ob Reinigen reicht, die Kartusche leer ist oder ein Techniker draufschauen sollte.</p>
+      <p><a class="btn ghost" href="/ratgeber/druckbild-pruefen/?modell=${p.id}">Zum Druckbild-Doktor</a></p>
+    </div>
+    <div class="note"><b>Reinigen im Menü:</b> ${mk(wFill('{REINIGEN}, bei Bedarf {INTENSIV}.', p.id))}${WARTUNG[p.id].power ? '<br><b>Ausschalten:</b> ' + esc(WARTUNG[p.id].power) : ''}</div>
   </section>
 
 ${faqHtml(faq)}
@@ -353,7 +367,7 @@ ${waysHtml({
     shopText: 'Alle Original-Kartuschen für die ' + esc(p.short) + ' im Shop frankierfarbe.de, mit Bestellung auf Rechnung oder per Bankeinzug.',
     shopHref: catHref })}
 
-  <p class="fine">Mehr Hilfe: <a href="/ratgeber/farbe-leer-was-tun/">Farbe leer: was tun?</a> · <a href="/#uebersicht">Übersicht aller Kartuschen</a></p>`;
+  <p class="fine">Mehr Hilfe: <a href="/ratgeber/farbe-leer-was-tun/">Farbe leer: was tun?</a> · <a href="/ratgeber/kartusche-wechseln/?modell=${p.id}">Kartusche wechseln</a> · <a href="/ratgeber/druckbild-pruefen/?modell=${p.id}">Druckbild prüfen</a> · <a href="/#uebersicht">Übersicht aller Kartuschen</a></p>`;
 
   const sizesShort = (p.id === 'one' ? ['XL-Set', 'Tintentank 175 ml', 'Tintentank 350 ml'] : m.sizes.map(s => s.size));
   const html = layout({
@@ -378,7 +392,7 @@ function buildRatgeber() {
     const m = byId(p.id), [w, h] = IMG[p.id];
     return `      <a class="mtile" href="/${p.slug}/"><span class="pic"><img src="${imgSrc(m)}" alt="${esc(m.name)}" width="${w}" height="${h}" loading="lazy"></span><strong>${esc(m.name).replace(/ (\S+)$/, '&nbsp;$1')}</strong>${m.models ? `<small>${esc(m.models).replace(/ · /g, '&nbsp;· ')}</small>` : ''}</a>`;
   }).join('\n');
-  const chips = MODELS.map(p => `<a href="/${p.slug}/#wechsel">${esc(p.name)}</a>`).join('');
+  const chips = MODELS.map(p => `<a href="/ratgeber/kartusche-wechseln/?modell=${p.id}">${esc(p.name)}</a>`).join('');
   const faq = [
     { q: 'Was bedeutet „Farbe leer“ bei der Frankiermaschine?',
       a: 'Die Maschine meldet, dass die Tinte in der Kartusche zur Neige geht oder aufgebraucht ist. Damit der Frankierabdruck lesbar bleibt, setzen Sie eine neue Original-Kartusche ein.' },
@@ -422,15 +436,15 @@ ${tiles}
 
   <section class="block" id="einsetzen">
     <h2><span class="stepno">3</span>Kartusche einsetzen</h2>
-    <p class="sub">Wie der Wechsel geht, steht kurz auf der Seite Ihres Modells. Wenn Sie lieber jemanden dabeihaben: Rufen Sie uns an, wir gehen den Wechsel am Telefon mit Ihnen durch.</p>
+    <p class="sub">Wählen Sie Ihr Modell und klicken Sie sich durch den Wechsel, Schritt für Schritt mit Bildern. Wenn Sie lieber jemanden dabeihaben: Rufen Sie uns an, wir gehen den Wechsel am Telefon mit Ihnen durch.</p>
     <div class="chips">${chips}</div>
   </section>
 
   <section class="block split">
     <div>
       <h2>Abdruck nach dem Wechsel blass oder streifig?</h2>
-      <p class="sub">Bevor Sie lange selbst probieren oder gleich die nächste Kartusche einsetzen: Rufen Sie uns an. Wir schauen gemeinsam, woran es liegt, und sagen Ihnen ehrlich, ob die Kartusche die Ursache ist.</p>
-      <p><a class="btn ghost" href="${TEL}">&#128222; <span class="nw">${PHONE}</span></a></p>
+      <p class="sub">Bevor Sie gleich die nächste Kartusche einsetzen: Der Druckbild-Doktor zeigt Ihnen in wenigen Klicks, ob Reinigen reicht. Oder Sie rufen uns an, wir sagen Ihnen ehrlich, ob die Kartusche die Ursache ist.</p>
+      <div class="actions"><a class="btn" href="/ratgeber/druckbild-pruefen/">Zum Druckbild-Doktor</a><a class="btn ghost" href="${TEL}">&#128222; <span class="nw">${PHONE}</span></a></div>
     </div>
     <div class="note"><b>Tipp: Ersatzkartusche bereithalten.</b> Damit die Meldung Sie nicht mitten im Versand überrascht, legen Sie eine Ersatzkartusche bereit. Lagern Sie sie aber nicht länger als etwa 12&nbsp;Monate. Wer viel verschickt, bestellt am besten gleich zwei Stück.</div>
   </section>
@@ -448,7 +462,7 @@ ${waysHtml({
     title: 'Frankiermaschine meldet „Farbe leer“: was tun? | farbeleer.de',
     desc: 'Ihre PostBase meldet „Farbe leer“? In drei Schritten zur passenden Original-Kartusche von Francotyp-Postalia: Modell erkennen, Größe wählen, einsetzen. Beratung aus Viernheim.',
     h1plain: 'Frankiermaschine meldet „Farbe leer“: was tun?',
-    crumbs: [{ name: 'Farbe leer: was tun?', path: '/ratgeber/farbe-leer-was-tun/' }],
+    crumbs: [{ name: 'Ratgeber', path: '/ratgeber/' }, { name: 'Farbe leer: was tun?', path: '/ratgeber/farbe-leer-was-tun/' }],
     ogImage: '/img/og-farbeleer.jpg',
     faq, body
   }));
@@ -493,8 +507,223 @@ function write(rel, html) {
   console.log('geschrieben:', rel);
 }
 
+// ── Erlebnis-Seiten: Druckbild-Doktor, Kartuschenwechsel, Ratgeber-Übersicht ──
+// Daten: assets/wartung.js. Die interaktive Fassung baut assets/doktor.js bzw. assets/wechsel.js
+// im Browser auf; hier entsteht die Textfassung, die auch ohne JavaScript lesbar ist.
+const ERL_JS = ['/assets/kartuschen.js', '/assets/wartung.js', '/assets/abdruck.js'];
+const neutral = t => String(t).replace(/\{(\w+)\}/g, (a, k) => ({ REINIGEN: '„Reinigen“', INTENSIV: '„Intensiv reinigen“', AUSRICHTEN: '„Ausrichten“', INFO: 'die Füllstandsanzeige', TESTDRUCK: 'Testabdruck', WECHSELN: 'den Kartuschenwechsel' })[k]);
+const symSources = () => WARTUNG_ORDER.map(id => `      <li><b>${esc(WARTUNG[id].name)}:</b> ${esc(WARTUNG[id].src)}</li>`).join('\n');
+
+function menuTable() {
+  const cell = (id, k) => { const v = wMenu(id)[k]; return v ? mk(v) : '–'; };
+  return `    <div class="scroll"><table class="tbl">
+      <thead><tr><th>Modell</th><th>Kartusche wechseln</th><th>Reinigen</th><th>Intensiv reinigen</th><th>Füllstand</th></tr></thead>
+      <tbody>
+${WARTUNG_ORDER.map(id => `      <tr><td><b>${esc(WARTUNG[id].name)}</b><small>${WARTUNG[id].carts === 2 ? 'zwei Kartuschen' : 'eine Kartusche'}</small></td><td>${cell(id, 'WECHSELN')}</td><td>${cell(id, 'REINIGEN')}</td><td>${cell(id, 'INTENSIV')}</td><td>${cell(id, 'INFO')}</td></tr>`).join('\n')}
+      </tbody>
+    </table></div>`;
+}
+
+function buildDoktor() {
+  currentPage = '/ratgeber/druckbild-pruefen/';
+  const slug = 'druckbild-pruefen', campaign = 'druckbild-doktor';
+  const base = id => DIAGNOSE.find(r => [].concat(r.symptom).includes(id) && !Object.keys(r.wenn).length).befund;
+  const symTxt = {
+    sauber: 'Alles gut. Kartusche trotzdem spätestens nach etwa 12 Monaten tauschen und die Maschine immer über die Taste ausschalten.',
+    blass: 'Im Handbuch heißt das Fehlstellen. Testabdruck, dann Reinigen, Intensiv reinigen und Reinigung von Hand. Ist die Kartusche älter als etwa 12 Monate oder stand die Maschine lange, ist sie vermutlich eingetrocknet.',
+    streifen: 'Auch das sind Fehlstellen, meist eingetrocknete Düsen. Gleiche Reihenfolge: Reinigen, Intensiv reinigen, von Hand reinigen, dann neue Kartusche.',
+    fehlt: 'Fehlstellen. Erst reinigen, dann den Füllstand prüfen. Hilft beides nicht, ist die Kartusche leer oder eingetrocknet.',
+    verschmiert: 'Unschärfen. Erst einen Testabdruck auf einem hellen, matten Umschlag machen. Dunkle, glänzende oder stark faserige Umschläge nehmen die Tinte schlecht an. Sonst reinigen.',
+    versatz: 'Versatz zwischen den beiden Kartuschen. Nur bei Maschinen mit zwei Kartuschen. Lösung: im Menü Ausrichten.',
+    gestaucht: 'Gestauchte Abdrucke kommen vom Brieftransport, nicht von der Kartusche. Bitte rufen Sie uns an.',
+    leer: 'Die Kartusche sitzt oft nicht richtig oder die Kontakte sind verschmutzt. Neu einsetzen, Kontakte säubern. Hilft das nicht, rufen Sie uns an.'
+  };
+  const syms = SYMPTOME.map(s => `      <div class="sym">${abdruckSvg(s.id, 'Beispiel: ' + s.label)}<div><h3>${esc(s.label)}</h3><p>${esc(symTxt[s.id])}</p></div></div>`).join('\n');
+  const faq = [
+    { q: 'Warum ist mein Frankierabdruck blass?',
+      a: 'Meist sind die Düsen der Kartusche eingetrocknet oder die Kartusche ist fast leer. Machen Sie einen Testabdruck und starten Sie dann im Menü „Reinigen“, bei Bedarf „Intensiv reinigen“. Wird es nicht besser und ist die Kartusche älter als etwa ein Jahr, setzen Sie eine neue Original-Kartusche ein.' },
+    { q: 'Was bedeuten weiße Streifen im Abdruck?',
+      a: 'Weiße Streifen oder Lücken nennen die Handbücher von Francotyp-Postalia Fehlstellen. Einzelne Düsen drucken dann nicht. Die Reihenfolge ist immer gleich: Testabdruck, Reinigen, Intensiv reinigen, Reinigung von Hand. Hilft das alles nicht, rufen Sie uns an.' },
+    { q: 'Die beiden Hälften meines Abdrucks sind verschoben. Was tun?',
+      a: 'Das kommt nur bei Maschinen mit zwei Kartuschen vor, also PostBase 30 bis 100, Insight, One und Fusion. Die beiden Kartuschen drucken dann nicht deckungsgleich. Starten Sie im Menü das Ausrichten und folgen Sie dem Display.' },
+    { q: 'Wann brauche ich eine neue Kartusche?',
+      a: 'Wenn der Füllstand niedrig ist oder Reinigen und Intensiv reinigen den Abdruck nicht verbessern. Tauschen Sie die Kartusche außerdem spätestens nach etwa 12 Monaten, auch wenn noch Tinte drin ist, weil sie sonst eintrocknen kann.' },
+    { q: 'Wie verhindere ich, dass die Kartusche eintrocknet?',
+      a: 'Schalten Sie die Maschine immer über die Taste aus, indem Sie sie etwa drei Sekunden drücken, und ziehen Sie den Stecker erst danach. Dann fährt das Drucksystem in seine Ruheposition. Und wechseln Sie die Kartusche spätestens nach einem Jahr.' },
+    { q: 'Kann ich am Telefon fragen, bevor ich etwas bestelle?',
+      a: 'Ja, gern. Unter 06204 / 9622-0 erreichen Sie Montag bis Freitag von 8 bis 16 Uhr unser Team in Viernheim. Wir sagen Ihnen ehrlich, ob eine neue Kartusche hilft oder ob ein Techniker draufschauen sollte.' }
+  ];
+  const body = `
+  <section class="page-hero">
+    <div>
+      <h1>Frankierabdruck blass oder streifig? <span>Der Druckbild-Doktor</span></h1>
+      <p class="lead">Vergleichen Sie Ihren Abdruck mit unseren Beispielen, beantworten Sie zwei, drei kurze Fragen und Sie wissen, was zu tun ist: selbst beheben, Kartusche bestellen oder uns anrufen.</p>
+    </div>
+  </section>
+
+  <div id="doktor" class="app app-only" aria-live="polite"></div>
+  <noscript><p class="noscript">Der interaktive Druckbild-Doktor braucht JavaScript. Darunter finden Sie alles auch als Text.</p></noscript>
+
+  <section class="block textfassung" id="ueberblick">
+    <h2>Welcher Abdruck, welche Lösung</h2>
+    <p class="sub">Die Kurzfassung zum Nachlesen. Die Lösungen stammen aus den Bedienungsanleitungen von Francotyp-Postalia. Die Grenze, ab wann Sie uns besser anrufen, legen unsere Techniker fest.${chk('Druckbild-Doktor: Ampelgrenzen gelb/rot sind eine Vorgabe von TE Printline, keine Handbuchaussage. Techniker bestätigen.')}</p>
+    <div class="symlist">
+${syms}
+    </div>
+    <h3 style="margin-top:26px">Die Reihenfolge bei schlechtem Abdruck</h3>
+    <ol class="order"><li>Testabdruck</li><li>Reinigen</li><li>Intensiv reinigen</li><li>Reinigung von Hand</li><li>Anrufen</li></ol>
+    <p class="sub" style="margin-top:12px">Reinigung von Hand: weiches, fusselfreies Tuch mit entmineralisiertem Wasser, Düsen nach unten, langsam in eine Richtung wischen, keine Reinigungsmittel. Riecht die Maschine verbrannt oder raucht sie: sofort den Netzstecker ziehen und anrufen.</p>
+    <h3 style="margin-top:26px">So heißen die Menüpunkte bei Ihrem Modell</h3>
+${menuTable()}
+    <details><summary>Quellen</summary><ul class="src">
+${symSources()}
+    </ul></details>
+  </section>
+
+${faqHtml(faq)}
+
+${waysHtml({
+    finderText: 'Ist die Kartusche leer oder eingetrocknet? Der Finder zeigt, welche Größe zu Ihrer Briefmenge passt.',
+    finderHref: '/#finder',
+    shopText: 'Alle Original-Kartuschen von Francotyp-Postalia im Shop frankierfarbe.de, mit Bestellung auf Rechnung oder per Bankeinzug.',
+    shopHref: shop('/c/postverarbeitung/francotyp-postalia', campaign, 'kategorie') })}
+
+  <p class="fine">Mehr Hilfe: <a href="/ratgeber/kartusche-wechseln/">Kartusche wechseln zum Durchklicken</a> · <a href="/ratgeber/farbe-leer-was-tun/">Farbe leer: was tun?</a></p>`;
+
+  write('ratgeber/druckbild-pruefen/index.html', layout({
+    path: '/ratgeber/druckbild-pruefen/', slug, campaign, nav: 'ratgeber',
+    title: 'Frankierabdruck blass oder streifig? Druckbild prüfen | farbeleer.de',
+    desc: 'PostBase druckt blass, streifig oder lückenhaft? Abdruck mit Beispielen vergleichen, kurz nachfragen lassen und erfahren, ob Reinigen reicht, die Kartusche leer ist oder ein Techniker helfen sollte.',
+    h1plain: 'Frankierabdruck blass oder streifig? Der Druckbild-Doktor',
+    crumbs: [{ name: 'Ratgeber', path: '/ratgeber/' }, { name: 'Druckbild prüfen', path: '/ratgeber/druckbild-pruefen/' }],
+    css: '/assets/erlebnis.css', js: ERL_JS.concat(['/assets/doktor.js']),
+    faq, body
+  }));
+}
+
+function buildWechsel() {
+  currentPage = '/ratgeber/kartusche-wechseln/';
+  const slug = 'kartusche-wechseln', campaign = 'kartuschenwechsel';
+  const kurz = [
+    ['Wechsel starten', 'Starten Sie den Kartuschenwechsel im Display. Bei den meisten Modellen heißt der Weg „MENÜ › DRUCKSYSTEM › WECHSELN“.'],
+    ['Kartuschenfach öffnen', 'Je nach Modell öffnet sich die Klappe, oder Sie klappen das Bedienfeld oder die Waage hoch.'],
+    ['Alte Kartusche herausnehmen', 'Entriegeln Sie die Kartusche und nehmen Sie sie nach oben heraus. Bei zwei Kartuschen immer beide.'],
+    ['Neue Kartusche vorbereiten', 'Die neue Kartusche sollte Raumtemperatur haben. Ziehen Sie den Düsenschutz ab und fassen Sie die Düsen nicht an.'],
+    ['Einsetzen, bis sie einrastet', 'Achten Sie auf die Richtung der Kontakte: bei mini und Vision M2 nach vorn, bei allen anderen nach hinten.'],
+    ['Schließen und warten', 'Schließen Sie die Klappe. Die Maschine bereitet die Kartusche vor, kalibriert und reinigt. Das dauert einen Moment.'],
+    ['Testabdruck oder Ausrichten', 'Prüfen Sie zum Schluss den Abdruck auf einem leeren Umschlag.']
+  ];
+  const howtoLd = { '@type': 'HowTo', '@id': BASE + '/ratgeber/kartusche-wechseln/#howto', name: 'Tintenkartusche einer PostBase-Frankiermaschine wechseln', inLanguage: 'de-DE',
+    supply: [{ '@type': 'HowToSupply', name: 'Original-Tintenkartusche von Francotyp-Postalia' }, { '@type': 'HowToSupply', name: 'leerer Briefumschlag für den Testabdruck' }],
+    step: kurz.map((k, i) => ({ '@type': 'HowToStep', position: i + 1, name: k[0], text: k[1], url: BASE + '/ratgeber/kartusche-wechseln/#schritt-' + (i + 1) })) };
+  const modelText = WARTUNG_ORDER.map(id => {
+    const w = WARTUNG[id];
+    const one = id === 'one' ? `
+        <h4>Mit Tanksystem</h4>
+${howto('one', true)}` : '';
+    return `      <details id="text-${id}"><summary>${esc(w.name)}: alle Schritte als Text</summary>
+${w.note ? '        <p>' + mk(w.note) + '</p>\n' : ''}${id === 'one' ? '        <h4>Mit Kartuschen</h4>\n' : ''}${howto(id)}${one}
+${w.power ? '        <p><b>Ausschalten:</b> ' + esc(w.power) + '</p>\n' : ''}        <p class="src">Quelle: ${esc(w.src)}</p>
+      </details>`;
+  }).join('\n');
+  const faq = [
+    { q: 'Muss ich bei zwei Kartuschen immer beide wechseln?',
+      a: 'Ja. Bei der PostBase 30 bis 100, der Insight, der One und der Fusion wechseln Sie laut Francotyp-Postalia immer beide Kartuschen zusammen und setzen immer zwei neue ein. Deshalb gibt es diese Kartuschen als Set.' },
+    { q: 'Zeigen die Kontakte nach vorn oder nach hinten?',
+      a: 'Bei der PostBase mini und der Vision M2 zeigen die Kontakte nach vorn, zur Bedienseite. Bei der PostBase 30 bis 100, Insight, One, Vision und Fusion zeigen sie nach hinten.' },
+    { q: 'Warum soll die neue Kartusche Raumtemperatur haben?',
+      a: 'Nach dem Einsetzen kalibriert die Maschine die Kartusche. Ist sie noch kalt, etwa aus dem Keller oder dem Auto, klappt das nicht richtig. Lassen Sie sie deshalb vorher eine Weile im Raum liegen.' },
+    { q: 'Wie lange dauert der Kartuschenwechsel?',
+      a: 'Die Handgriffe sind schnell gemacht. Danach bereitet die Maschine die Kartusche vor, kalibriert und reinigt. Das dauert einen Moment. Schalten Sie sie in dieser Zeit nicht aus.' },
+    { q: 'Wie oft sollte ich die Kartusche wechseln?',
+      a: 'Spätestens nach etwa 12 Monaten, auch wenn noch Tinte drin ist. Sonst kann sie eintrocknen. Deshalb empfehlen wir die Kartuschengröße, die bei Ihrer Briefmenge innerhalb eines Jahres aufgebraucht ist.' },
+    SHIP_FAQ
+  ];
+  const body = `
+  <section class="page-hero">
+    <div>
+      <h1>PostBase Kartusche wechseln: <span>Schritt für Schritt</span></h1>
+      <p class="lead">Wählen Sie Ihre Maschine und klicken Sie sich durch den Wechsel. Zu jedem Schritt sehen Sie, was passiert, und lesen in einem Satz, was Sie tun. Kommen Sie nicht weiter, sind wir am Telefon für Sie da.</p>
+    </div>
+  </section>
+
+  <div id="wechsel" class="app app-only" tabindex="-1"></div>
+  <noscript><p class="noscript">Die Anleitung zum Durchklicken braucht JavaScript. Darunter stehen alle Schritte als Text.</p></noscript>
+
+  <section class="block textfassung" id="kurz">
+    <h2>Kurz gesagt: so geht der Wechsel</h2>
+    <p class="sub">Gilt für alle PostBase-Modelle. Die genauen Handgriffe für Ihr Modell stehen darunter.</p>
+    <ol class="howto">
+${kurz.map((k, i) => `      <li id="schritt-${i + 1}"><b>${esc(k[0])}:</b> ${esc(k[1])}</li>`).join('\n')}
+    </ol>
+    <h2 style="margin-top:30px">Alle Schritte je Modell</h2>
+    <p class="sub">In unseren Worten nach den Bedienungsanleitungen von Francotyp-Postalia.</p>
+${modelText}
+  </section>
+
+  <section class="block split">
+    <div>
+      <h2>Abdruck nach dem Wechsel nicht sauber?</h2>
+      <p class="sub">Der Druckbild-Doktor zeigt Ihnen in wenigen Klicks, ob Reinigen oder Ausrichten reicht.</p>
+      <p><a class="btn ghost" href="/ratgeber/druckbild-pruefen/">Zum Druckbild-Doktor</a></p>
+    </div>
+    <div class="note"><b>Tipp: Ersatzkartusche bereithalten.</b> Lagern Sie sie aber nicht länger als etwa 12&nbsp;Monate. Welche Größe zu Ihrer Menge passt, sagt Ihnen der <a href="/#finder">Kartuschenfinder</a>.</div>
+  </section>
+
+${faqHtml(faq)}
+
+${waysHtml({
+    finderText: 'Maschine antippen, Briefmenge angeben und sehen, welche Kartuschengröße zu Ihnen passt.',
+    finderHref: '/#finder',
+    shopText: 'Alle Original-Kartuschen von Francotyp-Postalia im Shop frankierfarbe.de, mit Bestellung auf Rechnung oder per Bankeinzug.',
+    shopHref: shop('/c/postverarbeitung/francotyp-postalia', campaign, 'kategorie') })}
+
+  <p class="fine">Mehr Hilfe: <a href="/ratgeber/druckbild-pruefen/">Druckbild prüfen</a> · <a href="/ratgeber/farbe-leer-was-tun/">Farbe leer: was tun?</a></p>`;
+
+  write('ratgeber/kartusche-wechseln/index.html', layout({
+    path: '/ratgeber/kartusche-wechseln/', slug, campaign, nav: 'ratgeber',
+    title: 'PostBase Kartusche wechseln: Schritt für Schritt | farbeleer.de',
+    desc: 'Tintenkartusche in der PostBase wechseln: Modell wählen und den Wechsel Schritt für Schritt durchklicken, für mini, Vision M2, One, 30 bis 100, Vision, Fusion und Insight. Hilfe am Telefon aus Viernheim.',
+    h1plain: 'PostBase Kartusche wechseln: Schritt für Schritt',
+    crumbs: [{ name: 'Ratgeber', path: '/ratgeber/' }, { name: 'Kartusche wechseln', path: '/ratgeber/kartusche-wechseln/' }],
+    css: '/assets/erlebnis.css', js: ERL_JS.concat(['/assets/wechsel.js']),
+    howto: howtoLd, faq, body
+  }));
+}
+
+function buildRatgeberHub() {
+  currentPage = '/ratgeber/';
+  const cards = [
+    ['Farbe leer: was tun?', 'Die Maschine meldet „Farbe leer“? In drei Schritten zur passenden Original-Kartusche.', '/ratgeber/farbe-leer-was-tun/'],
+    ['Kartusche wechseln', 'Den Wechsel für Ihr Modell Schritt für Schritt durchklicken, mit Hilfe-Knopf auf jedem Schritt.', '/ratgeber/kartusche-wechseln/'],
+    ['Druckbild prüfen', 'Abdruck blass, streifig oder lückenhaft? Der Druckbild-Doktor sagt Ihnen, was hilft.', '/ratgeber/druckbild-pruefen/']
+  ];
+  const body = `
+  <section class="page-hero"><div>
+    <h1>Ratgeber rund um die <span>Frankierfarbe</span></h1>
+    <p class="lead">Kurze Hilfen für PostBase-Frankiermaschinen von Francotyp-Postalia. Und wenn Sie lieber mit jemandem sprechen: Unser Team in Viernheim ist Montag bis Freitag von 8 bis 16&nbsp;Uhr am Telefon.</p>
+  </div></section>
+  <section class="block"><div class="ways">
+${cards.map(c => `    <div class="way"><h3>${esc(c[0])}</h3><p>${esc(c[1])}</p><a class="btn" href="${c[2]}">Öffnen</a></div>`).join('\n')}
+  </div></section>
+  <section class="block"><h2>Nach Modell</h2><p class="sub">Alle Kartuschen, Reichweiten und der Wechsel für Ihre Maschine.</p>
+    <div class="chips">${MODELS.map(p => `<a href="/${p.slug}/">${esc(p.name)}</a>`).join('')}</div></section>`;
+  write('ratgeber/index.html', layout({
+    path: '/ratgeber/', slug: 'ratgeber', campaign: 'ratgeber', nav: 'ratgeber',
+    title: 'Ratgeber Frankiermaschine: Farbe leer, Kartusche wechseln, Druckbild | farbeleer.de',
+    desc: 'Ratgeber für PostBase-Frankiermaschinen: was bei „Farbe leer“ zu tun ist, wie der Kartuschenwechsel geht und was bei blassem oder streifigem Abdruck hilft.',
+    h1plain: 'Ratgeber rund um die Frankierfarbe',
+    crumbs: [{ name: 'Ratgeber', path: '/ratgeber/' }], body
+  }));
+}
+
+buildRatgeberHub();
+buildDoktor();
+buildWechsel();
 buildRatgeber();
 MODELS.forEach(buildModel);
 buildIndexParts();
+// Prüfhinweise, die nur in der interaktiven Fassung auftauchen (Befunde, Menünamen)
+(fs.readFileSync(path.join(ROOT, 'assets/wartung.js'), 'utf8').match(/\[\[\?.+?\]\]/g) || []).filter(m => !/' \+|Was geprüft/.test(m)).forEach(m => CHECKS.push('assets/wartung.js (Druckbild-Doktor/Kartuschenwechsel): ' + m.slice(3, -2)));
 const uniq = [...new Set(CHECKS)];
 console.log('\n[bitte prüfen]-Stellen (' + uniq.length + '):\n' + uniq.map(c => '- ' + c).join('\n'));
