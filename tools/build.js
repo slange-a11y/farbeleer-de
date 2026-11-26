@@ -175,17 +175,17 @@ const SHIP_FAQ = {
 const MODELS = [
   { id: 'mini', slug: 'postbase-mini', name: 'PostBase mini', h1: 'PostBase mini', short: 'PostBase mini',
     intro: 'Die PostBase mini ist die kleinste PostBase von Francotyp-Postalia. Hier sehen Sie alle Original-Kartuschen dafür und welche Größe zu Ihrer Briefmenge passt.',
-    recognize: 'Ein kompaktes Tischgerät mit kleinem Display oben und dem FP-Logo vorn am Gehäuse.',
+    recognize: 'Ein kompaktes Tischgerät mit kleinem Display und beleuchteten Tasten oben und dem FP-Logo vorn am Gehäuse. Sie arbeitet mit einer Kartusche.', recSrc: 'Betriebsanleitung PostBase mini (manualslib.de 225692)',
     extraFaq: [{ q: 'Passen die Kartuschen der PostBase mini auch in die Vision M2?',
       a: 'Bitte bestellen Sie immer die Kartusche, die für Ihr Modell angegeben ist. Für die PostBase mini und die PostBase Vision M2 gibt es eigene Artikel mit unterschiedlichen Artikelnummern, auch wenn Füllmengen und Reichweiten gleich sind. Wenn Sie nicht sicher sind, welches Modell bei Ihnen steht, rufen Sie uns an.' }] },
   { id: 'm2', slug: 'postbase-vision-m2', name: 'PostBase Vision M2', h1: 'PostBase Vision M2', short: 'Vision M2',
     intro: 'Die PostBase Vision M2 hat eigene Original-Kartuschen in drei Größen. Hier sehen Sie alle mit Reichweite und Artikelnummer und welche Größe zu Ihrer Briefmenge passt.',
-    recognize: 'Ein hellgraues, kastenförmiges Tischgerät mit großem Farbdisplay oben rechts und dem FP-Logo vorn.',
+    recognize: 'Ein hellgraues, kastenförmiges Tischgerät mit großem Touchdisplay oben rechts, das sich von selbst in Position stellt, und dem FP-Logo vorn. Die Waage ist eingebaut, gedruckt wird mit einer Kartusche.', recSrc: 'FP-Broschüre PostBase Vision M2',
     extraFaq: [{ q: 'Passen die Kartuschen der Vision M2 auch in die PostBase mini?',
       a: 'Bitte bestellen Sie immer die Kartusche, die für Ihr Modell angegeben ist. Für die PostBase Vision M2 und die PostBase mini gibt es eigene Artikel mit unterschiedlichen Artikelnummern, auch wenn Füllmengen und Reichweiten gleich sind. Wenn Sie nicht sicher sind, welches Modell bei Ihnen steht, rufen Sie uns an.' }] },
   { id: 'one', slug: 'postbase-one', name: 'PostBase One', h1: 'PostBase One', short: 'PostBase One',
     intro: 'Die PostBase One 120 und One 150 gibt es mit Kartuschen oder mit Tanksystem. Hier finden Sie die Original-Tinte für beide Ausführungen.',
-    recognize: 'Eine lange, flache Maschine mit Briefzuführung auf der einen und Ablage auf der anderen Seite, das Display sitzt in der Mitte.' },
+    recognize: 'Eine lange, flache Maschine mit Briefzuführung auf der einen und Ablage auf der anderen Seite, das Touchdisplay sitzt in der Mitte. Sie druckt mit zwei Kartuschen oder mit dem Tanksystem.', recSrc: 'Betriebsanleitung PostBase One (manualslib.de 132953)' },
   { id: 'classic', slug: 'postbase-classic', name: 'PostBase 30 bis 100', h1: 'PostBase 30, 45, 65 und 100', short: 'PostBase 30 bis 100',
     intro: 'Die PostBase 30, 45, 65 und 100 nutzen dieselben Original-Kartuschen-Sets. Hier sehen Sie alle vier Größen und welche zu Ihrer Briefmenge passt.',
     recognize: 'Ein helles Gehäuse mit Display und flacher Auflage obenauf, darunter eine dunkle Briefbahn mit Ablage.',
@@ -195,7 +195,7 @@ const MODELS = [
         a: 'Ein Set enthält zwei Kartuschen. „2 × 10 ml“ heißt also: zwei Kartuschen mit je 10 ml Tinte.' }] },
   { id: 'vision', slug: 'postbase-vision', name: 'PostBase Vision', h1: 'PostBase Vision 35, 50, 70 und A120', short: 'PostBase Vision',
     intro: 'Für die PostBase Vision 35, 50, 70 und A120 gibt es die Original-Kartusche nur noch in einer Größe: LARGE. Hier sehen Sie, wie lange sie bei Ihrer Briefmenge reicht.',
-    recognize: 'Das große Farbdisplay sitzt vorn im hellen Gehäuse, darunter läuft eine lange, dunkle Briefbahn.',
+    recognize: 'Das große Farb-Touchdisplay sitzt vorn im hellen Gehäuse und schwenkt von selbst in Position, bedient wird es mit einem Stift. Darunter läuft eine lange, dunkle Briefbahn. Die Waage ist eingebaut, gedruckt wird mit einer Kartusche.', recSrc: 'Referenzhandbuch PostBase Vision (manualslib.de 588745)',
     extraFaq: [{ q: 'Passt die Kartusche LARGE auch in die PostBase Vision A120?',
         a: 'Ja. Die Kartusche LARGE passt in die PostBase Vision 35, 50 und 70 und auch in die Vision A120.' },
       { q: 'Gibt es die Kartusche für die Vision auch kleiner?',
@@ -207,7 +207,7 @@ const MODELS = [
       a: 'Bitte bestellen Sie die Sets, die für die PostBase Fusion angegeben sind. Sie haben eigene Artikelnummern, auch wenn die Füllmengen denen der PostBase 30 bis 100 entsprechen. Im Zweifel rufen Sie uns kurz an.' }] },
   { id: 'insight', slug: 'postbase-insight', name: 'PostBase Insight', h1: 'PostBase Insight', short: 'PostBase Insight',
     intro: 'Die PostBase Insight nutzt dieselben Original-Kartuschen-Sets wie die PostBase 30 bis 100. Hier sehen Sie alle vier Größen und welche zu Ihrer Briefmenge passt.',
-    recognize: 'Das Display sitzt erhöht auf einem Standfuß über dem hellen Gehäuse, darunter liegt eine lange, dunkle Briefbahn.',
+    recognize: 'Das Touchdisplay sitzt erhöht auf einem Standfuß über dem hellen Gehäuse und lässt sich neigen, der Stift steckt am Gehäuse. Darunter liegt eine lange, dunkle Briefbahn. Gedruckt wird mit zwei Kartuschen.', recSrc: 'PostBase Insight, Meet your Meter (FP USA/Loffler)',
     extraFaq: [{ q: 'Warum stehen im Shop Kartuschen „für PostBase 30 bis 100“?',
       a: 'Weil die PostBase Insight dieselben Kartuschen-Sets nutzt wie die PostBase 30 bis 100. Im Shop sind sie dort eingeordnet. Für Ihre Insight bestellen Sie genau diese Sets.' }] }
 ];
@@ -286,7 +286,7 @@ ${howto('one')}
 ${wechselLinks('one')}
     <h3 style="margin-top:18px">Mit Tanksystem</h3>
 ${howto('one', true)}
-    <p>Das Druckkopf-Set brauchen Sie nur beim Umstieg auf das Tanksystem und wenn es nach seiner Reichweite getauscht werden muss.${chk('PostBase One Tanksystem: wann wird das Druckkopf-Set gebraucht, baut der Kunde es selbst ein?')}</p>
+    <p>Das Druckkopf-Set brauchen Sie beim Umstieg auf das Tanksystem und wenn die Maschine meldet, dass die Druckköpfe getauscht werden müssen. Getauscht werden immer beide Druckköpfe zusammen, das Display führt durch den Tausch. Am besten haben Sie ein Ersatz-Set im Schrank. Wenn Sie unsicher sind, rufen Sie uns an.</p>
 ${wechselLinks('one', true)}`;
     faq = [
       { q: 'Welche Tinte passt in die PostBase One?',
@@ -325,7 +325,7 @@ ${recTable(m)}`;
     </div>
     <img class="shot" src="${imgSrc(m)}" alt="${esc(m.name)} von Francotyp-Postalia" width="${w}" height="${h}">
   </section>
-  <p class="answer"><b>So erkennen Sie die ${esc(p.name)}:</b> ${esc(p.recognize)}${chk('Erkennungsmerkmal ' + p.name + ' (nur nach FP-Foto beschrieben)')}</p>
+  <p class="answer"><b>So erkennen Sie die ${esc(p.name)}:</b> ${esc(p.recognize)}${p.recSrc ? '' : chk('Erkennungsmerkmal ' + p.name + ' (nur nach FP-Foto beschrieben)')}</p>
 
   <section class="block" id="kartuschen">
     <h2>Diese Original-Kartuschen passen</h2>
@@ -416,7 +416,7 @@ function buildRatgeber() {
 
   <section class="block" id="modell">
     <h2><span class="stepno">1</span>Modell erkennen</h2>
-    <p class="sub">Tippen Sie auf das Gerät, das so aussieht wie Ihres. Auf der Seite dazu sehen Sie alle passenden Kartuschen. Den genauen Namen finden Sie meist auf dem Gehäuse der Maschine.${chk('Ratgeber: Modellname steht auf dem Gehäuse (Typenschild/Aufdruck)?')}</p>
+    <p class="sub">Tippen Sie auf das Gerät, das so aussieht wie Ihres. Auf der Seite dazu sehen Sie alle passenden Kartuschen. Den genauen Namen finden Sie auf dem Typenschild der Maschine, bei der PostBase Vision hinten neben dem Netzanschluss, bei der PostBase Fusion auf der Unterseite.</p>
     <div class="mtiles">
 ${tiles}
     </div>
