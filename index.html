@@ -231,16 +231,16 @@ var cur=1;
 var parent=null, sec='finder';
 var SECNUM={finder:1,variant:1,volume:2,result:3};
 function canGo(i){return i<cur && (i===1 || (i===2 && !!machine && !machine.noQty))}
-function show(id){
+function show(id,still){
   sec=id; cur=SECNUM[id];
   ['finder','variant','volume','result'].forEach(function(x){el(x).style.display=(x===id)?'block':'none'});
   [1,2,3].forEach(function(i){var s=el('st'+i); s.className=(i===cur)?'on':(canGo(i)?'go':''); s.title=canGo(i)?'Zurück zu Schritt '+i:'';});
   el('backvar').style.display=el('backvar2').style.display=parent?'':'none';
   el('backqty').style.display=(machine&&machine.noQty)?'none':'';
-  window.scrollTo({top:el('steps').offsetTop-10,behavior:'smooth'});
+  if(!still) window.scrollTo({top:el('steps').offsetTop-10,behavior:'smooth'});
 }
-function step(n){
-  if(n===1){parent=null; machine=null; show('finder')}
+function step(n,still){
+  if(n===1){parent=null; machine=null; show('finder',still)}
   else if(n===2 && machine) show('volume');
   else if(n==='v' && parent) show('variant');
 }
@@ -325,7 +325,14 @@ function moreLink(m){
 document.querySelectorAll('[data-back]').forEach(function(b){
   b.onclick=function(){var v=b.getAttribute('data-back'); step(v==='v'?'v':parseInt(v,10))};
 });
-function openOv(){if(location.hash==='#uebersicht'){var d=el('uebersicht');d.open=true;d.scrollIntoView()}}
+// Die Startseite beginnt immer oben. Nur eine Vorauswahl (?modell=…) oder #uebersicht springen gezielt.
+// Grund: Browser vervollständigen gern auf www.farbeleer.de/#finder und würden sonst sofort nach unten springen.
+if('scrollRestoration' in history) history.scrollRestoration='manual';
+if(location.hash==='#finder' && !new URLSearchParams(location.search).get('modell')){
+  history.replaceState(null,'',location.pathname);
+  window.scrollTo(0,0); window.addEventListener('load',function(){window.scrollTo(0,0)});
+}
+function openOv(){if(location.hash==='#uebersicht'){var d=el('uebersicht');if(d){d.open=true;d.scrollIntoView()}}}
 window.addEventListener('hashchange',openOv); openOv();
 // Vorauswahl per URL, z. B. /?modell=classic#finder (von den Modellseiten)
 (function(){
@@ -336,7 +343,7 @@ window.addEventListener('hashchange',openOv); openOv();
     if(m.choice) for(var j=0;j<m.choice.length;j++){ if(m.choice[j].m.id===want){ pick(m); parent=m; choose(m.choice[j].m); return; } }
   }
 })();
-el('homelink').onclick=function(e){e.preventDefault(); step(1); history.replaceState(null,'',location.pathname); window.scrollTo({top:0,behavior:'smooth'})};
+el('homelink').onclick=function(e){e.preventDefault(); step(1,true); history.replaceState(null,'',location.pathname); window.scrollTo({top:0,behavior:'smooth'})};
 document.querySelectorAll('[data-shop]').forEach(function(a){a.href=shopUrl('/',a.getAttribute('data-shop'))});
 </script>
 </body>
