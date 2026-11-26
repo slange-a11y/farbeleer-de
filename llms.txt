@@ -36,8 +36,17 @@ Hinweise: PostBase Insight nutzt dieselben Kartuschen wie die PostBase 30 bis 10
 
 ## Seiten
 - [Kartuschenfinder und Übersicht](https://www.farbeleer.de/): Modell wählen, Monatsmenge angeben, Empfehlung erhalten
+- [Farbe leer: was tun?](https://www.farbeleer.de/ratgeber/farbe-leer-was-tun/): Ratgeber in drei Schritten (Modell erkennen, Größe wählen und bestellen, Kartusche einsetzen), mit FAQ
+- [PostBase mini](https://www.farbeleer.de/postbase-mini/): alle Kartuschen, Empfehlung nach Briefmenge, Wechsel
+- [PostBase Vision M2](https://www.farbeleer.de/postbase-vision-m2/): alle Kartuschen, Empfehlung nach Briefmenge, Wechsel
+- [PostBase One](https://www.farbeleer.de/postbase-one/): Kartuschen-Set XL oder Tanksystem (Tintentanks und Druckkopf-Set)
+- [PostBase 30, 45, 65 und 100](https://www.farbeleer.de/postbase-classic/): Kartuschen-Sets XS bis XL
+- [PostBase Vision 35, 50 und 70](https://www.farbeleer.de/postbase-vision/): Kartusche LARGE, Hinweis zur Vision A120
+- [PostBase Fusion](https://www.farbeleer.de/postbase-fusion/): Kartuschen-Sets XS bis XL
+- [PostBase Insight](https://www.farbeleer.de/postbase-insight/): nutzt die Kartuschen-Sets der PostBase 30 bis 100
 - [Webshop frankierfarbe.de](https://www.frankierfarbe.de/): Bestellung der Original-Kartuschen
 - [Impressum](https://www.farbeleer.de/impressum.html)
+- [Datenschutz](https://www.farbeleer.de/datenschutz.html)
 
 ## Kontakt
 TE Printline GmbH, Ladenburger Straße 7, 68519 Viernheim, Telefon 06204 / 9622-0, mail@te-printline.de
