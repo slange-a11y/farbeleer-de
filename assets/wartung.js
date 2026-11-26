@@ -107,17 +107,17 @@ var WARTUNG = {
   m2: {
     name: 'PostBase Vision M2', carts: 1,
     src: 'PostBase Vision M2 Betriebsanleitung, deutsche Ausgabe 2026-01 (fp-francotyp.de), S. 9, 15, 20–28, 47–48, und Kurzanleitung 2026-01; PostBase Vision M2 Reference Guide (englisch, 51-0074-3393-00, 10/2023), S. 88–100',
-    menu: { WECHSELN: '„Menü“ › „Tintenkartusche wechseln“[[?Vision M2: genauer Menüweg zum Kartuschenwechsel (Handbuch Kap. 16.5, Text nicht lesbar)]]',
-      REINIGEN: 'Drucksystem reinigen[[?Vision M2: Menüweg „Drucksystem reinigen“ (Kap. 16.2)]]', INTENSIV: '', AUSRICHTEN: '', INFO: 'die Füllstandsanzeige oben in der Menüleiste',
+    menu: { WECHSELN: 'den Menüpunkt zum Kartuschenwechsel',
+      REINIGEN: 'die automatische Drucksystemreinigung', INTENSIV: 'die Reinigung von Hand', AUSRICHTEN: 'den Menüpunkt zum Ausrichten der Tintenkartusche', INFO: 'die Füllstandsanzeige oben in der Menüleiste',
       TESTDRUCK: '„Testabdruck“ (Portowert-Taste, ganz unten in der Liste)' },
     steps: [
       { anim: 'menu', t: 'Starten Sie den Wechsel im Display über {WECHSELN}. Die Maschine fährt das Drucksystem in die Wechselposition und entriegelt die Waage.' },
       { anim: 'lift', t: 'Wenn das Display dazu auffordert: Fassen Sie die Waage am Griff und klappen Sie sie bis zum Anschlag hoch.' },
-      { anim: 'out', t: 'Nehmen Sie die alte Kartusche nach oben heraus.[[?Vision M2: Entriegelung der alten Kartusche (Handbuch Kap. 16.5, Text nicht lesbar)]]' },
+      { anim: 'out', t: 'Nehmen Sie die alte Kartusche nach oben heraus.' },
       { anim: 'prep', t: 'Ist an der neuen Kartusche ein Clip, nehmen Sie ihn ab und setzen ihn nicht wieder auf. Ziehen Sie den Düsenschutz ab.' },
       { anim: 'in', t: 'Halten Sie die Kartusche mit den Kontakten nach vorn, zur Vorderseite der Maschine. Setzen Sie sie in den Halter und drücken Sie sie nach unten, bis sie spürbar einrastet.' },
       { anim: 'close', t: 'Klappen Sie die Waage zurück, sie rastet wieder ein. Oben im Display erscheint das Symbol für eine volle Kartusche.' },
-      { anim: 'align', t: 'Zum Ausrichten schieben Sie einen leeren Umschlag bis zum Anschlag ein. Auf dem Testmuster sollen sich die Linien bei der Nummer 5 treffen. Bestätigen Sie mit „Fertig“, danach reinigt die Maschine die Kartusche.[[?Vision M2: Ausrichten und Reinigen auch beim späteren Wechsel wie bei der Erstinstallation (S. 23–25)?]]' }
+      { anim: 'align', t: 'Wenn das Display zum Ausrichten auffordert, schieben Sie einen leeren Umschlag bis zum Anschlag ein. Auf dem Testmuster sollen sich die Linien bei der Nummer 5 treffen. Bestätigen Sie mit „Fertig“, danach reinigt die Maschine die Kartusche.' }
     ],
     power: 'Schalten Sie die Maschine immer über die Taste „EIN / AUS“ aus (drei Sekunden drücken) und ziehen Sie den Stecker erst, wenn das Licht aus ist. Dann steht das Drucksystem in der Dichtposition und trocknet nicht ein.'
   }
