@@ -117,7 +117,6 @@ ${ld}
 </div>
 <nav class="nav" aria-label="Hauptnavigation"><ul>
   <li><a href="/#finder">Kartuschenfinder</a></li>
-  <li><a${on('modelle')} href="/#modelle">Modelle</a></li>
   <li><a${on('ratgeber')} href="/ratgeber/">Ratgeber</a></li>
   <li><a href="/#beratung">Persönliche Beratung</a></li>
   <li><a href="/#faq">Häufige Fragen</a></li>
