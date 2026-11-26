@@ -19,9 +19,9 @@
 var WARTUNG = {
   classic: {
     name: 'PostBase 30 bis 100', carts: 2,
-    src: 'FP-Broschüre „PostBase Wartung & Pflege – Tipps zur Selbsthilfe“ (koelliker.ch); PostBase Operator Manual (FP, englisch, manualslib 1044163), S. 90–98, 116–117',
+    src: 'FP-Broschüre „PostBase Wartung & Pflege – Tipps zur Selbsthilfe“ (koelliker.ch); PostBase Operator Manual (FP, englisch, manualslib 1044163), S. 90–98, 116–117; Betriebsanleitung PostBase, deutsch, Stand 11/2014 (fp-francotyp.de), S. 41–42',
     menu: { WECHSELN: '„MENÜ › DRUCKSYSTEM › WECHSELN“', REINIGEN: '„REINIGEN“', INTENSIV: '„INTENSIV REINIGEN“', AUSRICHTEN: '„AUSRICHTEN“', INFO: '„INFO DRUCKSYSTEM“',
-      TESTDRUCK: 'Testabdruck[[?PostBase 30 bis 100 und Insight: deutscher Menüname für den Testabdruck (in der Broschüre nicht genannt)]]' },
+      TESTDRUCK: '„TESTABDRUCK“ (unter „PRODUKT“, am Ende der Liste der Zusatzleistungen)' },
     steps: [
       { anim: 'menu', t: 'Wählen Sie im Display {WECHSELN}. Die Klappe öffnet sich dann von selbst. Bitte stützen Sie sich nicht auf die offene Klappe.' },
       { anim: 'out', t: 'Drücken Sie die alte Kartusche an den geriffelten Griffflächen nach unten und etwas nach vorn. Dann können Sie sie nach oben herausnehmen. Machen Sie das mit beiden Kartuschen.', tip: 'Säubern Sie bei jedem Wechsel die Kontakte in der Halterung. Dafür gibt es von FP das Set „clean & renew“.' },
@@ -38,11 +38,11 @@ var WARTUNG = {
   },
   vision: {
     name: 'PostBase Vision', carts: 1,
-    src: 'PostBase Vision Referenzhandbuch, deutsche Ausgabe 09/2019 (te-postline.de), S. 146–155, 175, 180, 205',
+    src: 'PostBase Vision Referenzhandbuch, deutsche Ausgabe 09/2019 (te-postline.de; manualslib.de 588745), S. 146–155, 175, 180, 205; Operator Maintenance & Care (Loffler, US), S. 130–138',
     menu: { WECHSELN: '„MENÜ › DRUCKSYSTEM › WECHSELN“', REINIGEN: '„REINIGEN“', INTENSIV: '„INTENSIV REINIGEN“', AUSRICHTEN: '', INFO: '„INFO DRUCKSYSTEM“', TESTDRUCK: '„TESTDRUCK“' },
-    note: 'Bei der Vision A120 heißt der Menüweg anders.[[?Vision A120: deutscher Menüweg zum Kartuschenwechsel (US-Handbuch: MENU › INK CARTRIDGE › CHANGE CARTRIDGE)]] Die Kartusche LARGE passt auch dort.',
+    note: 'Gilt genauso für die Vision A120. Die Kartusche LARGE passt auch dort.',
     steps: [
-      { anim: 'menu', t: 'Wählen Sie im Display {WECHSELN} und öffnen Sie die Klappe.[[?PostBase Vision: öffnet sich die Klappe von selbst oder von Hand?]]' },
+      { anim: 'menu', t: 'Wählen Sie im Display {WECHSELN}. Die Maschine öffnet die Klappe selbst. Ziehen Sie sie nicht von Hand auf.' },
       { anim: 'out', t: 'Drücken Sie auf die Markierung „Push here“. Die Kartusche kippt nach vorn und die grüne LED blinkt. Nehmen Sie die Kartusche an der grünen Nase nach oben heraus.' },
       { anim: 'prep', t: 'Nehmen Sie den Transportclip von der neuen Kartusche ab und setzen Sie ihn nicht wieder auf. Ziehen Sie dann den Schutzstreifen von den Düsen ab.' },
       { anim: 'in', t: 'Kontakte nach hinten, der grüne Pfeil zeigt zur grünen Nase. Drücken Sie die Kartusche nach unten und nach hinten, bis sie einrastet. Leuchtet die grüne LED dauerhaft, sitzt sie richtig.' },
@@ -52,10 +52,10 @@ var WARTUNG = {
   },
   fusion: {
     name: 'PostBase Fusion', carts: 2,
-    src: 'PostBase Fusion Referenzhandbuch, deutsche Ausgabe (FP, cdn.shopify.com), S. 40–41, 144–152, 173, 178, 184, 192–194',
+    src: 'PostBase Fusion Referenzhandbuch, deutsche Ausgabe (FP, cdn.shopify.com), S. 30–32, 40–41, 144–152, 173, 178, 184, 192–194',
     menu: { WECHSELN: '„MENÜ › DRUCKSYSTEM › WECHSELN“', REINIGEN: '„REINIGEN“', INTENSIV: '„INTENSIV REINIGEN“', AUSRICHTEN: '', INFO: '„FÜLLSTAND KARTUSCHE“', TESTDRUCK: '„TESTDRUCK“' },
     steps: [
-      { anim: 'menu', t: 'Wählen Sie im Display {WECHSELN} und öffnen Sie die Klappe.[[?PostBase Fusion: öffnet sich die Klappe von selbst oder von Hand?]]' },
+      { anim: 'menu', t: 'Wählen Sie im Display {WECHSELN}. Die Maschine fährt das Drucksystem in die Wechselposition und öffnet die Klappe selbst. Halten Sie die Klappe dabei nicht fest.' },
       { anim: 'out', t: 'Drücken Sie die alte Kartusche an den geriffelten Griffflächen nach unten und etwas nach vorn und nehmen Sie sie heraus. Danach die zweite.' },
       { anim: 'shake', t: 'Bewegen Sie jede neue Kartusche sechsmal auf und ab. Ziehen Sie dann den Düsenschutz ab. Der Transportclip ist nur für den Versand gedacht.' },
       { anim: 'in', t: 'Kontakte nach hinten, Kartusche einsetzen und nach unten drücken, bis sie einrastet. Dann die zweite.', tip: 'Immer beide Kartuschen zusammen wechseln.' },
@@ -79,10 +79,11 @@ var WARTUNG = {
     tank: {
       name: 'PostBase One mit Tanksystem',
       steps: [
-        { anim: 'menu', t: 'Bestätigen Sie die Meldung und wählen Sie im Display „MENÜ › DRUCKSYSTEM › TANK WECHSELN“. Die Klappe öffnet sich.' },
+        { anim: 'menu', t: 'Bestätigen Sie die Meldung und wählen Sie im Display „MENÜ › DRUCKSYSTEM › TANK WECHSELN“. Die Klappe öffnet sich von selbst, ziehen Sie sie nicht auf.' },
         { anim: 'out', t: 'Drücken Sie auf die Mulde des alten Tanks, schieben Sie ihn nach unten und ziehen Sie ihn gleichzeitig nach vorn. Dann heben Sie ihn aus der Halterung.' },
-        { anim: 'in', t: 'Setzen Sie den neuen Tank ein, wie es das Display zeigt.[[?PostBase One Tanksystem: Handgriffe beim Einsetzen des neuen Tanks (Handbuch S. 129, nicht gelesen)]]' },
-        { anim: 'test', t: 'Schließen Sie die Klappe und prüfen Sie den Abdruck. Die Druckköpfe tauschen Sie immer paarweise, auch dafür führt das Display durch.' }
+        { anim: 'shake', t: 'Packen Sie den neuen Tank aus und schütteln Sie ihn sechsmal kräftig.' },
+        { anim: 'in', t: 'Setzen Sie den Tank ein und drücken Sie ihn nach unten, bis er in der Halterung einrastet.' },
+        { anim: 'test', t: 'Schließen Sie die Klappe und prüfen Sie den Abdruck. Wann die Druckköpfe getauscht werden müssen, meldet die Maschine selbst. Getauscht werden sie immer paarweise.' }
       ]
     },
     power: 'Schalten Sie die Maschine immer aus, indem Sie den Wipptaster drei Sekunden drücken, bevor Sie den Stecker ziehen. Sonst kann der Druckkopf eintrocknen.'
