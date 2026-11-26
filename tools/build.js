@@ -192,16 +192,6 @@ const MODELS = [
     recognize: 'Ein hellgraues, kastenförmiges Tischgerät mit großem Touchdisplay oben rechts, das sich von selbst in Position stellt, und dem FP-Logo vorn. Die Waage ist eingebaut, gedruckt wird mit einer Kartusche.', recSrc: 'FP-Broschüre PostBase Vision M2',
     extraFaq: [{ q: 'Passen die Kartuschen der Vision M2 auch in die PostBase mini?',
       a: 'Bitte bestellen Sie immer die Kartusche, die für Ihr Modell angegeben ist. Für die PostBase Vision M2 und die PostBase mini gibt es eigene Artikel mit unterschiedlichen Artikelnummern, auch wenn Füllmengen und Reichweiten gleich sind. Wenn Sie nicht sicher sind, welches Modell bei Ihnen steht, rufen Sie uns an.' }] },
-  { id: 'one', slug: 'postbase-one', name: 'PostBase One', h1: 'PostBase One', short: 'PostBase One',
-    intro: 'Die PostBase One 120 und One 150 gibt es mit Kartuschen oder mit Tanksystem. Hier finden Sie die Original-Tinte für beide Ausführungen.',
-    recognize: 'Eine lange, flache Maschine mit Briefzuführung auf der einen und Ablage auf der anderen Seite, das Touchdisplay sitzt in der Mitte. Sie druckt mit zwei Kartuschen oder mit dem Tanksystem.', recSrc: 'Betriebsanleitung PostBase One (manualslib.de 132953)' },
-  { id: 'classic', slug: 'postbase-classic', name: 'PostBase 30 bis 100', h1: 'PostBase 30, 45, 65 und 100', short: 'PostBase 30 bis 100',
-    intro: 'Die PostBase 30, 45, 65 und 100 nutzen dieselben Original-Kartuschen-Sets. Hier sehen Sie alle vier Größen und welche zu Ihrer Briefmenge passt.',
-    recognize: 'Ein helles Gehäuse mit schwarz umrandetem Display und flacher Auflage obenauf, darunter eine dunkle Briefbahn mit Ablage.', recSrc: 'FP-Foto, Angabe TE Printline',
-    extraFaq: [{ q: 'Gelten die Kartuschen für alle Modelle von PostBase 30 bis 100?',
-      a: 'Ja. Die PostBase 30, 45, 65 und 100 nutzen dieselben Kartuschen-Sets XS, SMALL, MEDIUM und XL. Auch die PostBase Insight nutzt diese Sets.' },
-      { q: 'Was bedeutet die Angabe „2 × 10 ml“?',
-        a: 'Ein Set enthält zwei Kartuschen. „2 × 10 ml“ heißt also: zwei Kartuschen mit je 10 ml Tinte.' }] },
   { id: 'vision', slug: 'postbase-vision', name: 'PostBase Vision', h1: 'PostBase Vision 35, 50, 70 und A120', short: 'PostBase Vision',
     intro: 'Für die PostBase Vision 35, 50, 70 und A120 gibt es die Original-Kartusche nur noch in einer Größe: LARGE. Hier sehen Sie, wie lange sie bei Ihrer Briefmenge reicht.',
     recognize: 'Das große Farb-Touchdisplay sitzt vorn im hellen Gehäuse und schwenkt von selbst in Position, bedient wird es mit einem Stift. Darunter läuft eine lange, dunkle Briefbahn. Die Waage ist eingebaut, gedruckt wird mit einer Kartusche.', recSrc: 'Referenzhandbuch PostBase Vision (manualslib.de 588745)',
@@ -209,16 +199,27 @@ const MODELS = [
         a: 'Ja. Die Kartusche LARGE passt in die PostBase Vision 35, 50 und 70 und auch in die Vision A120.' },
       { q: 'Gibt es die Kartusche für die Vision auch kleiner?',
         a: 'Nein. Für die PostBase Vision gibt es die Original-Kartusche nur noch in Größe LARGE. Wechseln Sie sie mindestens einmal im Jahr, damit die Tinte nicht eintrocknet.' }] },
+  { id: 'classic', slug: 'postbase-classic', name: 'PostBase 30 bis 100', h1: 'PostBase 30, 45, 65 und 100', short: 'PostBase 30 bis 100',
+    intro: 'Die PostBase 30, 45, 65 und 100 nutzen dieselben Original-Kartuschen-Sets. Hier sehen Sie alle vier Größen und welche zu Ihrer Briefmenge passt.',
+    recognize: 'Ein helles Gehäuse mit schwarz umrandetem Display und flacher Auflage obenauf, darunter eine dunkle Briefbahn mit Ablage.', recSrc: 'FP-Foto, Angabe TE Printline',
+    extraFaq: [{ q: 'Gelten die Kartuschen für alle Modelle von PostBase 30 bis 100?',
+      a: 'Ja. Die PostBase 30, 45, 65 und 100 nutzen dieselben Kartuschen-Sets XS, SMALL, MEDIUM und XL. Auch die PostBase Insight nutzt diese Sets.' },
+      { q: 'Was bedeutet die Angabe „2 × 10 ml“?',
+        a: 'Ein Set enthält zwei Kartuschen. „2 × 10 ml“ heißt also: zwei Kartuschen mit je 10 ml Tinte.' }] },
+  { id: 'insight', slug: 'postbase-insight', name: 'PostBase Insight', h1: 'PostBase Insight', short: 'PostBase Insight',
+    intro: 'Die PostBase Insight nutzt dieselben Original-Kartuschen-Sets wie die PostBase 30 bis 100. Hier sehen Sie alle vier Größen und welche zu Ihrer Briefmenge passt.',
+    recognize: 'Das Touchdisplay sitzt erhöht auf einem Standfuß über dem hellen Gehäuse und lässt sich neigen, der Stift steckt am Gehäuse. Darunter liegt eine lange, dunkle Briefbahn. Gedruckt wird mit zwei Kartuschen.', recSrc: 'PostBase Insight, Meet your Meter (FP USA/Loffler)',
+    extraFaq: [{ q: 'Warum stehen im Shop Kartuschen „für PostBase 30 bis 100“?',
+      a: 'Weil die PostBase Insight dieselben Kartuschen-Sets nutzt wie die PostBase 30 bis 100. Im Shop sind sie dort eingeordnet. Für Ihre Insight bestellen Sie genau diese Sets.' }] },
   { id: 'fusion', slug: 'postbase-fusion', name: 'PostBase Fusion', h1: 'PostBase Fusion', short: 'PostBase Fusion',
     intro: 'Die PostBase Fusion 35, 50, 70 und 120 hat eigene Original-Kartuschen-Sets in vier Größen. Hier sehen Sie alle mit Reichweite und welche zu Ihrer Briefmenge passt.',
     recognize: 'Ein hellgraues Gehäuse mit weiß umrandetem Display obenauf, darunter eine lange, dunkle Briefbahn mit Ablage.', recSrc: 'FP-Foto, Angabe TE Printline',
     extraFaq: [{ q: 'Passen die Kartuschen der PostBase 30 bis 100 auch in die Fusion?',
       a: 'Bitte bestellen Sie die Sets, die für die PostBase Fusion angegeben sind. Sie haben eigene Artikelnummern, auch wenn die Füllmengen denen der PostBase 30 bis 100 entsprechen. Im Zweifel rufen Sie uns kurz an.' }] },
-  { id: 'insight', slug: 'postbase-insight', name: 'PostBase Insight', h1: 'PostBase Insight', short: 'PostBase Insight',
-    intro: 'Die PostBase Insight nutzt dieselben Original-Kartuschen-Sets wie die PostBase 30 bis 100. Hier sehen Sie alle vier Größen und welche zu Ihrer Briefmenge passt.',
-    recognize: 'Das Touchdisplay sitzt erhöht auf einem Standfuß über dem hellen Gehäuse und lässt sich neigen, der Stift steckt am Gehäuse. Darunter liegt eine lange, dunkle Briefbahn. Gedruckt wird mit zwei Kartuschen.', recSrc: 'PostBase Insight, Meet your Meter (FP USA/Loffler)',
-    extraFaq: [{ q: 'Warum stehen im Shop Kartuschen „für PostBase 30 bis 100“?',
-      a: 'Weil die PostBase Insight dieselben Kartuschen-Sets nutzt wie die PostBase 30 bis 100. Im Shop sind sie dort eingeordnet. Für Ihre Insight bestellen Sie genau diese Sets.' }] }
+  { id: 'one', slug: 'postbase-one', name: 'PostBase One', h1: 'PostBase One', short: 'PostBase One',
+    intro: 'Die PostBase One 120 und One 150 gibt es mit Kartuschen oder mit Tanksystem. Hier finden Sie die Original-Tinte für beide Ausführungen.',
+    recognize: 'Eine lange, flache Maschine mit Briefzuführung auf der einen und Ablage auf der anderen Seite, das Touchdisplay sitzt in der Mitte. Sie druckt mit zwei Kartuschen oder mit dem Tanksystem.', recSrc: 'Betriebsanleitung PostBase One (manualslib.de 132953)' }
+
 ];
 // Modell-Knöpfe: „PostBase“ steht einmal davor, die Knöpfe tragen nur den Kurznamen (passt am Desktop in eine Zeile)
 const modelChips = href => '<div class="chips"><span class="chips-pre">PostBase</span>' +
@@ -386,7 +387,7 @@ function buildRatgeber() {
   const cl = byId('classic'), n = 600, i = pickIndex(cl.sizes, n), k = cl.sizes[i], bigger = cl.sizes[i + 1];
   const tiles = MODELS.map(p => {
     const m = byId(p.id), [w, h] = IMG[p.id];
-    return `      <a class="mtile" href="/${p.slug}/"><span class="pic"><img src="${imgSrc(m)}" alt="${esc(m.name)}" width="${w}" height="${h}" loading="lazy"></span><strong>${esc(m.name).replace(/ (\S+)$/, '&nbsp;$1')}</strong>${m.models ? `<small>${esc(m.models).replace(/ · /g, '&nbsp;· ')}</small>` : ''}</a>`;
+    return `      <a class="mtile${p.id === 'one' ? ' wide' : ''}" href="/${p.slug}/"><span class="pic"><img src="${imgSrc(m)}" alt="${esc(m.name)}" width="${w}" height="${h}" loading="lazy"></span><strong>${esc(m.name).replace(/ (\S+)$/, '&nbsp;$1')}</strong>${m.models ? `<small>${esc(m.models).replace(/ · /g, '&nbsp;· ')}</small>` : ''}</a>`;
   }).join('\n');
   const chips = modelChips(p => '/ratgeber/kartusche-wechseln/?modell=' + p.id);
   const faq = [

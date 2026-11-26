@@ -311,3 +311,10 @@ section.block,.faqlink{margin-top:var(--gap-xl)}
   .chips-pre{grid-column:1/-1}
   .chips a{text-align:center;padding:6px 4px;font-size:.88rem}
 }
+
+/* Maschinen von klein nach groß: die PostBase One als größte Maschine füllt den Rest der letzten Reihe */
+.grid .tile.wide,.mtile.wide{flex-basis:calc(50% - 6px)}
+@media (max-width:860px){.grid .tile.wide,.mtile.wide{flex-basis:100%}}
+.tile.wide .pic,.mtile.wide .pic{aspect-ratio:8/3}
+@media (max-width:860px){.grid .tile.wide .pic,.mtile.wide .pic{aspect-ratio:4/1}}
+@media (max-width:720px){.grid .tile.wide .pic,.mtile.wide .pic{aspect-ratio:8/3}}

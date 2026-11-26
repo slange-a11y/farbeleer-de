@@ -38,7 +38,7 @@
     return '<h2 tabindex="-1">Welche Maschine haben Sie?</h2><p class="sub">' + (s.two ? 'Verschobene Hälften gibt es nur bei Maschinen mit zwei Kartuschen. Diese hier kommen in Frage:' : 'Tippen Sie auf das Gerät, das so aussieht wie Ihres.') + '</p>' +
       '<div class="mgrid">' + ids.map(function (id) {
         var m = finderMachine(id);
-        return '<button type="button" class="tile" data-mod="' + id + '"><span class="pic"><img src="/' + m.img + '" alt="" loading="lazy"></span><strong>' + esc(WARTUNG[id].name) + '</strong>' + (MACHINES.filter(function (x) { return x.id === id; })[0].models ? '<span class="models">' + esc(MACHINES.filter(function (x) { return x.id === id; })[0].models) + '</span>' : '') + '</button>';
+        return '<button type="button" class="tile' + (id === 'one' && ids.length === 7 ? ' wide' : '') + '" data-mod="' + id + '"><span class="pic"><img src="/' + m.img + '" alt="" loading="lazy"></span><strong>' + esc(WARTUNG[id].name) + '</strong>' + (MACHINES.filter(function (x) { return x.id === id; })[0].models ? '<span class="models">' + esc(MACHINES.filter(function (x) { return x.id === id; })[0].models) + '</span>' : '') + '</button>';
       }).join('') + '</div>' +
       '<p class="help">Ihre Maschine ist nicht dabei? <a href="' + TEL + '">Rufen Sie uns an: <span class="nw">' + PHONE + '</span></a></p>';
   }

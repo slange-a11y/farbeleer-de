@@ -132,3 +132,10 @@
   .sym{grid-template-columns:96px 1fr}
   .ctrl .btn{flex:1 1 auto;justify-content:center}
 }
+
+/* PostBase One als größte Maschine: füllt den Rest der letzten Reihe */
+.mgrid .tile.wide{grid-column:span 2}
+@media (max-width:860px){.mgrid .tile.wide{grid-column:1/-1}}
+@media (max-width:720px){.mgrid .tile.wide{grid-column:span 2}}
+@media (min-width:861px),(max-width:720px){.mgrid .tile.wide .pic{aspect-ratio:8/3}}
+@media (min-width:721px) and (max-width:860px){.mgrid .tile.wide .pic{aspect-ratio:4/1}}
