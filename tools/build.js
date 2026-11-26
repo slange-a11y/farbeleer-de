@@ -115,7 +115,7 @@ ${ld}
   <a class="btn" href="${TEL}">&#128222; <span class="nw">${PHONE}</span></a>
 </div>
 <nav class="nav" aria-label="Hauptnavigation"><ul>
-  <li><a href="/#finder">Kartuschenfinder</a></li>
+  <li><a href="/">Kartuschenfinder</a></li>
   <li><a${on('ratgeber')} href="/ratgeber/">Ratgeber</a></li>
   <li><a href="/#beratung">Persönliche Beratung</a></li>
   <li><a${on('faq')} href="/haeufige-fragen/">Häufige Fragen</a></li>
@@ -422,7 +422,7 @@ ${tiles}
   <section class="block" id="groesse">
     <h2><span class="stepno">2</span>Passende Größe wählen und bestellen</h2>
     <p class="sub">Der Kartuschenfinder empfiehlt die Größe, die bei Ihrer Briefmenge innerhalb eines Jahres aufgebraucht ist. So trocknet nichts ein.</p>
-    <div class="actions" ><a class="btn" href="/#finder">Zum Kartuschenfinder &rarr;</a><a class="btn ghost" href="${shop('/c/postverarbeitung/francotyp-postalia', 'ratgeber', slug + '-kategorie')}">Kartuschen im Shop</a></div>
+    <div class="actions" ><a class="btn" href="/">Zum Kartuschenfinder &rarr;</a><a class="btn ghost" href="${shop('/c/postverarbeitung/francotyp-postalia', 'ratgeber', slug + '-kategorie')}">Kartuschen im Shop</a></div>
 ${more('groesse-mehr', 'Warum nicht einfach die größte Kartusche? Ein Beispiel', `    <div class="prose">
       <p>Für die meisten Modelle gibt es mehrere Kartuschengrößen. Größer ist dabei nicht automatisch besser: Steckt eine Kartusche zu lange in der Maschine, kann die Tinte eintrocknen. Wir empfehlen deshalb die Größe, die bei Ihrer Briefmenge innerhalb von ${MAX_MONTHS}&nbsp;Monaten aufgebraucht ist. Im Zweifel lieber eine Nummer kleiner.</p>
       <p><b>Ein Beispiel:</b> Sie haben eine PostBase&nbsp;65 und verschicken rund ${fmt(n)} Briefe im Monat. Das Set ${k.size} reicht für bis zu ${fmt(k.reach)}&nbsp;Frankierungen, also ${months(k.reach, n)}. Das Set ${bigger.size} mit bis zu ${fmt(bigger.reach)}&nbsp;Frankierungen würde länger als ein Jahr in der Maschine stecken. Unsere Empfehlung ist deshalb ${k.size}.</p>
