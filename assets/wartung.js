@@ -33,8 +33,8 @@ var WARTUNG = {
   },
   insight: {
     name: 'PostBase Insight', carts: 2, like: 'classic',
-    src: 'PostBase Insight Operating Manual, Abschnitt Ink Replacement (FP, englisch, bei Loffler), S. 90–95; Reinigung und Störungen: PostBase Operator Manual (FP, englisch), S. 96–98, 117. Die Kartuschen-Sets sind laut FP-Shop dieselben wie für die PostBase 30 bis 100.',
-    note: 'Die Insight wird beim Wechsel genauso bedient wie die PostBase 30 bis 100.[[?PostBase Insight: deutsche Menünamen wie bei der PostBase 30 bis 100? (nur englische Insight-Ausgabe gelesen)]]'
+    src: 'PostBase Insight Operating Manual, Abschnitt Ink Replacement (FP, englisch, bei Loffler), S. 90–95; Reinigung und Störungen: PostBase Operator Manual (FP, englisch), S. 96–98, 117. Die Kartuschen-Sets sind laut FP-Shop dieselben wie für die PostBase 30 bis 100. Bedienung wie PostBase 30 bis 100 (Betriebsanleitung PostBase, deutsch, Stand 11/2014; Angabe TE Printline).',
+    note: 'Die Insight wird beim Wechsel genauso bedient wie die PostBase 30 bis 100.'
   },
   vision: {
     name: 'PostBase Vision', carts: 1,
