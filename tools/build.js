@@ -35,7 +35,7 @@ const one = byId('one');
 const oneCart = one.choice[0].m, oneTank = one.choice[1].m;
 
 // Bildmaße (für width/height, gegen Springen beim Laden)
-const IMG = { mini: [340, 337], m2: [421, 336], one: [448, 177], classic: [448, 265], vision: [643, 355], fusion: [447, 242], insight: [448, 282] };
+const IMG = { mini: [635, 548], m2: [719, 571], one: [1041, 263], classic: [722, 387], vision: [690, 371], fusion: [447, 242], insight: [448, 282] };
 
 // ── Helfer ──────────────────────────────────────────────────────────────
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
