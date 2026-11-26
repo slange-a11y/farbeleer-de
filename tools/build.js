@@ -220,6 +220,9 @@ const MODELS = [
     extraFaq: [{ q: 'Warum stehen im Shop Kartuschen „für PostBase 30 bis 100“?',
       a: 'Weil die PostBase Insight dieselben Kartuschen-Sets nutzt wie die PostBase 30 bis 100. Im Shop sind sie dort eingeordnet. Für Ihre Insight bestellen Sie genau diese Sets.' }] }
 ];
+// Modell-Knöpfe: „PostBase“ steht einmal davor, die Knöpfe tragen nur den Kurznamen (passt am Desktop in eine Zeile)
+const modelChips = href => '<div class="chips"><span class="chips-pre">PostBase</span>' +
+  MODELS.map(p => `<a href="${href(p)}" aria-label="${esc(p.name)}">${esc(p.name.replace(/^PostBase /, ''))}</a>`).join('') + '</div>';
 
 function sizesTable(m, slug, opts) {
   opts = opts || {};
@@ -385,7 +388,7 @@ function buildRatgeber() {
     const m = byId(p.id), [w, h] = IMG[p.id];
     return `      <a class="mtile" href="/${p.slug}/"><span class="pic"><img src="${imgSrc(m)}" alt="${esc(m.name)}" width="${w}" height="${h}" loading="lazy"></span><strong>${esc(m.name).replace(/ (\S+)$/, '&nbsp;$1')}</strong>${m.models ? `<small>${esc(m.models).replace(/ · /g, '&nbsp;· ')}</small>` : ''}</a>`;
   }).join('\n');
-  const chips = MODELS.map(p => `<a href="/ratgeber/kartusche-wechseln/?modell=${p.id}">${esc(p.name)}</a>`).join('');
+  const chips = modelChips(p => '/ratgeber/kartusche-wechseln/?modell=' + p.id);
   const faq = [
     { q: 'Was bedeutet „Farbe leer“ bei der Frankiermaschine?',
       a: 'Die Maschine meldet, dass die Tinte in der Kartusche zur Neige geht oder aufgebraucht ist. Damit der Frankierabdruck lesbar bleibt, setzen Sie eine neue Original-Kartusche ein.' },
@@ -429,7 +432,7 @@ ${more('groesse-mehr', 'Warum nicht einfach die größte Kartusche? Ein Beispiel
   <section class="block" id="einsetzen">
     <h2><span class="stepno">3</span>Kartusche einsetzen</h2>
     <p class="sub">Wählen Sie Ihr Modell und klicken Sie sich durch den Wechsel.</p>
-    <div class="chips">${chips}</div>
+    ${chips}
     <p class="help">Abdruck danach blass oder streifig? <a href="/ratgeber/druckbild-pruefen/">Zum Druckbild-Doktor</a></p>
   </section>
 
@@ -466,7 +469,7 @@ function buildIndexParts() {
         { path: a.path, c: 'one-druckkopf', label: 'Druckkopf-Set (Tanksystem)', ml: '–', reach: nbsp(fmt(a.reach)) + '&nbsp;Briefe', sku: a.sku }]);
     } else group(th(m), std(m));
   });
-  const chips = '    <div class="chips">' + MODELS.map(p => `<a href="/${p.slug}/">${esc(p.name)}</a>`).join('') + '</div>';
+  const chips = '    ' + modelChips(p => '/' + p.slug + '/');
   let s = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
   OV_ROWS = rows.join('\n');
   if (s.includes('<!-- build:uebersicht -->')) s = replaceBetween(s, 'uebersicht', OV_ROWS);
@@ -661,7 +664,7 @@ function buildRatgeberHub() {
 ${cards.map(c => `    <a class="helpcard" href="${c[2]}"><strong>${esc(c[0])}</strong><span>${esc(c[1])}</span></a>`).join('\n')}
   </div></section>
   <section class="block"><h2>Nach Modell</h2><p class="sub">Alle Kartuschen, Reichweiten und der Wechsel für Ihre Maschine.</p>
-    <div class="chips">${MODELS.map(p => `<a href="/${p.slug}/">${esc(p.name)}</a>`).join('')}</div></section>`;
+    ${modelChips(p => '/' + p.slug + '/')}</section>`;
   write('ratgeber/index.html', layout({
     path: '/ratgeber/', slug: 'ratgeber', campaign: 'ratgeber', nav: 'ratgeber',
     title: 'Ratgeber Frankiermaschine: Farbe leer, Kartusche wechseln, Druckbild | farbeleer.de',
