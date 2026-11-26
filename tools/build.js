@@ -724,6 +724,6 @@ buildRatgeber();
 MODELS.forEach(buildModel);
 buildIndexParts();
 // Prüfhinweise, die nur in der interaktiven Fassung auftauchen (Befunde, Menünamen)
-(fs.readFileSync(path.join(ROOT, 'assets/wartung.js'), 'utf8').match(/\[\[\?.+?\]\]/g) || []).forEach(m => CHECKS.push('assets/wartung.js (Druckbild-Doktor/Kartuschenwechsel): ' + m.slice(3, -2)));
+(fs.readFileSync(path.join(ROOT, 'assets/wartung.js'), 'utf8').match(/\[\[\?.+?\]\]/g) || []).filter(m => !/' \+|Was geprüft/.test(m)).forEach(m => CHECKS.push('assets/wartung.js (Druckbild-Doktor/Kartuschenwechsel): ' + m.slice(3, -2)));
 const uniq = [...new Set(CHECKS)];
 console.log('\n[bitte prüfen]-Stellen (' + uniq.length + '):\n' + uniq.map(c => '- ' + c).join('\n'));
