@@ -602,6 +602,8 @@ ${w.power ? '        <p><b>Ausschalten:</b> ' + esc(w.power) + '</p>\n' : ''}   
       </details>`;
   }).join('\n');
   const faq = [
+    { q: 'Wie wechsle ich die Kartusche?',
+      a: 'Öffnen Sie im Ratgeber die Seite „Kartusche wechseln“ und tippen Sie auf Ihre Maschine. Dann zeigt Ihnen die Anleitung jeden Handgriff mit Bild. Kommen Sie nicht weiter, rufen Sie uns an.' },
     { q: 'Muss ich bei zwei Kartuschen immer beide wechseln?',
       a: 'Ja. Bei der PostBase 30 bis 100, der Insight, der One und der Fusion wechseln Sie laut Francotyp-Postalia immer beide Kartuschen zusammen und setzen immer zwei neue ein. Deshalb gibt es diese Kartuschen als Set.' },
     { q: 'Zeigen die Kontakte nach vorn oder nach hinten?',
@@ -676,6 +678,41 @@ ${cards.map(c => `    <a class="helpcard" href="${c[2]}"><strong>${esc(c[0])}</s
 }
 
 
+// Alltagswörter je Frage für die Suche auf /haeufige-fragen/ (Schlüssel = Anfang der Frage). Jede Frage braucht einen Eintrag.
+const FAQ_KEYS = {
+  'Was bedeutet „Farbe leer“': 'farbe leer tinte leer tinte alle farbe alle meldung display zeigt anzeige nichts mehr drin druckt nicht mehr druckt nichts maschine streikt fehlermeldung warnung',
+  'Welche Tintenkartusche passt': 'welche patrone passt richtige kartusche welche tinte welche farbe kaufen bestellen nachkaufen modell typ geraet ersatz nachfuellen',
+  'Wie lange reicht': 'reichweite wie viele briefe wieviel briefe haelt hält wie lange halten lebensdauer menge frankierungen ergiebig verbrauch',
+  'Warum empfehlen Sie nicht einfach': 'groesste große grosse kartusche guenstiger billiger xl lohnt sich sparen empfehlung',
+  'Wie lange kann ich eine Ersatzkartusche': 'vorrat lagern aufbewahren haltbarkeit haltbar ablaufdatum verfallsdatum mindesthaltbarkeit reserve ersatz liegen alt',
+  'Was mache ich, wenn meine Maschine nicht': 'maschine nicht in der liste nicht dabei fehlt nicht gefunden anderes modell altes modell weiss nicht welche maschine unbekannt typenschild',
+  'Wie wechsle ich die Kartusche': 'wechseln tauschen austauschen einsetzen neue rein alte raus anleitung schritt fuer schritt einbauen patrone tinte',
+  'Muss ich bei zwei Kartuschen': 'zwei patronen beide tauschen nur eine einzeln set paar doppelt',
+  'Zeigen die Kontakte': 'einsetzen richtung falsch herum andersrum rein stecken welche seite chip kontakte vorne hinten einbauen einlegen',
+  'Warum soll die neue Kartusche Raumtemperatur': 'kalt kaelte winter auto keller temperatur warm nicht erkannt',
+  'Wie oft sollte ich die Kartusche wechseln': 'wie oft tauschen wechseln intervall jaehrlich jedes jahr regelmaessig',
+  'Warum ist mein Frankierabdruck blass': 'hell blass schwach verblasst grau undeutlich schlecht lesbar kaum sichtbar stempel hell druck hell duenn',
+  'Was bedeuten weiße Streifen': 'streifen striche linien luecken fehlt teile weiss fleckig unvollstaendig gestreift stempel',
+  'Wann brauche ich eine neue Kartusche': 'wann neue bald leer fast leer fuellstand wieviel noch drin wechseln noetig',
+  'Wie verhindere ich, dass die Kartusche eintrocknet': 'eingetrocknet trocken verstopft duesen urlaub lange nicht benutzt pause ausschalten stecker',
+  'Sind das Original-Kartuschen': 'original echt fremd nachbau billig kompatibel alternative garantie hersteller fp francotyp',
+  'Wie schnell kommt': 'lieferzeit lieferung wann kommt paket versand dauer schnell morgen zustellung ankommen geliefert wie lange dauert',
+  'Wer kann bei Ihnen bestellen': 'privat privatperson firma gewerbe verein behoerde kunde konto bestellen darf',
+  'Kann ich auch telefonisch bestellen': 'anrufen telefon nummer per telefon sprechen ansprechpartner beratung mensch hotline erreichbar',
+  'Wie kann ich bezahlen': 'auf rechnung kaufen bezahlen zahlen rechnung lastschrift bankeinzug ueberweisung paypal kreditkarte vorkasse zahlungsart',
+  'Was kostet eine Kartusche': 'kosten preis preise kostet xl xs small medium large teuer guenstig euro geld angebot',
+  'Passen die Kartuschen der PostBase mini': 'mini m2 vision m2 passt gleiche kartusche austauschbar',
+  'Passt die Kartusche LARGE': 'a120 vision large passt',
+  'Gibt es die Kartusche für die Vision auch kleiner': 'vision klein kleiner kleinere groesse small medium',
+  'Gelten die Kartuschen für alle Modelle': '30 45 65 100 postbase classic gleiche kartusche alle modelle',
+  'Was bedeutet die Angabe': '2x10 ml milliliter zwei mal angabe bedeutung inhalt fuellmenge',
+  'Warum stehen im Shop': 'shop insight beschriftung classic steht',
+  'Passen die Kartuschen der PostBase 30 bis 100 auch in die Fusion': 'fusion classic passt gleiche',
+  'Wie erkenne ich, ob meine PostBase One': 'one tank tanksystem kartuschen erkennen unterscheiden version',
+  'Brauche ich für den Tintentank': 'druckkopf druckkoepfe tank set extra zusaetzlich'
+};
+const faqKeys = q => { const k = Object.keys(FAQ_KEYS).find(p => q.startsWith(p)); if (!k) throw new Error('Suchwörter fehlen für Frage: ' + q); return FAQ_KEYS[k]; };
+
 // ── Häufige Fragen: eine Seite für alles ────────────────────────────────
 function buildFaqPage() {
   currentPage = '/haeufige-fragen/';
@@ -697,6 +734,8 @@ function buildFaqPage() {
       a: 'Ja. TE Printline ist autorisierte Generalvertretung von Francotyp-Postalia und liefert ausschließlich Original-Tintenkartuschen und Original-Zubehör.' },
     SHIP_FAQ,
     { q: 'Wer kann bei Ihnen bestellen?', a: 'Wir verkaufen an Gewerbetreibende, Behörden und Vereine.' },
+    { q: 'Wie kann ich bezahlen?', a: 'Per Rechnung oder per Bankeinzug.' },
+    { q: 'Was kostet eine Kartusche?', a: 'Die aktuellen Preise stehen im Shop frankierfarbe.de bei jeder Kartusche. Über den Kartuschenfinder kommen Sie direkt zur passenden. Am Telefon nennen wir Ihnen den Preis gern.' },
     { q: 'Kann ich auch telefonisch bestellen?',
       a: 'Ja, gern. Unter ' + PHONE + ' erreichen Sie Montag bis Freitag von 8 bis 16 Uhr unser Team in Viernheim. Am Telefon sprechen Sie mit Menschen, nicht mit einer Bandansage oder einer KI.' }
   ];
@@ -709,23 +748,25 @@ function buildFaqPage() {
   ];
   const all = groups.flatMap(g => g.faq);
   const seen = new Set(); all.forEach(f => { if (seen.has(f.q)) throw new Error('Doppelte Frage: ' + f.q); seen.add(f.q); });
-  const qa = f => `    <details><summary>${esc(f.q)}</summary><p>${esc(f.a)}</p></details>`;
+  const qa = f => `    <details data-k="${esc(faqKeys(f.q))}"><summary>${esc(f.q)}</summary><p>${esc(f.a)}</p></details>`;
   const body = `
   <section class="page-hero"><div>
     <h1>Häufige <span>Fragen</span></h1>
     <p class="lead">Alle Antworten an einer Stelle. Ihre Frage ist nicht dabei? Rufen Sie uns an: <a href="${TEL}" class="nw">${PHONE}</a>, Montag bis Freitag von 8 bis 16&nbsp;Uhr.</p>
   </div></section>
   <div class="faqsearch" id="faqsearch" hidden>
-    <label for="faq-q">Frage suchen</label>
-    <input id="faq-q" type="search" placeholder="z. B. blass, Lieferung, Vision" autocomplete="off">
-    <p id="faq-none" class="faq-none" hidden>Dazu haben wir keine Antwort gefunden. Rufen Sie uns an: <a href="${TEL}" class="nw">${PHONE}</a></p>
+    <label for="faq-q">Was möchten Sie wissen?</label>
+    <input id="faq-q" type="search" placeholder="Einfach so schreiben, wie Sie es sagen würden" autocomplete="off" enterkeyhint="search">
+    <p class="faq-try">Zum Beispiel: ${['Tinte ist alle', 'Stempel ist zu hell', 'Wann kommt mein Paket?', 'Was kostet das?', 'Wie lange hält die Patrone?'].map(t => `<button type="button" data-try="${esc(t)}">${esc(t)}</button>`).join('')}</p>
+    <p id="faq-none" class="faq-none" hidden>Dazu haben wir keine passende Antwort gefunden. Rufen Sie uns einfach an: <a href="${TEL}" class="nw">${PHONE}</a></p>
     <p id="faq-count" class="sr-only" aria-live="polite"></p>
   </div>
+  <div id="faq-results" class="faq faq-results" hidden></div>
   <nav class="faqnav" aria-label="Themen">${groups.map(g => `<a href="#${g.id}">${esc(g.h)}</a>`).join('')}</nav>
 ${groups.map(g => `  <section class="block faq" id="${g.id}">
     <h2>${esc(g.h)}</h2>
 ${g.faq.map(qa).join('\n')}${g.id === 'kartusche' ? `
-    <details id="uebersicht"><summary>Übersicht aller Kartuschen mit Reichweite und Artikelnummer</summary>
+    <details id="uebersicht" data-k="uebersicht tabelle alle artikelnummer bestellnummer fuellmenge ml groessen vergleich reichweite"><summary>Übersicht aller Kartuschen mit Reichweite und Artikelnummer</summary>
     <div class="scroll">
 <table class="ov">
 <thead><tr><th>Frankiermaschine</th><th>Kartusche</th><th>Füllmenge</th><th>Reicht für bis zu</th><th>Artikel-Nr.</th></tr></thead>
@@ -737,41 +778,12 @@ ${OV_ROWS}
     <p class="fine">PostBase Insight nutzt dieselben Kartuschen wie die PostBase 30&nbsp;bis&nbsp;100. Für die PostBase One mit Tanksystem brauchen Sie neben dem Tintentank das Druckkopf-Set. Reichweiten laut Francotyp-Postalia, Stand November 2026.</p>
     </details>` : ''}
   </section>`).join('\n\n')}
-  <script>
-  (function () {
-    var box = document.getElementById('faqsearch'), q = document.getElementById('faq-q');
-    var none = document.getElementById('faq-none'), count = document.getElementById('faq-count');
-    var items = [].slice.call(document.querySelectorAll('.faq details'));
-    var SYN = { tinte: ['kartusch', 'tank'], farbe: ['tinte', 'kartusch'], patrone: ['kartusch'], patronen: ['kartusch'], versand: ['liefer', 'verschick'], bezahlen: ['rechnung', 'bankeinzug'], zahlung: ['rechnung', 'bankeinzug'], streifig: ['streifen'], kaputt: ['techniker'], telefon: ['anruf', 'telefon'] };
-    var norm = function (t) { return t.toLowerCase().replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss').replace(/[^a-z0-9 ]+/g, ' '); };
-    var text = items.map(function (d) { return norm(d.textContent); });
-    box.hidden = false;
-    q.addEventListener('input', function () {
-      var words = norm(q.value).split(' ').filter(function (w) { return w.length > 1; }), hits = 0;
-      // Wortstamm (lieferung findet liefern) und ein paar Wörter, die Kunden anders sagen
-      var alt = words.map(function (w) {
-        var stem = w.length > 6 ? w.slice(0, Math.max(5, w.length - 3)) : w;
-        return [stem].concat(SYN[stem] || SYN[w] || []);
-      });
-      items.forEach(function (d, i) {
-        var ok = alt.every(function (opts) { return opts.some(function (o) { return text[i].indexOf(o) >= 0; }); });
-        d.hidden = !ok; if (ok) hits++;
-        if (words.length && ok && hits <= 3) d.open = true; else if (!words.length) d.open = false;
-      });
-      [].forEach.call(document.querySelectorAll('section.faq'), function (sec) {
-        sec.hidden = !sec.querySelector('details:not([hidden])');
-      });
-      document.querySelector('.faqnav').hidden = words.length > 0;
-      none.hidden = !words.length || hits > 0;
-      count.textContent = words.length ? hits + ' Treffer' : '';
-    });
-  })();
-  </script>`;
+`;
   write('haeufige-fragen/index.html', layout({
     path: '/haeufige-fragen/', slug: 'haeufige-fragen', campaign: 'faq', nav: 'faq',
     title: 'Häufige Fragen zu Frankierfarbe und PostBase-Kartuschen | farbeleer.de',
     desc: 'Antworten zu Original-Kartuschen für PostBase-Frankiermaschinen: welche Kartusche passt, wie lange sie reicht, Wechsel, blasser Abdruck, Bestellung und Lieferung. Beratung aus Viernheim.',
-    h1plain: 'Häufige Fragen', crumbs: [{ name: 'Häufige Fragen', path: '/haeufige-fragen/' }],
+    h1plain: 'Häufige Fragen', crumbs: [{ name: 'Häufige Fragen', path: '/haeufige-fragen/' }], js: ['/assets/faqsuche.js'],
     faq: all, body
   }));
 }
