@@ -66,23 +66,23 @@ var WARTUNG = {
   },
   one: {
     name: 'PostBase One', carts: 2,
-    src: 'PostBase One Betriebsanleitung, deutsche Ausgabe (FP; manualslib.de 132953), Kapitel 13 Drucksystem, S. 115–135, 146, 196; Betriebsanleitung Stand 01-2018 (fp-francotyp.de), S. 14; Operator Manual 51-0055-3071-00 (US), S. 96–126',
+    src: 'PostBase One Betriebsanleitung Stand 01-2018 (fp-francotyp.de), Kapitel 14.3 und 14.5, S. 14, 123–127, 135–138; deutsche Ausgabe auf manualslib.de 132953, Kapitel 13; Operator Manual 51-0055-3071-00 (US), S. 96–126',
     menu: { WECHSELN: '„MENÜ › DRUCKSYSTEM › WECHSELN“', REINIGEN: '„REINIGEN“', INTENSIV: '„INTENSIVREINIGEN“', AUSRICHTEN: '„AUSRICHTEN“', INFO: '„INFO“', TESTDRUCK: 'Testabdruck' },
     steps: [
       { anim: 'menu', t: 'Bestätigen Sie die Meldung und wählen Sie im Display {WECHSELN}. Die Kartuschen fahren in die Wechselposition und die Klappe öffnet sich von selbst. Bitte nicht mit Gewalt öffnen.' },
-      { anim: 'lever', t: 'Drehen Sie die beiden blaugrünen Hebel nach hinten, ziehen Sie die blaugrünen Ausheber hoch und heben Sie die Kartuschen heraus.', tip: 'Säubern Sie bei jedem Wechsel die Kontakte mit dem FP-Set „clean & renew“.' },
-      { anim: 'shake', t: 'Die neuen Kartuschen sollten Raumtemperatur haben. Schütteln Sie jede sechsmal kräftig und ziehen Sie die Schutzstreifen erst kurz vor dem Einsetzen ab.' },
-      { anim: 'in', t: 'Kontakte nach hinten: Kartusche einsetzen, bis zum Anschlag nach unten drücken und dann leicht nach hinten, bis sie in der Halterung sitzt. Dann die zweite. Zum Schluss die Hebel wieder nach vorn drehen.', tip: 'Immer beide Kartuschen zusammen wechseln, und immer zwei neue.' },
-      { anim: 'close', t: 'Schließen Sie die Klappe. Die Maschine bereitet die Kartuschen vor. Das dauert einen Moment.' },
+      { anim: 'lever', t: 'Legen Sie die beiden blaugrünen Hebel nach hinten um. Ziehen Sie dann beide blaugrünen Ausheber nach oben und nehmen Sie die Kartuschen nach oben heraus.', tip: 'Säubern Sie bei jedem Wechsel die Kontakte mit dem FP-Set „clean & renew“.' },
+      { anim: 'shake', t: 'Die neuen Kartuschen sollten Raumtemperatur haben. Schütteln Sie jede sechsmal kräftig, der Düsenschutz bleibt dabei noch drauf. Ziehen Sie dann den Aufkleber ab und nehmen Sie den Düsenschutz vorsichtig ab.', tip: 'Die Düsen nicht berühren und immer nach unten halten.' },
+      { anim: 'in', t: 'Kontakte nach hinten: Kartusche einsetzen, bis zum Anschlag nach unten drücken und dann leicht nach hinten, bis sie in den Halter kippt. Dann die zweite. Zum Schluss beide Hebel wieder nach vorn umlegen.', tip: 'Immer beide Kartuschen zusammen wechseln, und immer zwei neue.' },
+      { anim: 'close', t: 'Schließen Sie die Klappe. Die Maschine kalibriert die Kartuschen und reinigt das Drucksystem. Das dauert einen Moment.' },
       { anim: 'align', t: 'Danach startet das Ausrichten von selbst: Legen Sie einen leeren Umschlag ein und lesen Sie auf dem Testabdruck ab, wo die Linien am besten übereinanderliegen.' }
     ],
     tank: {
       name: 'PostBase One mit Tanksystem',
       steps: [
         { anim: 'menu', t: 'Bestätigen Sie die Meldung und wählen Sie im Display „MENÜ › DRUCKSYSTEM › TANK WECHSELN“. Die Klappe öffnet sich von selbst, ziehen Sie sie nicht auf.' },
-        { anim: 'out', t: 'Drücken Sie auf die Mulde des alten Tanks, schieben Sie ihn nach unten und ziehen Sie ihn gleichzeitig nach vorn. Dann heben Sie ihn aus der Halterung.' },
-        { anim: 'shake', t: 'Packen Sie den neuen Tank aus und schütteln Sie ihn sechsmal kräftig.' },
-        { anim: 'in', t: 'Setzen Sie den Tank ein und drücken Sie ihn nach unten, bis er in der Halterung einrastet.' },
+        { anim: 'out', t: 'Drücken Sie auf die Mulde des alten Tanks, schieben Sie ihn nach unten und ziehen Sie ihn gleichzeitig nach vorn. Dann nehmen Sie ihn nach oben aus der Halterung.' },
+        { anim: 'shake', t: 'Nehmen Sie den neuen Tank aus der Verpackung und schütteln Sie ihn sechsmal kräftig.' },
+        { anim: 'in', t: 'Setzen Sie den Tank wie im Bild ein und drücken Sie ihn nach unten, bis er in der Halterung einrastet.' },
         { anim: 'test', t: 'Schließen Sie die Klappe und prüfen Sie den Abdruck. Wann die Druckköpfe getauscht werden müssen, meldet die Maschine selbst. Getauscht werden sie immer paarweise.' }
       ]
     },
@@ -125,7 +125,6 @@ var WARTUNG = {
 WARTUNG.insight.menu = WARTUNG.classic.menu;
 WARTUNG.insight.steps = WARTUNG.classic.steps;
 
-// Reihenfolge der Modelle auf den Seiten (wie im Kartuschenfinder)
 // Sortiert nach Leistung, von klein nach groß (wie im Kartuschenfinder)
 var WARTUNG_ORDER = ['mini', 'm2', 'vision', 'classic', 'insight', 'fusion', 'one'];
 
@@ -140,8 +139,10 @@ var WECHSEL_BILDER = {
   insight: { tap: [34, 32], steps: [['insight-1'], ['classic-2', 'classic-3'], ['insight-1'], ['classic-4'], ['classic-5'], ['umschlag']] },
   vision:  { tap: [36, 32], steps: [['vision-1'], ['vision-2', 'vision-3'], ['vision-4', 'vision-5'], ['vision-6'], ['vision-1'], ['umschlag']] },
   fusion:  { tap: [32, 30], steps: [['fusion-1'], ['fusion-2', 'fusion-3'], ['fusion-1'], ['fusion-4'], ['fusion-1'], ['umschlag']] },
-  one:     { tap: [37, 43], steps: [['one-1'], ['one-2', 'one-3', 'one-4'], ['one-5', 'one-6'], ['one-7'], ['one-1'], ['umschlag']],
-             tank: [['one-1'], ['one-1'], ['one-1'], ['one-1'], ['umschlag']] }
+  one:     { tap: [37, 43],
+             steps: [['one-1', 'one-k-menu'], ['one-k-hebel', 'one-k-ausheber', 'one-k-entnehmen'], ['one-k-schuetteln', 'one-k-aufkleber', 'one-k-duese'],
+                     ['one-k-einsetzen', 'one-k-verriegeln'], ['one-klappe'], ['umschlag', 'one-testdruck']],
+             tank: [['one-1', 'one-t-menu'], ['one-t-mulde', 'one-t-entnehmen'], ['one-t-schuetteln'], ['one-t-einsetzen', 'one-t-einrasten'], ['one-klappe', 'umschlag']] }
 };
 
 // ── 2. Druckbild-Doktor: Symptome ───────────────────────────────────────
