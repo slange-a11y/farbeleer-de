@@ -52,3 +52,9 @@ function finderMachine(id, tank) {
   }
   return null;
 }
+
+// Textfassung: ohne JavaScript offen, mit JavaScript zugeklappt (die interaktive Fassung steht darüber).
+if (typeof document !== 'undefined') {
+  var closeMore = function () { [].forEach.call(document.querySelectorAll('details[data-close-js]'), function (d) { d.removeAttribute('open'); }); };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', closeMore); else closeMore();
+}
