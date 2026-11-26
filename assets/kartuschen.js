@@ -52,6 +52,8 @@ var VOLUMES=[
   {label:'1.000 bis 3.000', hint:'täglich viel', n:2000},
   {label:'über 3.000',      hint:'Poststelle',   n:5000}
 ];
+// Kachelbild im gemeinsamen Maßstab (tools/kachel-bilder.py). breit: für die doppelt breite Kachel der One
+function kachelBild(id,breit){return '/img/kachel/'+(id==='one-tank'?'one':id)+(breit?'-breit':'')+'.webp'}
 var MAX_MONTHS=12;    // Kartusche soll spätestens nach 12 Monaten leer sein (sonst trocknet die Tinte ein)
 
 // Empfehlung: größte Kartusche, die bei der angegebenen Menge in höchstens 12 Monaten leer ist.

@@ -32,6 +32,7 @@
     clearInterval(cycle);
     stage.className = 'stage a-' + steps()[st.i].anim;
     stage.innerHTML = stageHtml();
+    ohneWaisen(stage);
     var imgs = stage.querySelectorAll('.pics img'), dots = stage.querySelectorAll('.dots i'), k = 0;
     if (imgs.length < 2) return;
     cycle = setInterval(function () {
@@ -45,12 +46,12 @@
   function viewModell() {
     var tiles = WARTUNG_ORDER.map(function (id) {
       var m = finderMachine(id), mm = MACHINES.filter(function (x) { return x.id === id; })[0];
-      var t = '<button type="button" class="tile" data-mod="' + id + '"><span class="pic"><img src="/' + m.img + '" alt="" loading="lazy"></span><strong>' + esc(WARTUNG[id].name) + '</strong>' + (mm.models ? '<span class="models">' + esc(mm.models) + '</span>' : '') + '</button>';
-      if (id === 'one') t = t.replace('data-mod="one"', 'data-mod="one"').replace('</strong>', ' mit Kartuschen</strong>') +
-        '<button type="button" class="tile" data-mod="one-tank"><span class="pic"><img src="/' + m.img + '" alt="" loading="lazy"></span><strong>PostBase One mit Tanksystem</strong><span class="models">Tintentank neben der Maschine</span></button>';
+      var t = '<button type="button" class="tile" data-mod="' + id + '"><span class="pic"><img src="' + kachelBild(id) + '" alt="" loading="lazy"></span><strong>' + esc(WARTUNG[id].name) + '</strong>' + (mm.models ? '<span class="models">' + esc(mm.models).replace(/ · /g, '&nbsp;·&nbsp;') + '</span>' : '') + '</button>';
+      if (id === 'one') t = t.replace('data-mod="one"', 'data-mod="one"').replace('</strong>', ' mit&nbsp;Kartuschen</strong>') +
+        '<button type="button" class="tile" data-mod="one-tank"><span class="pic"><img src="' + kachelBild(id) + '" alt="" loading="lazy"></span><strong>PostBase One mit&nbsp;Tanksystem</strong><span class="models">Tintentank neben der Maschine</span></button>';
       return t;
     }).join('');
-    return '<h2 tabindex="-1">Welche Maschine haben Sie?</h2><p class="sub">Die Handgriffe sind je Modell etwas anders. Tippen Sie auf das Gerät, das so aussieht wie Ihres.</p><div class="mgrid">' + tiles + '</div>' +
+    return '<h2 tabindex="-1">Welche Maschine haben Sie?</h2><p class="sub"><span class="satz">Die Handgriffe sind je Modell etwas anders.</span> <span class="satz">Tippen Sie auf das Gerät, das so aussieht wie\u00a0Ihres.</span></p><div class="mgrid">' + tiles + '</div>' +
       '<p class="help">Ihre Maschine ist nicht dabei? <a href="' + TEL + '">Rufen Sie uns an: <span class="nw">' + PHONE + '</span></a></p>';
   }
   function viewPlay() {
@@ -81,7 +82,7 @@
         VOLUMES.map(function (v) { return '<button type="button" class="qtile" data-vol="' + v.n + '"><small>' + esc(v.hint) + '</small><strong>' + esc(v.label) + '</strong></button>'; }).join('') + '</div>';
     }
     return '<div class="done"><svg class="tick" viewBox="0 0 84 84" aria-hidden="true"><circle cx="42" cy="42" r="42"/><path d="M24 44l12 12 24-26"/></svg>' +
-      '<h2 tabindex="-1">Geschafft</h2><p class="sub">So sieht ein sauberer Abdruck aus. Ist Ihrer blass oder lückenhaft, hilft der <a class="inline-link" href="/ratgeber/druckbild-pruefen/?modell=' + st.id + '">Druckbild-Doktor</a>.</p>' + abdruckBild('sauber', 'sauberer Testabdruck') + '</div>' +
+      '<h2 tabindex="-1">Geschafft</h2><p class="sub"><span class="satz">So sieht ein sauberer Abdruck aus.</span> <span class="satz">Ist Ihrer blass oder lückenhaft, hilft der <a class="inline-link" href="/ratgeber/druckbild-pruefen/?modell=' + st.id + '">Druckbild-Doktor</a>.</span></p>' + abdruckBild('sauber', 'sauberer Testabdruck') + '</div>' +
       '<div class="rec" id="rec"><h4>Nächste ' + unit + ' gleich bereitlegen?</h4>' + rec +
       '<p class="fine">Lagern Sie die Ersatz' + unit.toLowerCase() + ' nicht länger als etwa 12&nbsp;Monate und tauschen Sie spätestens nach einem Jahr, auch wenn noch Tinte drin ist. Sonst kann sie eintrocknen.</p></div>' +
       (w.power ? '<p class="note"><b>Gut zu wissen:</b> ' + esc(w.power) + '</p>' : '') +
@@ -91,6 +92,7 @@
 
   function render(focus) {
     root.innerHTML = st.view === 'modell' ? viewModell() : st.view === 'done' ? viewDone() : viewPlay();
+    ohneWaisen(root);
     clearInterval(cycle);
     if (st.view === 'play') { animate(); bindSwipe(); }
     if (focus !== false) { var h = root.querySelector('h2'); if (h) h.focus({ preventScroll: true }); if (root.getBoundingClientRect().top < 0) root.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); }
