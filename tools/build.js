@@ -188,7 +188,7 @@ const MODELS = [
     recognize: 'Eine lange, flache Maschine mit Briefzuführung auf der einen und Ablage auf der anderen Seite, das Touchdisplay sitzt in der Mitte. Sie druckt mit zwei Kartuschen oder mit dem Tanksystem.', recSrc: 'Betriebsanleitung PostBase One (manualslib.de 132953)' },
   { id: 'classic', slug: 'postbase-classic', name: 'PostBase 30 bis 100', h1: 'PostBase 30, 45, 65 und 100', short: 'PostBase 30 bis 100',
     intro: 'Die PostBase 30, 45, 65 und 100 nutzen dieselben Original-Kartuschen-Sets. Hier sehen Sie alle vier Größen und welche zu Ihrer Briefmenge passt.',
-    recognize: 'Ein helles Gehäuse mit Display und flacher Auflage obenauf, darunter eine dunkle Briefbahn mit Ablage.',
+    recognize: 'Ein helles Gehäuse mit schwarz umrandetem Display und flacher Auflage obenauf, darunter eine dunkle Briefbahn mit Ablage.', recSrc: 'FP-Foto, Angabe TE Printline',
     extraFaq: [{ q: 'Gelten die Kartuschen für alle Modelle von PostBase 30 bis 100?',
       a: 'Ja. Die PostBase 30, 45, 65 und 100 nutzen dieselben Kartuschen-Sets XS, SMALL, MEDIUM und XL. Auch die PostBase Insight nutzt diese Sets.' },
       { q: 'Was bedeutet die Angabe „2 × 10 ml“?',
@@ -202,7 +202,7 @@ const MODELS = [
         a: 'Nein. Für die PostBase Vision gibt es die Original-Kartusche nur noch in Größe LARGE. Wechseln Sie sie mindestens einmal im Jahr, damit die Tinte nicht eintrocknet.' }] },
   { id: 'fusion', slug: 'postbase-fusion', name: 'PostBase Fusion', h1: 'PostBase Fusion', short: 'PostBase Fusion',
     intro: 'Die PostBase Fusion 35, 50, 70 und 120 hat eigene Original-Kartuschen-Sets in vier Größen. Hier sehen Sie alle mit Reichweite und welche zu Ihrer Briefmenge passt.',
-    recognize: 'Ein hellgraues Gehäuse mit Display obenauf, darunter eine lange, dunkle Briefbahn mit Ablage.',
+    recognize: 'Ein hellgraues Gehäuse mit weiß umrandetem Display obenauf, darunter eine lange, dunkle Briefbahn mit Ablage.', recSrc: 'FP-Foto, Angabe TE Printline',
     extraFaq: [{ q: 'Passen die Kartuschen der PostBase 30 bis 100 auch in die Fusion?',
       a: 'Bitte bestellen Sie die Sets, die für die PostBase Fusion angegeben sind. Sie haben eigene Artikelnummern, auch wenn die Füllmengen denen der PostBase 30 bis 100 entsprechen. Im Zweifel rufen Sie uns kurz an.' }] },
   { id: 'insight', slug: 'postbase-insight', name: 'PostBase Insight', h1: 'PostBase Insight', short: 'PostBase Insight',
@@ -565,13 +565,13 @@ function buildDoktor() {
 
   <section class="block textfassung" id="ueberblick">
     <h2>Welcher Abdruck, welche Lösung</h2>
-    <p class="sub">Die Kurzfassung zum Nachlesen. Die Lösungen stammen aus den Bedienungsanleitungen von Francotyp-Postalia. Die Grenze, ab wann Sie uns besser anrufen, legen unsere Techniker fest.${chk('Druckbild-Doktor: Ampelgrenzen gelb/rot sind eine Vorgabe von TE Printline, keine Handbuchaussage. Techniker bestätigen.')}</p>
+    <p class="sub">Die Kurzfassung zum Nachlesen. Die Lösungen stammen aus den Bedienungsanleitungen von Francotyp-Postalia. Die Grenze, ab wann Sie uns besser anrufen, legen unsere Techniker fest.</p>
     <div class="symlist">
 ${syms}
     </div>
     <h3 style="margin-top:26px">Die Reihenfolge bei schlechtem Abdruck</h3>
     <ol class="order"><li>Testabdruck</li><li>Reinigen</li><li>Intensiv reinigen</li><li>Reinigung von Hand</li><li>Anrufen</li></ol>
-    <p class="sub" style="margin-top:12px">Reinigung von Hand: weiches, fusselfreies Tuch mit entmineralisiertem Wasser, Düsen nach unten, langsam in eine Richtung wischen, keine Reinigungsmittel. Riecht die Maschine verbrannt oder raucht sie: sofort den Netzstecker ziehen und anrufen.</p>
+    <p class="sub" style="margin-top:12px">Reinigung von Hand: weiches, fusselfreies Tuch mit entmineralisiertem Wasser, Düsen nach unten, langsam in eine Richtung wischen, keine Reinigungsmittel. Riecht die Maschine verschmort: sofort den Netzstecker ziehen und anrufen.</p>
     <h3 style="margin-top:26px">So heißen die Menüpunkte bei Ihrem Modell</h3>
 ${menuTable()}
     <details><summary>Quellen</summary><ul class="src">
