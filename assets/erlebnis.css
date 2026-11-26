@@ -89,6 +89,8 @@
 .stage.a-align .pics,.stage.a-test .pics{animation:slidein .9s cubic-bezier(.3,.1,.2,1) both}
 @keyframes slidein{from{transform:translateX(35%);opacity:0}to{transform:none;opacity:1}}
 .stage .tap{position:absolute;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;border:4px solid var(--red);animation:pulse 1.5s ease-out .4s infinite;opacity:0}
+/* Tipp-Kreis nur auf dem ersten Bild (Maschinenfoto) */
+.stage.later .tap{display:none}
 @keyframes pulse{0%{transform:scale(.45);opacity:1}100%{transform:scale(1.5);opacity:0}}
 .stage .busy{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);display:flex;align-items:center;gap:8px;background:rgba(40,40,42,.86);color:#fff;font-size:.85rem;padding:6px 14px;border-radius:16px;white-space:nowrap;opacity:0;animation:fadein .4s 1.4s forwards}
 .stage .busy i{width:14px;height:14px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:spin 1s linear infinite}

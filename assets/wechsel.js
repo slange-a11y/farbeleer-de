@@ -40,6 +40,7 @@
       imgs[k].classList.remove('on'); dots[k].classList.remove('on');
       k = (k + 1) % imgs.length;
       imgs[k].classList.add('on'); dots[k].classList.add('on');
+      stage.classList.toggle('later', k > 0);
     }, reduce ? 3500 : 2200);
   }
 
