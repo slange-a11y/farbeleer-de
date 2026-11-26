@@ -565,13 +565,13 @@ function buildDoktor() {
 
   <section class="block textfassung" id="ueberblick">
     <h2>Welcher Abdruck, welche Lösung</h2>
-    <p class="sub">Die Kurzfassung zum Nachlesen. Die Lösungen stammen aus den Bedienungsanleitungen von Francotyp-Postalia. Die Grenze, ab wann Sie uns besser anrufen, legen unsere Techniker fest.${chk('Druckbild-Doktor: Ampelgrenzen gelb/rot sind eine Vorgabe von TE Printline, keine Handbuchaussage. Techniker bestätigen.')}</p>
+    <p class="sub">Die Kurzfassung zum Nachlesen. Die Lösungen stammen aus den Bedienungsanleitungen von Francotyp-Postalia. Die Grenze, ab wann Sie uns besser anrufen, legen unsere Techniker fest.</p>
     <div class="symlist">
 ${syms}
     </div>
     <h3 style="margin-top:26px">Die Reihenfolge bei schlechtem Abdruck</h3>
     <ol class="order"><li>Testabdruck</li><li>Reinigen</li><li>Intensiv reinigen</li><li>Reinigung von Hand</li><li>Anrufen</li></ol>
-    <p class="sub" style="margin-top:12px">Reinigung von Hand: weiches, fusselfreies Tuch mit entmineralisiertem Wasser, Düsen nach unten, langsam in eine Richtung wischen, keine Reinigungsmittel. Riecht die Maschine verbrannt oder raucht sie: sofort den Netzstecker ziehen und anrufen.</p>
+    <p class="sub" style="margin-top:12px">Reinigung von Hand: weiches, fusselfreies Tuch mit entmineralisiertem Wasser, Düsen nach unten, langsam in eine Richtung wischen, keine Reinigungsmittel. Riecht die Maschine verschmort: sofort den Netzstecker ziehen und anrufen.</p>
     <h3 style="margin-top:26px">So heißen die Menüpunkte bei Ihrem Modell</h3>
 ${menuTable()}
     <details><summary>Quellen</summary><ul class="src">

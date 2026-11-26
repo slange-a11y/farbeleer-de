@@ -157,7 +157,7 @@ var FRAGEN = {
 // ── 3. Diagnose-Tabelle ─────────────────────────────────────────────────
 // Von oben nach unten gelesen, die erste passende Zeile gilt.
 // symptom: id oder Liste. wenn: Antworten, die passen müssen (leer = immer).
-// Die Ampelgrenzen sind eine Vorgabe von TE Printline, keine Handbuchaussage: Techniker bestätigen.
+// Die Ampelgrenzen sind eine Vorgabe von TE Printline (von Silvio bestätigt, 26.11.2026), keine Handbuchaussage.
 var DIAGNOSE = [
   // Symptom                              wenn                      Befund
   { symptom: 'sauber',                    wenn: {},                 befund: 'alles-gut' },
@@ -209,7 +209,7 @@ var BEFUNDE = {
     text: 'Sie haben alles versucht, was Sie selbst machen können. Rufen Sie uns an, wir finden gemeinsam die Ursache und sagen Ihnen ehrlich, ob eine neue Kartusche hilft oder ob ein Techniker kommen sollte.',
     schritte: [], nachher: 'sauber' },
   'rauch': { ampel: 'rot', titel: 'Stecker ziehen und anrufen',
-    text: 'Riecht die Maschine verbrannt oder raucht sie, ziehen Sie sofort den Netzstecker und benutzen Sie die Maschine nicht weiter. Rufen Sie uns an.',
+    text: 'Riecht die Maschine verschmort, ziehen Sie sofort den Netzstecker und benutzen Sie die Maschine nicht weiter. Rufen Sie uns an.',
     schritte: [], nachher: null }
 };
 

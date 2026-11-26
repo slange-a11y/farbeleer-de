@@ -29,7 +29,7 @@
       '<div class="abdrucke">' + SYMPTOME.map(function (s) {
         return '<button type="button" class="atile" data-sym="' + s.id + '">' + abdruckSvg(s.id, 'Beispiel: ' + s.label) + '<strong>' + esc(s.label) + '</strong><small>' + esc(s.sub) + '</small></button>';
       }).join('') + '</div>' +
-      '<p class="smoke">Riecht die Maschine verbrannt oder kommt Rauch heraus? <button type="button" data-sym="rauch">Dann bitte hier tippen.</button></p>';
+      '<p class="smoke">Riecht die Maschine verschmort? <button type="button" data-sym="rauch">Dann bitte hier tippen.</button></p>';
   }
 
   function viewModell() {
