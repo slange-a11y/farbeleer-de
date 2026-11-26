@@ -36,9 +36,7 @@ var MACHINES=[
     {size:'XL',     sku:'580052302600', ml:'2 × 42 ml', reach:18000, path:'/p/tintenkartuschen-set-xl-fuer-frankiermaschine-postbase-30-bis-100-francotyp-postalia'}]},
   {id:'vision', name:'PostBase Vision', models:'Vision 35 · 50 · 70', img:'img/vision.png?v=2', page:'/postbase-vision/', cat:'/c/postverarbeitung/francotyp-postalia/postbase-vision-35-70', noQty:true, sizes:[
     {size:'LARGE', sku:'580059772400', ml:'40 ml', reach:11400, path:'/p/tintenkartusche-large-fuer-frankiermaschine-postbase-vision-35-bis-70-francotyp-postalia'}],
-    only:'Für die PostBase Vision 35 bis 70 gibt es die Original-Kartusche nur noch in Größe LARGE. Wechseln Sie sie mindestens einmal im Jahr, damit die Tinte nicht eintrocknet.',
-    extra:'Sie haben eine PostBase Vision A120? Dafür gibt es ein eigenes XL-Set (2 × 40 ml, bis 18.000 Frankierungen). Rufen Sie uns an, wir bestellen es für Sie.',
-    a120:{size:'XL-Set A120', sku:'580059772800', ml:'2 × 40 ml', reach:18000, phone:true}},
+    only:'Für die PostBase Vision 35 bis 70 gibt es die Original-Kartusche nur noch in Größe LARGE. Wechseln Sie sie mindestens einmal im Jahr, damit die Tinte nicht eintrocknet.'},
   {id:'fusion', name:'PostBase Fusion', models:'Fusion 35 · 50 · 70 · 120', img:'img/fusion.png', page:'/postbase-fusion/', cat:'/c/postverarbeitung/francotyp-postalia/postbase-fusion-35-120', sizes:[
     {size:'XS', sku:'580059895600', ml:'2 × 4 ml',  reach:1500,  path:'/p/tintenkartuschen-set-xs-fuer-frankiermaschine-postbase-fusion-35-bis-120-francotyp-postalia'},
     {size:'S',  sku:'580059893600', ml:'2 × 10 ml', reach:4000,  path:'/p/tintenkartuschen-set-s-fuer-frankiermaschine-postbase-fusion-35-bis-120-francotyp-postalia'},

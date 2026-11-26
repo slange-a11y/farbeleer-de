@@ -186,11 +186,9 @@ const MODELS = [
       { q: 'Was bedeutet die Angabe „2 × 10 ml“?',
         a: 'Ein Set enthält zwei Kartuschen. „2 × 10 ml“ heißt also: zwei Kartuschen mit je 10 ml Tinte.' }] },
   { id: 'vision', slug: 'postbase-vision', name: 'PostBase Vision', h1: 'PostBase Vision 35, 50 und 70', short: 'PostBase Vision',
-    intro: 'Für die PostBase Vision 35, 50 und 70 gibt es die Original-Kartusche nur noch in einer Größe: LARGE. Für die Vision A120 gibt es ein eigenes Set.',
+    intro: 'Für die PostBase Vision 35, 50 und 70 gibt es die Original-Kartusche nur noch in einer Größe: LARGE. Hier sehen Sie, wie lange sie bei Ihrer Briefmenge reicht.',
     recognize: 'Das große Farbdisplay sitzt vorn im hellen Gehäuse, darunter läuft eine lange, dunkle Briefbahn.',
-    extraFaq: [{ q: 'Ich habe eine PostBase Vision A120. Welche Kartusche brauche ich?',
-      a: 'Für die PostBase Vision A120 gibt es ein eigenes XL-Set (2 × 40 ml, bis zu 18.000 Frankierungen). Rufen Sie uns an, wir bestellen es für Sie.' },
-      { q: 'Gibt es die Kartusche für die Vision auch kleiner?',
+    extraFaq: [{ q: 'Gibt es die Kartusche für die Vision auch kleiner?',
         a: 'Nein. Für die PostBase Vision 35 bis 70 gibt es die Original-Kartusche nur noch in Größe LARGE. Wechseln Sie sie mindestens einmal im Jahr, damit die Tinte nicht eintrocknet.' }] },
   { id: 'fusion', slug: 'postbase-fusion', name: 'PostBase Fusion', h1: 'PostBase Fusion', short: 'PostBase Fusion',
     intro: 'Die PostBase Fusion 35, 50, 70 und 120 hat eigene Original-Kartuschen-Sets in vier Größen. Hier sehen Sie alle mit Reichweite und welche zu Ihrer Briefmenge passt.',
@@ -296,7 +294,6 @@ ${howto(oneCart, 'PostBase One', true)}
     ];
   } else {
     let extraRow = '';
-    if (p.id === 'vision') extraRow = `      <tr><td><b>${esc(m.a120.size)}</b><br><small>${nb(m.a120.ml)}, nur für Vision A120</small><small class="m-sku">Art.-Nr. telefonisch</small></td><td>${reachTxt(m.a120.reach)}</td><td class="sku">telefonisch</td><td><a href="${TEL}">Anrufen</a></td></tr>`;
     tables = sizesTable(m, slug, { extraRow });
     if (m.sizes.length > 1) {
       rec = `    <p>Größer ist nicht automatisch besser. Steckt eine Kartusche zu lange in der Maschine, kann die Tinte eintrocknen. Wir empfehlen deshalb die größte Kartusche, die bei Ihrer Briefmenge innerhalb von ${MAX_MONTHS}&nbsp;Monaten aufgebraucht ist. Reicht schon die kleinste länger, nehmen Sie die kleinste und wechseln sie trotzdem einmal im Jahr.</p>
@@ -305,7 +302,6 @@ ${recTable(m)}`;
       rec = `    <p>${esc(m.only)}</p>
 ${recTable(m)}`;
     }
-    if (p.id === 'vision') special = `    <div class="note"><b>PostBase Vision A120:</b> ${esc(m.extra.replace(/^Sie haben eine PostBase Vision A120\? /, ''))}</div>`;
     if (p.id === 'insight') special = `    <div class="note"><b>Gut zu wissen:</b> ${esc(m.extra)} Im Shop finden Sie die Sets deshalb unter „PostBase 30 bis 100“.</div>`;
     guide = howto(m, p.name, isSet);
     faq = [
