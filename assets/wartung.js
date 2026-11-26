@@ -89,6 +89,7 @@ var WARTUNG = {
   },
   mini: {
     name: 'PostBase mini', carts: 1,
+    note: 'Gilt genauso für die PostBase Mini Insight: Sie nutzt dieselbe Kartusche und denselben Ablauf.',
     src: 'PostBase Mini Betriebsanleitung, deutsche Ausgabe (FP; manualslib.de 12448), S. 18, 21, 66–74, 78–79; PostBase mini Operator Manual (US), S. 64–76',
     menu: { WECHSELN: '„MENÜ › DRUCKSYSTEM › WECHSELN“', REINIGEN: '„REINIGEN“', INTENSIV: '„INTENSIVREINIGEN“', AUSRICHTEN: '„AUSRICHTEN“', INFO: '„INFO“', TESTDRUCK: 'Testabdruck' },
     steps: [
