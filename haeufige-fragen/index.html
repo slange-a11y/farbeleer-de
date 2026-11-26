@@ -340,6 +340,12 @@
     <h1>Häufige <span>Fragen</span></h1>
     <p class="lead">Alle Antworten an einer Stelle. Ihre Frage ist nicht dabei? Rufen Sie uns an: <a href="tel:+49620496220" class="nw">06204 / 9622-0</a>, Montag bis Freitag von 8 bis 16&nbsp;Uhr.</p>
   </div></section>
+  <div class="faqsearch" id="faqsearch" hidden>
+    <label for="faq-q">Frage suchen</label>
+    <input id="faq-q" type="search" placeholder="z. B. blass, Lieferung, Vision" autocomplete="off">
+    <p id="faq-none" class="faq-none" hidden>Dazu haben wir keine Antwort gefunden. Rufen Sie uns an: <a href="tel:+49620496220" class="nw">06204 / 9622-0</a></p>
+    <p id="faq-count" class="sr-only" aria-live="polite"></p>
+  </div>
   <nav class="faqnav" aria-label="Themen"><a href="#kartusche">Welche Kartusche passt?</a><a href="#wechsel">Kartusche wechseln</a><a href="#abdruck">Abdruck und Pflege</a><a href="#bestellen">Bestellen und Lieferung</a><a href="#modelle">Zu einzelnen Modellen</a></nav>
   <section class="block faq" id="kartusche">
     <h2>Welche Kartusche passt?</h2>
@@ -420,6 +426,36 @@
     <details><summary>Passen die Kartuschen der PostBase 30 bis 100 auch in die Fusion?</summary><p>Bitte bestellen Sie die Sets, die für die PostBase Fusion angegeben sind. Sie haben eigene Artikelnummern, auch wenn die Füllmengen denen der PostBase 30 bis 100 entsprechen. Im Zweifel rufen Sie uns kurz an.</p></details>
     <details><summary>Warum stehen im Shop Kartuschen „für PostBase 30 bis 100“?</summary><p>Weil die PostBase Insight dieselben Kartuschen-Sets nutzt wie die PostBase 30 bis 100. Im Shop sind sie dort eingeordnet. Für Ihre Insight bestellen Sie genau diese Sets.</p></details>
   </section>
+  <script>
+  (function () {
+    var box = document.getElementById('faqsearch'), q = document.getElementById('faq-q');
+    var none = document.getElementById('faq-none'), count = document.getElementById('faq-count');
+    var items = [].slice.call(document.querySelectorAll('.faq details'));
+    var SYN = { tinte: ['kartusch', 'tank'], farbe: ['tinte', 'kartusch'], patrone: ['kartusch'], patronen: ['kartusch'], versand: ['liefer', 'verschick'], bezahlen: ['rechnung', 'bankeinzug'], zahlung: ['rechnung', 'bankeinzug'], streifig: ['streifen'], kaputt: ['techniker'], telefon: ['anruf', 'telefon'] };
+    var norm = function (t) { return t.toLowerCase().replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss').replace(/[^a-z0-9 ]+/g, ' '); };
+    var text = items.map(function (d) { return norm(d.textContent); });
+    box.hidden = false;
+    q.addEventListener('input', function () {
+      var words = norm(q.value).split(' ').filter(function (w) { return w.length > 1; }), hits = 0;
+      // Wortstamm (lieferung findet liefern) und ein paar Wörter, die Kunden anders sagen
+      var alt = words.map(function (w) {
+        var stem = w.length > 6 ? w.slice(0, Math.max(5, w.length - 3)) : w;
+        return [stem].concat(SYN[stem] || SYN[w] || []);
+      });
+      items.forEach(function (d, i) {
+        var ok = alt.every(function (opts) { return opts.some(function (o) { return text[i].indexOf(o) >= 0; }); });
+        d.hidden = !ok; if (ok) hits++;
+        if (words.length && ok && hits <= 3) d.open = true; else if (!words.length) d.open = false;
+      });
+      [].forEach.call(document.querySelectorAll('section.faq'), function (sec) {
+        sec.hidden = !sec.querySelector('details:not([hidden])');
+      });
+      document.querySelector('.faqnav').hidden = words.length > 0;
+      none.hidden = !words.length || hits > 0;
+      count.textContent = words.length ? hits + ' Treffer' : '';
+    });
+  })();
+  </script>
 </main>
 
 <div class="sticky-call">

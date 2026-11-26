@@ -278,3 +278,11 @@ details.more>summary:hover{color:var(--text)}
 .faqnav{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
 .faqnav a{background:var(--gray-light);border-radius:20px;padding:6px 14px;font-size:.92rem;color:var(--text);text-decoration:none}
 .faqnav a:hover{background:var(--red-soft);color:var(--red)}
+.faqsearch{margin-top:18px}
+.faqsearch label{display:block;font-weight:700;margin-bottom:6px}
+.faqsearch input{width:100%;max-width:520px;font:inherit;font-size:1.05rem;padding:12px 14px;border:2px solid var(--gray-mid);border-radius:8px}
+.faqsearch input:focus{border-color:var(--red);outline:none}
+.faq-none{margin-top:12px;color:var(--text-mid)}
+.faq-none a{color:var(--red);font-weight:700}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+[hidden]{display:none!important}

@@ -711,6 +711,12 @@ function buildFaqPage() {
     <h1>Häufige <span>Fragen</span></h1>
     <p class="lead">Alle Antworten an einer Stelle. Ihre Frage ist nicht dabei? Rufen Sie uns an: <a href="${TEL}" class="nw">${PHONE}</a>, Montag bis Freitag von 8 bis 16&nbsp;Uhr.</p>
   </div></section>
+  <div class="faqsearch" id="faqsearch" hidden>
+    <label for="faq-q">Frage suchen</label>
+    <input id="faq-q" type="search" placeholder="z. B. blass, Lieferung, Vision" autocomplete="off">
+    <p id="faq-none" class="faq-none" hidden>Dazu haben wir keine Antwort gefunden. Rufen Sie uns an: <a href="${TEL}" class="nw">${PHONE}</a></p>
+    <p id="faq-count" class="sr-only" aria-live="polite"></p>
+  </div>
   <nav class="faqnav" aria-label="Themen">${groups.map(g => `<a href="#${g.id}">${esc(g.h)}</a>`).join('')}</nav>
 ${groups.map(g => `  <section class="block faq" id="${g.id}">
     <h2>${esc(g.h)}</h2>
@@ -726,7 +732,37 @@ ${OV_ROWS}
     </div>
     <p class="fine">PostBase Insight nutzt dieselben Kartuschen wie die PostBase 30&nbsp;bis&nbsp;100. Für die PostBase One mit Tanksystem brauchen Sie neben dem Tintentank das Druckkopf-Set. Reichweiten laut Francotyp-Postalia, Stand November 2026.</p>
     </details>` : ''}
-  </section>`).join('\n\n')}`;
+  </section>`).join('\n\n')}
+  <script>
+  (function () {
+    var box = document.getElementById('faqsearch'), q = document.getElementById('faq-q');
+    var none = document.getElementById('faq-none'), count = document.getElementById('faq-count');
+    var items = [].slice.call(document.querySelectorAll('.faq details'));
+    var SYN = { tinte: ['kartusch', 'tank'], farbe: ['tinte', 'kartusch'], patrone: ['kartusch'], patronen: ['kartusch'], versand: ['liefer', 'verschick'], bezahlen: ['rechnung', 'bankeinzug'], zahlung: ['rechnung', 'bankeinzug'], streifig: ['streifen'], kaputt: ['techniker'], telefon: ['anruf', 'telefon'] };
+    var norm = function (t) { return t.toLowerCase().replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss').replace(/[^a-z0-9 ]+/g, ' '); };
+    var text = items.map(function (d) { return norm(d.textContent); });
+    box.hidden = false;
+    q.addEventListener('input', function () {
+      var words = norm(q.value).split(' ').filter(function (w) { return w.length > 1; }), hits = 0;
+      // Wortstamm (lieferung findet liefern) und ein paar Wörter, die Kunden anders sagen
+      var alt = words.map(function (w) {
+        var stem = w.length > 6 ? w.slice(0, Math.max(5, w.length - 3)) : w;
+        return [stem].concat(SYN[stem] || SYN[w] || []);
+      });
+      items.forEach(function (d, i) {
+        var ok = alt.every(function (opts) { return opts.some(function (o) { return text[i].indexOf(o) >= 0; }); });
+        d.hidden = !ok; if (ok) hits++;
+        if (words.length && ok && hits <= 3) d.open = true; else if (!words.length) d.open = false;
+      });
+      [].forEach.call(document.querySelectorAll('section.faq'), function (sec) {
+        sec.hidden = !sec.querySelector('details:not([hidden])');
+      });
+      document.querySelector('.faqnav').hidden = words.length > 0;
+      none.hidden = !words.length || hits > 0;
+      count.textContent = words.length ? hits + ' Treffer' : '';
+    });
+  })();
+  </script>`;
   write('haeufige-fragen/index.html', layout({
     path: '/haeufige-fragen/', slug: 'haeufige-fragen', campaign: 'faq', nav: 'faq',
     title: 'Häufige Fragen zu Frankierfarbe und PostBase-Kartuschen | farbeleer.de',
