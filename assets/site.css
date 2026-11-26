@@ -325,3 +325,5 @@ section.block,.faqlink{margin-top:var(--gap-xl)}
 .faq-try button:hover,.faq-try button:focus-visible{border-color:var(--red);color:var(--red);outline:none}
 .faq-results{margin-top:var(--gap-l)}
 .faq-results details:first-child{border-top:1px solid var(--gray-mid)}
+.satz{display:block}
+th{text-wrap:balance}

@@ -22,6 +22,7 @@ const PHONE = '06204 / 9622-0';
 const TEL = 'tel:+49620496220';
 
 // ── Daten laden ─────────────────────────────────────────────────────────
+const { umbrechen } = require('./umbruch.js');
 const D = {};
 vm.createContext(D);
 vm.runInContext(fs.readFileSync(path.join(ROOT, 'assets/kartuschen.js'), 'utf8'), D);
@@ -131,7 +132,7 @@ ${o.body}
 <div class="sticky-call">
   <p>Lieber persönlich bestellen? Wir beraten Sie gerne.</p>
   <a class="btn white sm" href="${TEL}">&#128222; Jetzt anrufen: <span class="nw">${PHONE}</span></a>
-  <small>Mo–Fr 8–16&nbsp;Uhr</small>
+  <small>Mo–Fr&nbsp;8–16&nbsp;Uhr</small>
 </div>
 
 <footer>
@@ -386,8 +387,8 @@ function buildRatgeber() {
   // Rechenbeispiel aus den echten Daten (PostBase 30 bis 100, rund 600 Briefe)
   const cl = byId('classic'), n = 600, i = pickIndex(cl.sizes, n), k = cl.sizes[i], bigger = cl.sizes[i + 1];
   const tiles = MODELS.map(p => {
-    const m = byId(p.id), [w, h] = IMG[p.id];
-    return `      <a class="mtile${p.id === 'one' ? ' wide' : ''}" href="/${p.slug}/"><span class="pic"><img src="${imgSrc(m)}" alt="${esc(m.name)}" width="${w}" height="${h}" loading="lazy"></span><strong>${esc(m.name).replace(/ (\S+)$/, '&nbsp;$1')}</strong>${m.models ? `<small>${esc(m.models).replace(/ · /g, '&nbsp;· ')}</small>` : ''}</a>`;
+    const m = byId(p.id), breit = p.id === 'one';
+    return `      <a class="mtile${breit ? ' wide' : ''}" href="/${p.slug}/"><span class="pic"><img src="${D.kachelBild(p.id, breit)}" alt="${esc(m.name)}" width="${breit ? 1600 : 800}" height="600" loading="lazy"></span><strong>${esc(m.name).replace(/ (\S+)$/, '&nbsp;$1')}</strong>${m.models ? `<small>${esc(m.models).replace(/ · /g, '&nbsp;·&nbsp;')}</small>` : ''}</a>`;
   }).join('\n');
   const chips = modelChips(p => '/ratgeber/kartusche-wechseln/?modell=' + p.id);
   const faq = [
@@ -488,7 +489,7 @@ function replaceBetween(s, name, content) {
 function write(rel, html) {
   const f = path.join(ROOT, rel);
   fs.mkdirSync(path.dirname(f), { recursive: true });
-  fs.writeFileSync(f, html);
+  fs.writeFileSync(f, umbrechen(html));
   console.log('geschrieben:', rel);
 }
 
@@ -795,6 +796,11 @@ buildRatgeber();
 MODELS.forEach(buildModel);
 buildIndexParts();
 buildFaqPage();
+// Handgepflegte Seiten bekommen dieselben Zeilenumbruch-Regeln
+['index.html', 'impressum.html', 'datenschutz.html'].forEach(rel => {
+  const f = path.join(ROOT, rel), alt = fs.readFileSync(f, 'utf8'), neu = umbrechen(alt);
+  if (neu !== alt) fs.writeFileSync(f, neu);
+});
 // Prüfhinweise, die nur in der interaktiven Fassung auftauchen (Befunde, Menünamen)
 (fs.readFileSync(path.join(ROOT, 'assets/wartung.js'), 'utf8').match(/\[\[\?.+?\]\]/g) || []).filter(m => !/' \+|Was geprüft/.test(m)).forEach(m => CHECKS.push('assets/wartung.js (Druckbild-Doktor/Kartuschenwechsel): ' + m.slice(3, -2)));
 const uniq = [...new Set(CHECKS)];
