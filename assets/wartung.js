@@ -126,7 +126,8 @@ WARTUNG.insight.menu = WARTUNG.classic.menu;
 WARTUNG.insight.steps = WARTUNG.classic.steps;
 
 // Reihenfolge der Modelle auf den Seiten (wie im Kartuschenfinder)
-var WARTUNG_ORDER = ['mini', 'm2', 'one', 'classic', 'vision', 'fusion', 'insight'];
+// Sortiert nach Leistung, von klein nach groß (wie im Kartuschenfinder)
+var WARTUNG_ORDER = ['mini', 'm2', 'vision', 'classic', 'insight', 'fusion', 'one'];
 
 // Bilder zum Kartuschenwechsel (img/erlebnis/, geschnitten mit tools/bogen-schneiden.py).
 // Zeichnungen nach den FP-Betriebsanleitungen, Fotos von farbeleer.de. Je Schritt eine Liste:
