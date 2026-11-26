@@ -104,12 +104,10 @@ ${ld}
 </head>
 <body>
 
-<div class="topbar">TE Printline GmbH · autorisierte Generalvertretung von Francotyp-Postalia</div>
 <div class="usp"><ul>
-  <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M3 14v-2a9 9 0 0118 0v2"/><rect x="2" y="14" width="5" height="7" rx="2"/><rect x="17" y="14" width="5" height="7" rx="2"/></svg>Beratung: <span class="nw">${PHONE}</span></li>
   <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg>Bis 13&nbsp;Uhr bestellt, heute versendet</li>
   <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>Für Gewerbe, Behörden, Vereine</li>
-  <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 2.7s6 6.6 6 11a6 6 0 01-12 0c0-4.4 6-11 6-11z"/></svg>Original von Francotyp-Postalia</li>
+  <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 2.7s6 6.6 6 11a6 6 0 01-12 0c0-4.4 6-11 6-11z"/></svg>Original von Francotyp-Postalia, autorisierte Generalvertretung</li>
 </ul></div>
 <div class="head">
   <a href="/" title="Zur Startseite von farbeleer.de"><img src="/logo.png" alt="TE Printline GmbH" width="380" height="47"></a>
@@ -119,7 +117,7 @@ ${ld}
   <li><a href="/#finder">Kartuschenfinder</a></li>
   <li><a${on('ratgeber')} href="/ratgeber/">Ratgeber</a></li>
   <li><a href="/#beratung">Persönliche Beratung</a></li>
-  <li><a href="/#faq">Häufige Fragen</a></li>
+  <li><a${on('faq')} href="/haeufige-fragen/">Häufige Fragen</a></li>
   <li><a href="${navShop}">Zum Shop</a></li>
 </ul></nav>
 
@@ -147,6 +145,12 @@ ${o.body}
 `;
 }
 
+// Alle Fragen sammeln sich auf /haeufige-fragen/. Auf den Seiten steht nur ein Hinweis darauf.
+const FAQ_POOL = {};
+function pool(group, list) { (FAQ_POOL[group] = FAQ_POOL[group] || []).push(...list); }
+function faqLink() {
+  return `  <p class="faqlink">Noch Fragen? <a href="/haeufige-fragen/">Häufige Fragen</a> oder <a href="${TEL}">rufen Sie uns an</a>.</p>`;
+}
 function faqHtml(faq) {
   return `  <section class="block faq" id="faq">
     <h2>Häufige Fragen</h2>
@@ -302,6 +306,7 @@ ${wechselLinks('one', true)}`;
         a: 'Ja. Für das Tanksystem braucht die PostBase One außerdem das Druckkopf-Set für das Tanksystem (Artikel-Nr. ' + oneTank.addon.sku + ', reicht für bis zu ' + fmt(oneTank.addon.reach) + ' Frankierungen).' },
       SHIP_FAQ
     ];
+    pool('model:PostBase One', faq.slice(1, 3));
   } else {
     let extraRow = '';
     tables = sizesTable(m, slug, { extraRow });
@@ -320,6 +325,7 @@ ${recTable(m)}`;
     ];
     if (m.sizes.length > 1) faq.push({ q: 'Welche Kartuschengröße ist für meine ' + p.name + ' die richtige?', a: recSentence(m) });
     faq = faq.concat(p.extraFaq || []).concat([SHIP_FAQ]);
+    if (p.id !== 'm2') pool('model:' + p.name, p.extraFaq || []); // mini und M2 hätten dieselbe Frage zweimal
   }
 
   const helpCards = `    <div class="helpcards">
@@ -353,9 +359,8 @@ ${helpCards}
 ${more('wechsel', 'Kartuschenwechsel als Text lesen', guide + '\n' + care + '\n    <p class="fine">Quelle: ' + esc(WARTUNG[p.id].src) + '</p>')}
   </section>
 
-${faqHtml(faq)}
-
-${waysHtml({ finderHref, shopHref: catHref })}`;
+${faqLink()}
+`;
 
   const sizesShort = (p.id === 'one' ? ['XL-Set', 'Tintentank 175 ml', 'Tintentank 350 ml'] : m.sizes.map(s => s.size));
   const html = layout({
@@ -365,7 +370,7 @@ ${waysHtml({ finderHref, shopHref: catHref })}`;
     h1plain: 'Tintenkartusche für die ' + p.h1,
     crumbs: [{ name: p.name, path: '/' + slug + '/' }],
     image: '/' + m.img.replace(/\?.*$/, ''),
-    faq, body
+    body
   });
   write(slug + '/index.html', html);
 }
@@ -390,6 +395,7 @@ function buildRatgeber() {
       a: 'Nicht unbedingt. Tinte kann eintrocknen, wenn eine Kartusche zu lange in der Maschine steckt. Wir empfehlen die Größe, die bei Ihrer Menge innerhalb eines Jahres aufgebraucht ist, und raten, die Kartusche mindestens einmal im Jahr zu wechseln.' },
     SHIP_FAQ
   ];
+  pool('farbeleer', faq);
   const body = `
   <section class="page-hero">
     <div>
@@ -427,13 +433,8 @@ ${more('groesse-mehr', 'Warum nicht einfach die größte Kartusche? Ein Beispiel
     <p class="help">Abdruck danach blass oder streifig? <a href="/ratgeber/druckbild-pruefen/">Zum Druckbild-Doktor</a></p>
   </section>
 
-${faqHtml(faq)}
-
-${waysHtml({
-    finderText: 'Maschine antippen, Briefmenge angeben und sehen, welche Kartuschengröße zu Ihnen passt.',
-    finderHref: '/#finder',
-    shopText: 'Alle Original-Kartuschen von Francotyp-Postalia im Shop frankierfarbe.de, mit Bestellung auf Rechnung oder per Bankeinzug.',
-    shopHref: shop('/c/postverarbeitung/francotyp-postalia', 'ratgeber', slug + '-kategorie-unten') })}`;
+${faqLink()}
+`;
 
   write('ratgeber/farbe-leer-was-tun/index.html', layout({
     path: '/ratgeber/farbe-leer-was-tun/', slug, campaign: 'ratgeber', nav: 'ratgeber',
@@ -442,7 +443,7 @@ ${waysHtml({
     h1plain: 'Frankiermaschine meldet „Farbe leer“: was tun?',
     crumbs: [{ name: 'Ratgeber', path: '/ratgeber/' }, { name: 'Farbe leer: was tun?', path: '/ratgeber/farbe-leer-was-tun/' }],
     ogImage: '/img/og-farbeleer.jpg',
-    faq, body
+    body
   }));
 }
 
@@ -467,10 +468,12 @@ function buildIndexParts() {
   });
   const chips = '    <div class="chips">' + MODELS.map(p => `<a href="/${p.slug}/">${esc(p.name)}</a>`).join('') + '</div>';
   let s = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
-  s = replaceBetween(s, 'uebersicht', rows.join('\n'));
+  OV_ROWS = rows.join('\n');
+  if (s.includes('<!-- build:uebersicht -->')) s = replaceBetween(s, 'uebersicht', OV_ROWS);
   s = replaceBetween(s, 'modelle', chips);
   fs.writeFileSync(path.join(ROOT, 'index.html'), s);
 }
+let OV_ROWS = '';
 function replaceBetween(s, name, content) {
   const a = `<!-- build:${name} -->`, b = `<!-- /build:${name} -->`;
   const i = s.indexOf(a), j = s.indexOf(b);
@@ -527,6 +530,7 @@ function buildDoktor() {
     { q: 'Wie verhindere ich, dass die Kartusche eintrocknet?',
       a: 'Schalten Sie die Maschine immer über die Taste aus, indem Sie sie etwa drei Sekunden drücken, und ziehen Sie den Stecker erst danach. Dann fährt das Drucksystem in seine Ruheposition. Und wechseln Sie die Kartusche spätestens nach einem Jahr.' }
   ];
+  pool('Abdruck und Pflege', faq);
   const body = `
   <section class="page-hero">
     <div>
@@ -554,13 +558,8 @@ ${symSources()}
 `, true)}
   </div>
 
-${faqHtml(faq)}
-
-${waysHtml({
-    finderText: 'Ist die Kartusche leer oder eingetrocknet? Der Finder zeigt, welche Größe zu Ihrer Briefmenge passt.',
-    finderHref: '/#finder',
-    shopText: 'Alle Original-Kartuschen von Francotyp-Postalia im Shop frankierfarbe.de, mit Bestellung auf Rechnung oder per Bankeinzug.',
-    shopHref: shop('/c/postverarbeitung/francotyp-postalia', campaign, 'kategorie') })}`;
+${faqLink()}
+`;
 
   write('ratgeber/druckbild-pruefen/index.html', layout({
     path: '/ratgeber/druckbild-pruefen/', slug, campaign, nav: 'ratgeber',
@@ -569,7 +568,7 @@ ${waysHtml({
     h1plain: 'Frankierabdruck blass oder streifig? Der Druckbild-Doktor',
     crumbs: [{ name: 'Ratgeber', path: '/ratgeber/' }, { name: 'Druckbild prüfen', path: '/ratgeber/druckbild-pruefen/' }],
     css: '/assets/erlebnis.css', js: ERL_JS.concat(['/assets/doktor.js']),
-    faq, body
+    body
   }));
 }
 
@@ -608,6 +607,7 @@ ${w.power ? '        <p><b>Ausschalten:</b> ' + esc(w.power) + '</p>\n' : ''}   
     { q: 'Wie oft sollte ich die Kartusche wechseln?',
       a: 'Spätestens nach etwa 12 Monaten, auch wenn noch Tinte drin ist. Sonst kann sie eintrocknen. Deshalb empfehlen wir die Kartuschengröße, die bei Ihrer Briefmenge innerhalb eines Jahres aufgebraucht ist.' }
   ];
+  pool('Kartusche wechseln', faq);
   const body = `
   <section class="page-hero">
     <div>
@@ -631,13 +631,8 @@ ${modelText}
 `, true)}
   </div>
 
-${faqHtml(faq)}
-
-${waysHtml({
-    finderText: 'Maschine antippen, Briefmenge angeben und sehen, welche Kartuschengröße zu Ihnen passt.',
-    finderHref: '/#finder',
-    shopText: 'Alle Original-Kartuschen von Francotyp-Postalia im Shop frankierfarbe.de, mit Bestellung auf Rechnung oder per Bankeinzug.',
-    shopHref: shop('/c/postverarbeitung/francotyp-postalia', campaign, 'kategorie') })}`;
+${faqLink()}
+`;
 
   write('ratgeber/kartusche-wechseln/index.html', layout({
     path: '/ratgeber/kartusche-wechseln/', slug, campaign, nav: 'ratgeber',
@@ -646,7 +641,7 @@ ${waysHtml({
     h1plain: 'PostBase Kartusche wechseln: Schritt für Schritt',
     crumbs: [{ name: 'Ratgeber', path: '/ratgeber/' }, { name: 'Kartusche wechseln', path: '/ratgeber/kartusche-wechseln/' }],
     css: '/assets/erlebnis.css', js: ERL_JS.concat(['/assets/wechsel.js']),
-    howto: howtoLd, faq, body
+    howto: howtoLd, body
   }));
 }
 
@@ -676,12 +671,78 @@ ${cards.map(c => `    <a class="helpcard" href="${c[2]}"><strong>${esc(c[0])}</s
   }));
 }
 
+
+// ── Häufige Fragen: eine Seite für alles ────────────────────────────────
+function buildFaqPage() {
+  currentPage = '/haeufige-fragen/';
+  const take = (grp, qs) => (FAQ_POOL[grp] || []).filter(f => !qs || qs.some(q => f.q.startsWith(q)));
+  const general = [
+    { q: 'Welche Tintenkartusche passt in meine Frankiermaschine?',
+      a: 'Das hängt vom Modell ab. Jede PostBase von Francotyp-Postalia hat eigene Kartuschen. Tippen Sie im Kartuschenfinder auf Ihr Gerät, dann sehen Sie die passenden Größen. Die Übersicht aller Kartuschen steht gleich darunter. Wenn Sie unsicher sind, rufen Sie uns an.' },
+    { q: 'Wie lange reicht eine Tintenkartusche?',
+      a: 'Je nach Größe reicht eine Original-Kartusche für etwa 700 bis 22.000 Briefe, ein Tintentank der PostBase One für bis zu 100.000. Die tatsächliche Reichweite hängt vom Abdruck ab, zum Beispiel ob Sie ein Werbeklischee mitdrucken.' },
+    { q: 'Warum empfehlen Sie nicht einfach die größte Kartusche?',
+      a: 'Weil Tinte in der Maschine eintrocknen kann, wenn eine Kartusche zu lange steckt. Wir empfehlen deshalb die Größe, die bei Ihrer Menge innerhalb eines Jahres aufgebraucht ist. Wechseln Sie die Kartusche mindestens einmal im Jahr.' },
+    { q: 'Wie lange kann ich eine Ersatzkartusche lagern?',
+      a: 'Eine Ersatzkartusche bereitzuhalten ist sinnvoll. Lagern Sie sie aber nicht länger als etwa 12 Monate, bevor Sie sie einsetzen.' },
+    { q: 'Was mache ich, wenn meine Maschine nicht im Kartuschenfinder steht?',
+      a: 'Rufen Sie uns an. Wir finden gemeinsam heraus, welches Modell bei Ihnen steht und welche Kartusche passt.' }
+  ];
+  const order = [
+    { q: 'Sind das Original-Kartuschen von Francotyp-Postalia?',
+      a: 'Ja. TE Printline ist autorisierte Generalvertretung von Francotyp-Postalia und liefert ausschließlich Original-Tintenkartuschen und Original-Zubehör.' },
+    SHIP_FAQ,
+    { q: 'Wer kann bei Ihnen bestellen?', a: 'Wir verkaufen an Gewerbetreibende, Behörden und Vereine.' },
+    { q: 'Kann ich auch telefonisch bestellen?',
+      a: 'Ja, gern. Unter ' + PHONE + ' erreichen Sie Montag bis Freitag von 8 bis 16 Uhr unser Team in Viernheim. Am Telefon sprechen Sie mit Menschen, nicht mit einer Bandansage oder einer KI.' }
+  ];
+  const groups = [
+    { id: 'kartusche', h: 'Welche Kartusche passt?', faq: take('farbeleer', ['Was bedeutet']).concat(general) },
+    { id: 'wechsel', h: 'Kartusche wechseln', faq: take('Kartusche wechseln') },
+    { id: 'abdruck', h: 'Abdruck und Pflege', faq: take('Abdruck und Pflege') },
+    { id: 'bestellen', h: 'Bestellen und Lieferung', faq: order },
+    { id: 'modelle', h: 'Zu einzelnen Modellen', faq: MODELS.flatMap(p => take('model:' + p.name)) }
+  ];
+  const all = groups.flatMap(g => g.faq);
+  const seen = new Set(); all.forEach(f => { if (seen.has(f.q)) throw new Error('Doppelte Frage: ' + f.q); seen.add(f.q); });
+  const qa = f => `    <details><summary>${esc(f.q)}</summary><p>${esc(f.a)}</p></details>`;
+  const body = `
+  <section class="page-hero"><div>
+    <h1>Häufige <span>Fragen</span></h1>
+    <p class="lead">Alle Antworten an einer Stelle. Ihre Frage ist nicht dabei? Rufen Sie uns an: <a href="${TEL}" class="nw">${PHONE}</a>, Montag bis Freitag von 8 bis 16&nbsp;Uhr.</p>
+  </div></section>
+  <nav class="faqnav" aria-label="Themen">${groups.map(g => `<a href="#${g.id}">${esc(g.h)}</a>`).join('')}</nav>
+${groups.map(g => `  <section class="block faq" id="${g.id}">
+    <h2>${esc(g.h)}</h2>
+${g.faq.map(qa).join('\n')}${g.id === 'kartusche' ? `
+    <details id="uebersicht"><summary>Übersicht aller Kartuschen mit Reichweite und Artikelnummer</summary>
+    <div class="scroll">
+<table class="ov">
+<thead><tr><th>Frankiermaschine</th><th>Kartusche</th><th>Füllmenge</th><th>Reicht für bis zu</th><th>Artikel-Nr.</th></tr></thead>
+<tbody>
+${OV_ROWS}
+</tbody>
+</table>
+    </div>
+    <p class="fine">PostBase Insight nutzt dieselben Kartuschen wie die PostBase 30&nbsp;bis&nbsp;100. Für die PostBase One mit Tanksystem brauchen Sie neben dem Tintentank das Druckkopf-Set. Reichweiten laut Francotyp-Postalia, Stand November 2026.</p>
+    </details>` : ''}
+  </section>`).join('\n\n')}`;
+  write('haeufige-fragen/index.html', layout({
+    path: '/haeufige-fragen/', slug: 'haeufige-fragen', campaign: 'faq', nav: 'faq',
+    title: 'Häufige Fragen zu Frankierfarbe und PostBase-Kartuschen | farbeleer.de',
+    desc: 'Antworten zu Original-Kartuschen für PostBase-Frankiermaschinen: welche Kartusche passt, wie lange sie reicht, Wechsel, blasser Abdruck, Bestellung und Lieferung. Beratung aus Viernheim.',
+    h1plain: 'Häufige Fragen', crumbs: [{ name: 'Häufige Fragen', path: '/haeufige-fragen/' }],
+    faq: all, body
+  }));
+}
+
 buildRatgeberHub();
 buildDoktor();
 buildWechsel();
 buildRatgeber();
 MODELS.forEach(buildModel);
 buildIndexParts();
+buildFaqPage();
 // Prüfhinweise, die nur in der interaktiven Fassung auftauchen (Befunde, Menünamen)
 (fs.readFileSync(path.join(ROOT, 'assets/wartung.js'), 'utf8').match(/\[\[\?.+?\]\]/g) || []).filter(m => !/' \+|Was geprüft/.test(m)).forEach(m => CHECKS.push('assets/wartung.js (Druckbild-Doktor/Kartuschenwechsel): ' + m.slice(3, -2)));
 const uniq = [...new Set(CHECKS)];

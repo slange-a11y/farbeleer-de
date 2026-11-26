@@ -271,3 +271,10 @@ details.more>summary:hover{color:var(--text)}
 }
 .helpcards.three{grid-template-columns:repeat(3,1fr)}
 @media (max-width:860px){.helpcards.three{grid-template-columns:1fr}}
+/* Runde 2: Telefon steht oben im Kopf, die Leiste unten nur auf dem Handy */
+@media (min-width:721px){.sticky-call{display:none}body{padding-bottom:0}}
+.faqlink{margin-top:44px;padding-top:18px;border-top:1px solid var(--gray-mid);color:var(--text-mid)}
+.faqlink a{color:var(--red);font-weight:700;text-decoration:none}
+.faqnav{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.faqnav a{background:var(--gray-light);border-radius:20px;padding:6px 14px;font-size:.92rem;color:var(--text);text-decoration:none}
+.faqnav a:hover{background:var(--red-soft);color:var(--red)}

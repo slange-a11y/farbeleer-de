@@ -39,9 +39,10 @@ Hinweise: PostBase Insight nutzt dieselben Kartuschen wie die PostBase 30 bis 10
 ## Seiten
 - [Kartuschenfinder und Übersicht](https://www.farbeleer.de/): Modell wählen, Monatsmenge angeben, Empfehlung erhalten
 - [Ratgeber-Übersicht](https://www.farbeleer.de/ratgeber/)
-- [Farbe leer: was tun?](https://www.farbeleer.de/ratgeber/farbe-leer-was-tun/): Ratgeber in drei Schritten (Modell erkennen, Größe wählen und bestellen, Kartusche einsetzen), mit FAQ
+- [Farbe leer: was tun?](https://www.farbeleer.de/ratgeber/farbe-leer-was-tun/): Ratgeber in drei Schritten (Modell erkennen, Größe wählen und bestellen, Kartusche einsetzen)
 - [Kartusche wechseln](https://www.farbeleer.de/ratgeber/kartusche-wechseln/): Kartuschenwechsel je PostBase-Modell zum Durchklicken, alle Schritte auch als Text, nach den FP-Bedienungsanleitungen
 - [Druckbild prüfen (Druckbild-Doktor)](https://www.farbeleer.de/ratgeber/druckbild-pruefen/): Diagnose bei blassem, streifigem, lückenhaftem, verschmiertem oder verschobenem Frankierabdruck mit Ampel-Befund (selbst beheben, Kartusche tauschen, anrufen)
+- [Häufige Fragen](https://www.farbeleer.de/haeufige-fragen/): alle Fragen zu Kartuschen, Wechsel, Abdruck, Bestellung und Lieferung an einer Stelle, mit Übersicht aller Kartuschen (Füllmenge, Reichweite, Artikelnummer)
 - [PostBase mini](https://www.farbeleer.de/postbase-mini/): alle Kartuschen, Empfehlung nach Briefmenge, Wechsel
 - [PostBase Vision M2](https://www.farbeleer.de/postbase-vision-m2/): alle Kartuschen, Empfehlung nach Briefmenge, Wechsel
 - [PostBase One](https://www.farbeleer.de/postbase-one/): Kartuschen-Set XL oder Tanksystem (Tintentanks und Druckkopf-Set)
