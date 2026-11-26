@@ -34,9 +34,9 @@ var MACHINES=[
     {size:'SMALL',  sku:'580052303600', ml:'2 × 10 ml', reach:4000,  path:'/p/tintenkartuschen-set-small-fuer-frankiermaschine-postbase-30-bis-100-francotyp-postalia'},
     {size:'MEDIUM', sku:'580052304600', ml:'2 × 20 ml', reach:8000,  path:'/p/tintenkartuschen-set-medium-fuer-frankiermaschine-postbase-30-bis-100-francotyp-postalia'},
     {size:'XL',     sku:'580052302600', ml:'2 × 42 ml', reach:18000, path:'/p/tintenkartuschen-set-xl-fuer-frankiermaschine-postbase-30-bis-100-francotyp-postalia'}]},
-  {id:'vision', name:'PostBase Vision', models:'Vision 35 · 50 · 70', img:'img/vision.png?v=2', page:'/postbase-vision/', cat:'/c/postverarbeitung/francotyp-postalia/postbase-vision-35-70', noQty:true, sizes:[
+  {id:'vision', name:'PostBase Vision', models:'Vision 35 · 50 · 70 · A120', img:'img/vision.png?v=2', page:'/postbase-vision/', cat:'/c/postverarbeitung/francotyp-postalia/postbase-vision-35-70', noQty:true, sizes:[
     {size:'LARGE', sku:'580059772400', ml:'40 ml', reach:11400, path:'/p/tintenkartusche-large-fuer-frankiermaschine-postbase-vision-35-bis-70-francotyp-postalia'}],
-    only:'Für die PostBase Vision 35 bis 70 gibt es die Original-Kartusche nur noch in Größe LARGE. Wechseln Sie sie mindestens einmal im Jahr, damit die Tinte nicht eintrocknet.'},
+    only:'Für die PostBase Vision 35 bis 70 und die Vision A120 gibt es die Original-Kartusche nur noch in Größe LARGE. Wechseln Sie sie mindestens einmal im Jahr, damit die Tinte nicht eintrocknet.'},
   {id:'fusion', name:'PostBase Fusion', models:'Fusion 35 · 50 · 70 · 120', img:'img/fusion.png', page:'/postbase-fusion/', cat:'/c/postverarbeitung/francotyp-postalia/postbase-fusion-35-120', sizes:[
     {size:'XS', sku:'580059895600', ml:'2 × 4 ml',  reach:1500,  path:'/p/tintenkartuschen-set-xs-fuer-frankiermaschine-postbase-fusion-35-bis-120-francotyp-postalia'},
     {size:'S',  sku:'580059893600', ml:'2 × 10 ml', reach:4000,  path:'/p/tintenkartuschen-set-s-fuer-frankiermaschine-postbase-fusion-35-bis-120-francotyp-postalia'},
