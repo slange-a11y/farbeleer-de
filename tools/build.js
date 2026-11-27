@@ -59,13 +59,22 @@ const imgSrc = m => '/' + m.img;
 const reachTxt = r => 'bis zu ' + nb(fmt(r)) + ' Frankierungen';
 function list(arr) { return arr.length < 2 ? arr.join('') : arr.slice(0, -1).join(', ') + ' und ' + arr[arr.length - 1]; }
 
+// Firma als Organization + LocalBusiness (gleich auf allen Seiten, auch index.html)
+const ORG = { '@type': ['Organization', 'LocalBusiness'], '@id': BASE + '/#org', name: 'TE Printline GmbH',
+  description: 'Autorisierte Generalvertretung von Francotyp-Postalia. Original-Tintenkartuschen, Zubehör und Service für PostBase-Frankiermaschinen, persönliche Beratung aus Viernheim.',
+  url: 'https://www.te-printline.de', logo: BASE + '/logo.png', image: BASE + '/img/og-farbeleer.jpg', telephone: '+49 6204 9622-0', email: 'mail@te-printline.de',
+  address: { '@type': 'PostalAddress', streetAddress: 'Ladenburger Straße 7', postalCode: '68519', addressLocality: 'Viernheim', addressRegion: 'Hessen', addressCountry: 'DE' },
+  openingHoursSpecification: { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '08:00', closes: '16:00' },
+  areaServed: { '@type': 'Country', name: 'Deutschland' },
+  knowsAbout: ['Frankiermaschinen', 'Francotyp-Postalia PostBase', 'Frankierfarbe', 'Tintenkartuschen für Frankiermaschinen'],
+  sameAs: ['https://www.frankierfarbe.de', 'https://www.te-printline.de'] };
+
 // ── Seitenrahmen (Kopf, Navigation, Anrufleiste, Fußzeile wie die Startseite) ──
 function layout(o) {
   const url = BASE + o.path;
   const crumbs = [{ name: 'Startseite', path: '/' }].concat(o.crumbs);
   const graph = [
-    { '@type': 'Organization', '@id': BASE + '/#org', name: 'TE Printline GmbH', url: 'https://www.te-printline.de', logo: BASE + '/logo.png', telephone: '+49 6204 9622-0',
-      address: { '@type': 'PostalAddress', streetAddress: 'Ladenburger Straße 7', postalCode: '68519', addressLocality: 'Viernheim', addressRegion: 'Hessen', addressCountry: 'DE' } },
+    ORG,
     { '@type': 'WebSite', '@id': BASE + '/#website', url: BASE + '/', name: 'farbeleer.de', inLanguage: 'de-DE', publisher: { '@id': BASE + '/#org' } },
     Object.assign({ '@type': 'WebPage', '@id': url + '#webpage', url, name: o.h1plain, description: o.desc, isPartOf: { '@id': BASE + '/#website' },
       breadcrumb: { '@id': url + '#breadcrumb' }, inLanguage: 'de-DE', dateModified: TODAY, publisher: { '@id': BASE + '/#org' } },
@@ -370,8 +379,8 @@ ${faqLink()}
   const sizesShort = (p.id === 'one' ? ['XL-Set', 'Tintentank 175 ml', 'Tintentank 350 ml'] : m.sizes.map(s => s.size));
   const html = layout({
     path: '/' + slug + '/', slug, campaign: 'modellseite', nav: 'modelle',
-    title: 'Tintenkartusche ' + p.h1 + ': Größen, Reichweite, Wechsel | farbeleer.de',
-    desc: 'Original-Tinte für die ' + p.h1 + ': ' + list(sizesShort) + ' mit Reichweite und Artikelnummer. Welche Größe passt zu Ihrer Menge? Beratung unter ' + PHONE + '.',
+    title: p.name + ' Tintenkartusche: Größen & Reichweite | farbeleer.de',
+    desc: 'Original-Tinte für die ' + p.h1 + ': ' + list(sizesShort) + ', mit Reichweite und Artikelnummer. Beratung: ' + PHONE + '.',
     h1plain: 'Tintenkartusche für die ' + p.h1,
     crumbs: [{ name: p.name, path: '/' + slug + '/' }],
     image: '/' + m.img.replace(/\?.*$/, ''),
@@ -444,7 +453,7 @@ ${faqLink()}
   write('ratgeber/farbe-leer-was-tun/index.html', layout({
     path: '/ratgeber/farbe-leer-was-tun/', slug, campaign: 'ratgeber', nav: 'ratgeber',
     title: 'Frankiermaschine meldet „Farbe leer“: was tun? | farbeleer.de',
-    desc: 'Ihre PostBase meldet „Farbe leer“? In drei Schritten zur passenden Original-Kartusche von Francotyp-Postalia: Modell erkennen, Größe wählen, einsetzen. Beratung aus Viernheim.',
+    desc: 'PostBase meldet „Farbe leer“? In drei Schritten zur passenden Original-Kartusche von Francotyp-Postalia: Modell erkennen, Größe wählen, einsetzen.',
     h1plain: 'Frankiermaschine meldet „Farbe leer“: was tun?',
     crumbs: [{ name: 'Ratgeber', path: '/ratgeber/' }, { name: 'Farbe leer: was tun?', path: '/ratgeber/farbe-leer-was-tun/' }],
     ogImage: '/img/og-farbeleer.jpg',
@@ -569,7 +578,7 @@ ${faqLink()}
   write('ratgeber/druckbild-pruefen/index.html', layout({
     path: '/ratgeber/druckbild-pruefen/', slug, campaign, nav: 'ratgeber',
     title: 'Frankierabdruck blass oder streifig? Druckbild prüfen | farbeleer.de',
-    desc: 'PostBase druckt blass, streifig oder lückenhaft? Abdruck mit Beispielen vergleichen, kurz nachfragen lassen und erfahren, ob Reinigen reicht, die Kartusche leer ist oder ein Techniker helfen sollte.',
+    desc: 'PostBase druckt blass oder streifig? Abdruck mit Beispielen vergleichen und erfahren, ob Reinigen reicht, die Kartusche leer ist oder ein Techniker hilft.',
     h1plain: 'Frankierabdruck blass oder streifig? Der Druckbild-Doktor',
     crumbs: [{ name: 'Ratgeber', path: '/ratgeber/' }, { name: 'Druckbild prüfen', path: '/ratgeber/druckbild-pruefen/' }],
     css: '/assets/erlebnis.css', js: ERL_JS.concat(['/assets/doktor.js']),
@@ -644,7 +653,7 @@ ${faqLink()}
   write('ratgeber/kartusche-wechseln/index.html', layout({
     path: '/ratgeber/kartusche-wechseln/', slug, campaign, nav: 'ratgeber',
     title: 'PostBase Kartusche wechseln: Schritt für Schritt | farbeleer.de',
-    desc: 'Tintenkartusche in der PostBase wechseln: Modell wählen und den Wechsel Schritt für Schritt durchklicken, für mini, Vision M2, One, 30 bis 100, Vision, Fusion und Insight. Hilfe am Telefon aus Viernheim.',
+    desc: 'Tintenkartusche in der PostBase wechseln, Schritt für Schritt mit Bildern: mini, Vision M2, Vision, 30 bis 100, Insight, Fusion und One.',
     h1plain: 'PostBase Kartusche wechseln: Schritt für Schritt',
     crumbs: [{ name: 'Ratgeber', path: '/ratgeber/' }, { name: 'Kartusche wechseln', path: '/ratgeber/kartusche-wechseln/' }],
     css: '/assets/erlebnis.css', js: ERL_JS.concat(['/assets/wechsel.js']),
@@ -671,7 +680,7 @@ ${cards.map(c => `    <a class="helpcard" href="${c[2]}"><strong>${esc(c[0])}</s
     ${modelChips(p => '/' + p.slug + '/')}</section>`;
   write('ratgeber/index.html', layout({
     path: '/ratgeber/', slug: 'ratgeber', campaign: 'ratgeber', nav: 'ratgeber',
-    title: 'Ratgeber Frankiermaschine: Farbe leer, Kartusche wechseln, Druckbild | farbeleer.de',
+    title: 'Ratgeber Frankiermaschine: Farbe leer, Wechsel, Druckbild | farbeleer.de',
     desc: 'Ratgeber für PostBase-Frankiermaschinen: was bei „Farbe leer“ zu tun ist, wie der Kartuschenwechsel geht und was bei blassem oder streifigem Abdruck hilft.',
     h1plain: 'Ratgeber rund um die Frankierfarbe',
     crumbs: [{ name: 'Ratgeber', path: '/ratgeber/' }], body
@@ -783,7 +792,7 @@ ${OV_ROWS}
   write('haeufige-fragen/index.html', layout({
     path: '/haeufige-fragen/', slug: 'haeufige-fragen', campaign: 'faq', nav: 'faq',
     title: 'Häufige Fragen zu Frankierfarbe und PostBase-Kartuschen | farbeleer.de',
-    desc: 'Antworten zu Original-Kartuschen für PostBase-Frankiermaschinen: welche Kartusche passt, wie lange sie reicht, Wechsel, blasser Abdruck, Bestellung und Lieferung. Beratung aus Viernheim.',
+    desc: 'Antworten zu PostBase-Kartuschen: welche passt, wie lange sie reicht, Wechsel, blasser Abdruck, Bestellung und Lieferung.',
     h1plain: 'Häufige Fragen', crumbs: [{ name: 'Häufige Fragen', path: '/haeufige-fragen/' }], js: ['/assets/faqsuche.js'],
     faq: all, body
   }));

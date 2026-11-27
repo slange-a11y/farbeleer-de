@@ -50,6 +50,5 @@ Disallow: /entwurf/
 User-agent: Applebot
 Allow: /
 Disallow: /entwurf/
-Disallow: /entwurf/
 
 Sitemap: https://www.farbeleer.de/sitemap.xml
